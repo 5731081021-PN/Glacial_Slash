@@ -1,11 +1,29 @@
 package entity;
 
+import entity.card.SkillCard;
 import render.Renderable;
 
 public class Checkpoint implements Renderable {
-
+	
+	private SkillCard[] skillCards;
+	private boolean used;
+	
+	public Checkpoint(SkillCard[] skillCards) {
+		this.skillCards = skillCards;
+		used = false;
+	}
+	
+	public SkillCard[] drawCard() {
+		used = true;
+		return skillCards;
+	}
+	
+	public boolean isUsed() {
+		return used;
+	}
+	
 	@Override
-	public void draw() {
+	public void render() {
 		// TODO Auto-generated method stub
 		
 	}
