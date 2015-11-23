@@ -1,4 +1,4 @@
-package entity.cards;
+package entity.card;
 
 import render.Renderable;
 
