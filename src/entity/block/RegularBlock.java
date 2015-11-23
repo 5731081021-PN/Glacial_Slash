@@ -1,9 +1,11 @@
 package entity.block;
 
-public class RegularBlock implements Rigid {
+import render.Renderable;
+
+public class RegularBlock implements Rigid, Renderable {
 
 	@Override
-	public void draw() {
+	public void render() {
 		// TODO Auto-generated method stub
 		
 	}
@@ -11,7 +13,7 @@ public class RegularBlock implements Rigid {
 	@Override
 	public boolean isVisible() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override

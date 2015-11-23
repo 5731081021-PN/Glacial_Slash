@@ -2,7 +2,7 @@ package render;
 
 public interface Renderable {
 
-	public void draw();
+	public void render();
 	public boolean isVisible();
 	public int getZ();
 
