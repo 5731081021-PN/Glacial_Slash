@@ -1,3 +1,7 @@
+/*
+ * Checkpoints act as a save point and also a turn indicator
+ */
+
 package entity;
 
 import entity.card.SkillCard;

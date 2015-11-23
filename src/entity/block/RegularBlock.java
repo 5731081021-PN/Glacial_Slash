@@ -1,3 +1,7 @@
+/*
+ * Regular standing blocks
+ */
+
 package entity.block;
 
 import render.Renderable;

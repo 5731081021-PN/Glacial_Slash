@@ -1,3 +1,7 @@
+/*
+ * Abstract class representing every kind of cards
+ */
+
 package entity.card;
 
 import render.Renderable;

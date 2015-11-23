@@ -1,3 +1,7 @@
+/*
+ * Keyboard input checker
+ */
+
 package input;
 
 public class InputUtility {

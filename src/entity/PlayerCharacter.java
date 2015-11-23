@@ -1,3 +1,7 @@
+/*
+ * The character being controlled by the player
+ */
+
 package entity;
 
 import render.Renderable;

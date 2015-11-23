@@ -1,3 +1,8 @@
+/*
+ * The physical player playing the game
+ * Shows the status on the screen, such as mana and hand
+ */
+
 package entity;
 
 import java.util.List;
