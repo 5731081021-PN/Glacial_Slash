@@ -15,10 +15,24 @@ import render.Renderable;
 
 public class PlayerStatus implements Renderable {
 	
+	private static PlayerStatus player;
 	private int currentMana, maxMana;
 	private List<SkillCard> hand;
 	
-	public PlayerStatus() {
+	public static synchronized PlayerStatus newPlayer() {
+		player = new PlayerStatus();
+		return player;
+	}
+	
+	public static synchronized void loadPlayer(PlayerStatus player) {
+		PlayerStatus.player = player;
+	}
+	
+	public static synchronized PlayerStatus getPlayer() {
+		return player;
+	}
+
+	private PlayerStatus() {
 		maxMana = 2;
 		currentMana = 2;
 		hand = new ArrayList<SkillCard>();
@@ -41,8 +55,10 @@ public class PlayerStatus implements Renderable {
 		return hand;
 	}
 	
-	public void addCard(SkillCard skillCard) {
-		hand.add(skillCard);
+	public void addCard(SkillCard[] skillCards) {
+		for (SkillCard s: skillCards) {
+			hand.add(s);
+		}
 	}
 
 	@Override
