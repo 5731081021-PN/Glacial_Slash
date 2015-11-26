@@ -13,12 +13,12 @@ import java.util.ArrayList;
 
 import render.Renderable;
 
-public class Player implements Renderable {
+public class PlayerStatus implements Renderable {
 	
 	private int currentMana, maxMana;
 	private List<SkillCard> hand;
 	
-	public Player() {
+	public PlayerStatus() {
 		maxMana = 2;
 		currentMana = 2;
 		hand = new ArrayList<SkillCard>();
