@@ -8,6 +8,8 @@ import render.Renderable;
 
 public class PlayerCharacter implements Renderable {
 
+	public static final int LEFT = -1, RIGHT = 1;
+	private int speed;
 	private int x, y;
 	
 	public PlayerCharacter() {
@@ -20,6 +22,16 @@ public class PlayerCharacter implements Renderable {
 	
 	public int getY() {
 		return y;
+	}
+
+	// Motion
+	public void walk(int direction) {
+		x += speed*direction;
+		// TODO play walking animation
+	}
+	
+	public void jump() {
+		// TODO implement jump
 	}
 
 	@Override
