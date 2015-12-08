@@ -29,9 +29,13 @@ public class PlayerCharacterRunnable implements Runnable {
 				player.fall();
 			}
 
-			if (InputUtility.getKeyPressed(KeyEvent.VK_SPACE)) {
+			if (InputUtility.getKeyTriggered(KeyEvent.VK_SPACE)) {
 				if (Terrain.isGround(terrain)) {
 					player.jump();
+				}
+				InputUtility.setKeyTriggered(KeyEvent.VK_SPACE, false);
+				if (InputUtility.getKeyPressed(KeyEvent.VK_SPACE)) {
+					player.highJump();
 				}
 			}
 
