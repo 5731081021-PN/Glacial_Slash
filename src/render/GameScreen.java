@@ -18,5 +18,7 @@ public class GameScreen extends JComponent {
 	public static GameScreen getScreen() {
 		return screen;
 	}
+	
+	// On KeyListener, make triggering synchronous? Then pressing asynchronous?
 
 }
