@@ -20,7 +20,6 @@ public class PlayerCharacterRunnable implements Runnable {
 	}
 
 	public void run() {
-		// TODO Implement running
 		while (true) {
 
 			int terrain = PlayerStatus.getPlayer().getCurrentMap().getTerrain(player.getX(), player.getY());
@@ -39,12 +38,12 @@ public class PlayerCharacterRunnable implements Runnable {
 				}
 			}
 
-			if (InputUtility.getKeyPressed(KeyEvent.VK_LEFT)) {
+			if (InputUtility.getKeyTriggered(KeyEvent.VK_LEFT) || InputUtility.getKeyPressed(KeyEvent.VK_LEFT)) {
 				if (!Terrain.isLeftWall(terrain)) {
 					player.walk(PlayerCharacter.LEFT);
 				}
 			}
-			else if (InputUtility.getKeyPressed(KeyEvent.VK_RIGHT)) {
+			else if (InputUtility.getKeyTriggered(KeyEvent.VK_RIGHT) || InputUtility.getKeyPressed(KeyEvent.VK_RIGHT)) {
 				if (!Terrain.isRightWall(terrain)) {
 					player.walk(PlayerCharacter.RIGHT);
 				}
