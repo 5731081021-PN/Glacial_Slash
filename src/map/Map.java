@@ -6,8 +6,6 @@ package map;
 
 import java.io.File;
 
-import render.GameScreen;
-
 public class Map {
 	
 	private int width, height;
