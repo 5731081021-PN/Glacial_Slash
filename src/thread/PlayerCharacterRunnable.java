@@ -32,7 +32,6 @@ public class PlayerCharacterRunnable implements Runnable {
 				if (Terrain.isGround(terrain)) {
 					player.jump();
 				}
-				InputUtility.setKeyTriggered(KeyEvent.VK_SPACE, false);
 				if (InputUtility.getKeyPressed(KeyEvent.VK_SPACE)) {
 					player.highJump();
 				}
@@ -49,6 +48,7 @@ public class PlayerCharacterRunnable implements Runnable {
 				}
 			}
 			
+			//TODO slashing with the sabre
 			//TODO use skills
 
 			try {
