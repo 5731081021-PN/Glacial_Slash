@@ -2,6 +2,7 @@ package render;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
@@ -13,8 +14,8 @@ import javax.swing.KeyStroke;
 
 import entity.PlayerCharacter;
 import entity.PlayerStatus;
+import entity.map.Map;
 import input.InputUtility;
-import map.Map;
 
 public class GameScreen extends JComponent {
 
@@ -24,6 +25,7 @@ public class GameScreen extends JComponent {
 	private Map currentMap;
 	private PlayerStatus playerStatus;
 	private PlayerCharacter playerCharacter;
+	private Point camera;
 	
 	public static GameScreen getScreen() {
 		if (screen == null)

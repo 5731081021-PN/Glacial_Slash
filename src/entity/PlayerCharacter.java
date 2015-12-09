@@ -6,21 +6,24 @@ package entity;
 
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
-import map.Terrain;
+import entity.map.Terrain;
 import render.Renderable;
 
 public class PlayerCharacter implements Renderable {
 
 	public static final int LEFT = -1, RIGHT = 1;
-	private int x, y, xSpeed, ySpeed, facingDirection;
-	private int jumpCounter;
+	public static final float WALK_SPEED = 16f, JUMP_INITIAL_SPEED = -5f, TERMINAL_SPEED = 32f;
+	private int x, y, facingDirection;
+	private float xRemainder, yRemainder, xSpeed, ySpeed;
+	private float xTargetSpeed, yTargetSpeed, xAcceleration, yAcceleration;
+	private Rectangle boundaries;
 	
 	public PlayerCharacter() {
 		// TODO Auto-generated constructor stub
 		// implement x y
-		jumpCounter = 0;
 	}
 	
 	public synchronized int getX() {
@@ -31,46 +34,44 @@ public class PlayerCharacter implements Renderable {
 	}
 
 	// Motion
-	public synchronized void walk(int direction) {
-		if (this.facingDirection == direction) {
-			x += direction;
-			// TODO play walking animation
-		}
-		else {
-			this.facingDirection = -this.facingDirection;
-			// TODO play turn animation
-		}
-	}
 	
+	public synchronized void walk(int direction) {
+		xTargetSpeed = WALK_SPEED;
+	}
+
 	public synchronized void jump() {
 		// TODO implement jump
-		jumpCounter = 2;
+		ySpeed = JUMP_INITIAL_SPEED;
+		yTargetSpeed = TERMINAL_SPEED;
+	}
+
+	public synchronized void moveX() {
+		xSpeed = xTargetSpeed*xAcceleration + xSpeed*(1-xAcceleration);
+		int speedFloor = (int)Math.floor(xSpeed);
+		int newX = x;
+		float newXRemainder = xRemainder;
+		newX += speedFloor;
+		newXRemainder += xSpeed - speedFloor;
+		if (Float.compare(newXRemainder, 1f) > 0) {
+			newXRemainder -= 1f;
+			newX++;
+		}
+		// TODO Check collision
 	}
 	
-	public synchronized void highJump() {
-		jumpCounter = 4;
-	}
-	
-	public synchronized void fall() {
-		// TODO implement jumping and falling
-		// Gravitational fall
-		if (jumpCounter > 0){
-			y--;
-			jumpCounter--;
-			if (Terrain.isRigid(PlayerStatus.getPlayer().getCurrentMap().getTerrain(x, y))) {
-				y++;
-				jumpCounter = 0;
-			}
+	public synchronized void moveY() {
+		ySpeed = yTargetSpeed*yAcceleration + ySpeed*(1-xAcceleration);
+		int speedFloor = (int)Math.floor(ySpeed);
+		int newY = y;
+		float newYRemainder = yRemainder;
+		newY += speedFloor;
+		newYRemainder += ySpeed - speedFloor;
+		if (Float.compare(newYRemainder, 1f) > 0) {
+			newYRemainder -= 1f;
+			newY++;
 		}
-		else {
-			if (Terrain.isAir(PlayerStatus.getPlayer().getCurrentMap().getTerrain(x, y))) {
-				y++;
-				// set speed later
-			}
-			else {
-				// stop jump animation
-			}
-		}
+		// TODO Check collision
+		// TODO Change sprite to upward or downward accordingly
 	}
 
 	@Override

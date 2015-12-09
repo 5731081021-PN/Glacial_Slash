@@ -9,6 +9,7 @@ public class MainFrame extends JFrame {
 	public MainFrame() {
 		super("Glacial Slash");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.add(GameScreen.getScreen());
 		this.pack();
 	}
 
