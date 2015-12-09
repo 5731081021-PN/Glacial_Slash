@@ -8,8 +8,9 @@ package entity;
 import java.util.List;
 
 import entity.card.SkillCard;
-import map.Map;
+import entity.map.Map;
 
+import java.awt.Graphics2D;
 import java.util.ArrayList;
 
 import render.Renderable;
@@ -68,7 +69,7 @@ public class PlayerStatus implements Renderable {
 	}
 
 	@Override
-	public void render() {}
+	public void render(Graphics2D g) {}
 	
 	@Override
 	public boolean isVisible() {

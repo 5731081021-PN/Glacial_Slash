@@ -4,12 +4,15 @@
 
 package entity.card;
 
+import java.awt.Image;
+
 import render.Renderable;
 
 public abstract class SkillCard implements Renderable, Comparable<SkillCard> {
 
 	protected int cost;
-	protected int[] command;
+	protected int[] command; // maybe hardcode the command to player
+	protected Image cardImage;
 	
 	public abstract void activate();
 	

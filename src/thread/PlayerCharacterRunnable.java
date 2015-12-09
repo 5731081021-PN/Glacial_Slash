@@ -8,8 +8,8 @@ import java.awt.event.KeyEvent;
 
 import entity.PlayerCharacter;
 import entity.PlayerStatus;
+import entity.map.Terrain;
 import input.InputUtility;
-import map.Terrain;
 
 public class PlayerCharacterRunnable implements Runnable {
 

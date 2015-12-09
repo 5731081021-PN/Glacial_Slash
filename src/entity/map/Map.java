@@ -2,8 +2,10 @@
  * Represent each map of the game
  */
 
-package map;
+package entity.map;
 
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.io.File;
 
 import render.Renderable;
@@ -11,6 +13,7 @@ import render.Renderable;
 public class Map implements Renderable {
 	
 	private int width, height;
+	private Tile[][] tile;
 
 	public Map(File mapFile) {
 		
@@ -22,6 +25,14 @@ public class Map implements Renderable {
 
 	public int getHeight() {
 		return height;
+	}
+	
+	public int movableWidth(Rectangle collisionBox, int direction) {
+		int moveBoundary = (int)(collisionBox.getX() + (direction < 0 ? 0 : 1)*collisionBox.getWidth());
+		int upperBoundary = (int)collisionBox.getY(), lowerBoundary = (int)(collisionBox.getY() + collisionBox.getHeight());
+	}
+	
+	public int movableHeight(Rectangle collisionBox, int direction) {
 	}
 
 	public boolean isOnScreen(int x, int y) {
@@ -36,7 +47,7 @@ public class Map implements Renderable {
 	}
 
 	@Override
-	public void render() {
+	public void render(Graphics2D g) {
 		// TODO Auto-generated method stub
 		
 	}

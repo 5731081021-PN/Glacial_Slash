@@ -2,7 +2,7 @@
  * Holder class for terrain constants
  */
 
-package map;
+package entity.map;
 
 public final class Terrain {
 
