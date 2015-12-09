@@ -9,7 +9,7 @@ import render.Resource;
 public enum Tile implements Renderable {
 	
 	AIR (true, null),
-	GROUND (false, Resource.floorSprite);
+	GROUND (false, Resource.floorTile);
 	
 	private boolean passable;
 	private Image tileSprite;
