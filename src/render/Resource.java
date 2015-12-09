@@ -7,17 +7,23 @@ import javax.imageio.ImageIO;
 
 public class Resource {
 
-	private static BufferedImage playerIdleSprite ,floor;
-	
+	public static BufferedImage playerIdleSprite, floorSprite;
+	private static ClassLoader loader = Resource.class.getClassLoader();
 	
 	static {
+
 		try {
-			ClassLoader loader = Resource.class.getClassLoader();
 			playerIdleSprite = ImageIO.read(loader.getResource("res/player.png"));
-			floor = ImageIO.read(loader.getResource("res/floor.png"));
 		} catch (IOException e) {
 			playerIdleSprite = null;
-			floor = null;
 		}
+
+		try {
+			floorSprite = ImageIO.read(loader.getResource("res/floor.png"));
+		} catch (IOException e) {
+			floorSprite = null;
+		}
+
 	}
+
 }

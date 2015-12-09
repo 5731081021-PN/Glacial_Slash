@@ -10,7 +10,9 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 import entity.map.Terrain;
+import render.GameScreen;
 import render.Renderable;
+import render.Resource;
 
 public class PlayerCharacter implements Renderable {
 
@@ -20,10 +22,14 @@ public class PlayerCharacter implements Renderable {
 	private float xRemainder, yRemainder, xSpeed, ySpeed;
 	private float xTargetSpeed, yTargetSpeed, xAcceleration, yAcceleration;
 	private Rectangle boundaries;
+	private Image sprite = Resource.playerIdleSprite;
 	
 	public PlayerCharacter() {
 		// TODO Auto-generated constructor stub
 		// implement x y
+		x = 640;
+		y = 360;
+		facingDirection = 1;
 	}
 	
 	public synchronized int getX() {
@@ -77,13 +83,13 @@ public class PlayerCharacter implements Renderable {
 	@Override
 	public void render(Graphics2D g) {
 		// TODO Auto-generated method stub
-		
+		g.drawImage(sprite, x - GameScreen.getScreen().getCameraX(), y - GameScreen.getScreen().getCameraY(), null);
 	}
 
 	@Override
 	public boolean isVisible() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override

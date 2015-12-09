@@ -4,11 +4,12 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 
 import render.Renderable;
+import render.Resource;
 
 public enum Tile implements Renderable {
 	
 	AIR (true, null),
-	GROUND (false, );
+	GROUND (false, Resource.floorSprite);
 	
 	private boolean passable;
 	private Image tileSprite;

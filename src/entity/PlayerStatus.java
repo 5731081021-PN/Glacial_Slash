@@ -32,6 +32,8 @@ public class PlayerStatus implements Renderable {
 	}
 	
 	public static synchronized PlayerStatus getPlayer() {
+		if (player == null)
+			player = newPlayer();
 		return player;
 	}
 

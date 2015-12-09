@@ -7,16 +7,59 @@ package entity.map;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
+import javax.swing.JOptionPane;
+
+import render.GameScreen;
 import render.Renderable;
 
 public class Map implements Renderable {
 	
 	private int width, height;
-	private Tile[][] tile;
+	private Tile[][] tileMap;
+	private static int tileWidth = 32, tileHeight = 32;
 
 	public Map(File mapFile) {
+		Scanner fileScanner;
+
+		try {
+			fileScanner = new Scanner(mapFile);
+		} catch (FileNotFoundException e) {
+			JOptionPane.showMessageDialog(null, "File not found", "Error", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
 		
+		// TODO add some kind of file encoding
+		
+		String buffer = "";
+		height = 0;
+		while (fileScanner.hasNextLine()) {
+			buffer = fileScanner.nextLine().trim();
+			height++;
+		}
+		width = buffer.length();
+		fileScanner.close();
+		
+		tileMap = new Tile[width][height];
+	
+		try {
+			fileScanner = new Scanner(mapFile);
+		} catch (FileNotFoundException e) {
+			JOptionPane.showMessageDialog(null, "File not found", "Error", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+	
+		for (int tileX = 0; tileX < width; tileX++) {
+			buffer = fileScanner.nextLine().trim();
+			for (int tileY = 0; tileY < width; tileY++) {
+				switch (buffer.charAt(tileY)) {
+				case '#': tileMap[tileX][tileY] = Tile.GROUND; break;
+				default : tileMap[tileX][tileY] = Tile.AIR;
+				}
+			}
+		}
 	}
 	
 	public int getWidth() {
@@ -26,7 +69,7 @@ public class Map implements Renderable {
 	public int getHeight() {
 		return height;
 	}
-	
+/* TODO implement collision checking	
 	public int movableWidth(Rectangle collisionBox, int direction) {
 		int moveBoundary = (int)(collisionBox.getX() + (direction < 0 ? 0 : 1)*collisionBox.getWidth());
 		int upperBoundary = (int)collisionBox.getY(), lowerBoundary = (int)(collisionBox.getY() + collisionBox.getHeight());
@@ -34,7 +77,7 @@ public class Map implements Renderable {
 	
 	public int movableHeight(Rectangle collisionBox, int direction) {
 	}
-
+*/
 	public boolean isOnScreen(int x, int y) {
 		return (x >= 0 && x <= this.getWidth()) && (y >= 0 && y <= this.getHeight());
 	}
@@ -49,7 +92,22 @@ public class Map implements Renderable {
 	@Override
 	public void render(Graphics2D g) {
 		// TODO Auto-generated method stub
+		int cameraX = GameScreen.getScreen().getCameraX();
+		int cameraY = GameScreen.getScreen().getCameraY();
+		int firstTileX = cameraX/tileWidth;
+		int firstTileY = cameraY/tileHeight;
+		int lastTileX = firstTileX + GameScreen.getScreen().getWidth()/tileWidth;
+		int lastTileY = firstTileY + GameScreen.getScreen().getHeight()/tileHeight;
 		
+		try {
+			for (int tileX = firstTileX; tileX <= lastTileX; tileX++) {
+				try {
+					for (int tileY = firstTileY; tileY <= lastTileY; tileY++) {
+						g.drawImage(tileMap[tileX][tileY].getTileSprite(), tileX*tileWidth-cameraX, tileY*tileHeight-cameraY, null);
+					}
+				} catch (ArrayIndexOutOfBoundsException e) {}
+			}
+		} catch (ArrayIndexOutOfBoundsException e) {}
 	}
 
 	@Override
