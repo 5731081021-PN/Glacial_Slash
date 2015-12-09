@@ -4,6 +4,8 @@
 
 package entity;
 
+import java.awt.Graphics2D;
+
 import entity.card.SkillCard;
 import render.Renderable;
 
@@ -27,7 +29,7 @@ public class Checkpoint implements Renderable {
 	}
 	
 	@Override
-	public void render() {
+	public void render(Graphics2D g) {
 		// TODO Auto-generated method stub
 		
 	}

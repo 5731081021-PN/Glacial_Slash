@@ -4,6 +4,7 @@
 
 package entity;
 
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 
@@ -13,7 +14,7 @@ import render.Renderable;
 public class PlayerCharacter implements Renderable {
 
 	public static final int LEFT = -1, RIGHT = 1;
-	private int x, y, direction;
+	private int x, y, xSpeed, ySpeed, facingDirection;
 	private int jumpCounter;
 	
 	public PlayerCharacter() {
@@ -25,19 +26,18 @@ public class PlayerCharacter implements Renderable {
 	public synchronized int getX() {
 		return x;
 	}
-	
 	public synchronized int getY() {
 		return y;
 	}
 
 	// Motion
 	public synchronized void walk(int direction) {
-		if (this.direction == direction) {
+		if (this.facingDirection == direction) {
 			x += direction;
 			// TODO play walking animation
 		}
 		else {
-			this.direction = -this.direction;
+			this.facingDirection = -this.facingDirection;
 			// TODO play turn animation
 		}
 	}
@@ -74,7 +74,7 @@ public class PlayerCharacter implements Renderable {
 	}
 
 	@Override
-	public void render() {
+	public void render(Graphics2D g) {
 		// TODO Auto-generated method stub
 		
 	}
