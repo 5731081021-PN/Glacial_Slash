@@ -50,11 +50,11 @@ public class Map implements Renderable {
 			JOptionPane.showMessageDialog(null, "File not found", "Error", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
-	
-		for (int tileX = 0; tileX < width; tileX++) {
+		
+		for (int tileY = 0; tileY < height; tileY++) {
 			buffer = fileScanner.nextLine().trim();
-			for (int tileY = 0; tileY < width; tileY++) {
-				switch (buffer.charAt(tileY)) {
+			for (int tileX = 0; tileX < width; tileX++) {
+				switch (buffer.charAt(tileX)) {
 				case '#': tileMap[tileX][tileY] = Tile.GROUND; break;
 				default : tileMap[tileX][tileY] = Tile.AIR;
 				}

@@ -4,7 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 
 import render.Renderable;
-import render.Resource;
+import res.Resource;
 
 public enum Tile implements Renderable {
 	

@@ -12,7 +12,7 @@ import java.awt.image.BufferedImage;
 import entity.map.Terrain;
 import render.GameScreen;
 import render.Renderable;
-import render.Resource;
+import res.Resource;
 
 public class PlayerCharacter implements Renderable {
 

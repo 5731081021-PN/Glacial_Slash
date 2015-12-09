@@ -65,7 +65,7 @@ public class GameScreen extends JComponent {
 		playerCharacter.render(g2d);
 		
 		// draw map
-//		currentMap.render(g2d);
+		currentMap.render(g2d);
 		
 		// draw things to the actual screen
 		g.drawImage(screenImage, 0, 0, null);

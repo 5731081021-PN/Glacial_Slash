@@ -14,6 +14,7 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 
 import render.Renderable;
+import res.Resource;
 
 public class PlayerStatus implements Renderable {
 	
@@ -41,6 +42,7 @@ public class PlayerStatus implements Renderable {
 		maxMana = 2;
 		currentMana = 2;
 		hand = new ArrayList<SkillCard>();
+		currentMap = new Map(Resource.emptyMap);
 	}
 	
 	public int getCurrentMana() {
