@@ -20,6 +20,7 @@ import entity.PlayerCharacter;
 import entity.PlayerStatus;
 import entity.map.GameMap;
 import input.InputUtility;
+import thread.PlayerCharacterRunnable;
 
 public class GameScreen extends JComponent {
 
@@ -30,7 +31,6 @@ public class GameScreen extends JComponent {
 	private PlayerStatus playerStatus;
 	private PlayerCharacter playerCharacter;
 	private Point camera;
-	private Image screenImage;
 	
 	public static GameScreen getScreen() {
 		if (screen == null)
@@ -44,31 +44,33 @@ public class GameScreen extends JComponent {
 		ActionMap actionMap = this.getActionMap();
 		// Using key binding
 		
+		this.setDoubleBuffered(true);
+		
 		playerStatus = PlayerStatus.getPlayer();
 		currentMap = playerStatus.getCurrentMap();
 		playerCharacter = new PlayerCharacter();
 		camera = new Point(0, 0);
+		
+		// For testing purpose
+		new Thread(new PlayerCharacterRunnable(playerCharacter)).start();
 	}
 	
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		
-		screenImage = new BufferedImage(this.getWidth(), this.getHeight(), BufferedImage.OPAQUE);
-		Graphics2D g2d = ((BufferedImage)screenImage).createGraphics();
+		Graphics2D g2d = (Graphics2D)g;
 
 		// placeholder background
-		g2d.setBackground(Color.WHITE);
+		g2d.setBackground(Color.BLACK);
 		g2d.clearRect(0, 0, this.getWidth(), this.getHeight());
+	
+		// draw map
+		currentMap.render(g2d);
 
 		// draw player
 		playerCharacter.render(g2d);
-		
-		// draw map
-		currentMap.render(g2d);
-		
-		// draw things to the actual screen
-		g.drawImage(screenImage, 0, 0, null);
+	
 	}
 	
 	public int getCameraX() {
