@@ -63,7 +63,7 @@ public class GameMap implements Renderable {
 			return 0;
 		
 		int frontBoundary = (int)(collisionBox.getX() + (direction < 0 ? 0 : 1)*collisionBox.getWidth());
-		int upperBoundary = (int)collisionBox.getY(), lowerBoundary = (int)(upperBoundary + collisionBox.getHeight());
+		int upperBoundary = (int)collisionBox.getY() + 1, lowerBoundary = (int)(collisionBox.getY() + collisionBox.getHeight() - 1);
 		int upperBoundaryTile = upperBoundary/tileHeight, lowerBoundaryTile = lowerBoundary/tileHeight;
 		
 		int startTile = frontBoundary/tileWidth;
@@ -93,7 +93,7 @@ public class GameMap implements Renderable {
 			return 0;
 		
 		int frontBoundary = (int)(collisionBox.getY() + (direction < 0 ? 0 : 1)*collisionBox.getHeight());
-		int leftBoundary = (int)collisionBox.getX(), rightBoundary = (int)(leftBoundary + collisionBox.getWidth());
+		int leftBoundary = (int)collisionBox.getX() + 1, rightBoundary = (int)(collisionBox.getX() + collisionBox.getWidth() - 1);
 		int leftBoundaryTile = leftBoundary/tileWidth, rightBoundaryTile = rightBoundary/tileWidth;
 		
 		int startTile = frontBoundary/tileHeight;

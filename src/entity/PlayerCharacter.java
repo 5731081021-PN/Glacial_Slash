@@ -50,7 +50,7 @@ public class PlayerCharacter implements Renderable {
 	// Motion
 	
 	public synchronized void walk(int direction) {
-		xTargetSpeed = WALK_SPEED;
+		xTargetSpeed = direction*WALK_SPEED;
 	}
 
 	public synchronized void jump() {

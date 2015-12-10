@@ -28,10 +28,16 @@ public class PlayerCharacterRunnable implements Runnable {
 
 			//TODO player controls
 			synchronized (GameScreen.getScreen()) {
+				
+				if (InputUtility.getKeyPressed(CommandKey.LEFT))
+					player.walk(PlayerCharacter.LEFT);
+				else if (InputUtility.getKeyPressed(CommandKey.RIGHT))
+					player.walk(PlayerCharacter.RIGHT);
+				else
+					player.walk(0);
 
-				if (InputUtility.getKeyTriggered(CommandKey.JUMP)) {
+				if (InputUtility.getKeyTriggered(CommandKey.JUMP))
 					player.jump();
-				}
 			//TODO slashing with the sabre
 			//TODO use skills
 			}
