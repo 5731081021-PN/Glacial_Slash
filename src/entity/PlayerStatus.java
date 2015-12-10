@@ -8,7 +8,7 @@ package entity;
 import java.util.List;
 
 import entity.card.SkillCard;
-import entity.map.Map;
+import entity.map.GameMap;
 
 import java.awt.Graphics2D;
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ public class PlayerStatus implements Renderable {
 	private static PlayerStatus player;
 	private int currentMana, maxMana;
 	private List<SkillCard> hand;
-	private Map currentMap;
+	private GameMap currentMap;
 	
 	public static synchronized PlayerStatus newPlayer() {
 		player = new PlayerStatus();
@@ -42,7 +42,7 @@ public class PlayerStatus implements Renderable {
 		maxMana = 2;
 		currentMana = 2;
 		hand = new ArrayList<SkillCard>();
-		currentMap = new Map(Resource.emptyMap);
+		currentMap = new GameMap(Resource.emptyMap);
 	}
 	
 	public int getCurrentMana() {
@@ -68,7 +68,7 @@ public class PlayerStatus implements Renderable {
 		}
 	}
 	
-	public Map getCurrentMap() {
+	public GameMap getCurrentMap() {
 		return currentMap;
 	}
 

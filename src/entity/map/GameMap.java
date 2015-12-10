@@ -15,13 +15,13 @@ import javax.swing.JOptionPane;
 import render.GameScreen;
 import render.Renderable;
 
-public class Map implements Renderable {
+public class GameMap implements Renderable {
 	
 	private int width, height;
 	private Tile[][] tileMap;
 	private static int tileWidth = 32, tileHeight = 32;
 
-	public Map(File mapFile) {
+	public GameMap(File mapFile) {
 		Scanner fileScanner;
 
 		try {
@@ -91,7 +91,6 @@ public class Map implements Renderable {
 
 	@Override
 	public void render(Graphics2D g) {
-		// TODO Auto-generated method stub
 		int cameraX = GameScreen.getScreen().getCameraX();
 		int cameraY = GameScreen.getScreen().getCameraY();
 		int firstTileX = cameraX/tileWidth;
@@ -112,14 +111,12 @@ public class Map implements Renderable {
 
 	@Override
 	public boolean isVisible() {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public int getZ() {
-		// TODO Auto-generated method stub
-		return 0;
+		return Integer.MAX_VALUE;
 	}
 
 }

@@ -18,7 +18,7 @@ import javax.swing.KeyStroke;
 
 import entity.PlayerCharacter;
 import entity.PlayerStatus;
-import entity.map.Map;
+import entity.map.GameMap;
 import input.InputUtility;
 
 public class GameScreen extends JComponent {
@@ -26,7 +26,7 @@ public class GameScreen extends JComponent {
 	private static final long serialVersionUID = 8861317653703713044L;
 	
 	private static GameScreen screen;
-	private Map currentMap;
+	private GameMap currentMap;
 	private PlayerStatus playerStatus;
 	private PlayerCharacter playerCharacter;
 	private Point camera;
