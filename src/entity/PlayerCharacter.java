@@ -15,7 +15,7 @@ import res.Resource;
 
 public class PlayerCharacter implements Renderable {
 
-	public static final int LEFT = -1, RIGHT = 1;
+	public static final int LEFT = -1, RIGHT = 1, IDLE = 0;
 	public static final float WALK_SPEED = 8f, JUMP_INITIAL_SPEED = -30f, TERMINAL_SPEED = 16f;
 	private int x, y, facingDirection;
 	private float xRemainder, yRemainder, xSpeed, ySpeed;
@@ -28,7 +28,7 @@ public class PlayerCharacter implements Renderable {
 		// implement x y
 		x = 640;
 		xRemainder = 0f;
-		y = 360;
+		y = 100;
 		yRemainder = 0f;
 		xSpeed = 0f;
 		ySpeed = 0f;

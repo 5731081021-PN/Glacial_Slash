@@ -23,42 +23,44 @@ public class PlayerCharacterRunnable implements Runnable {
 	}
 
 	public void run() {
-		new Timer(20, new ActionListener() {
+		while (true) {
+			// TODO Auto-generated method stub
+			try {
+				Thread.sleep(17);
+			} catch (InterruptedException e) {}
 			
-	@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+			playerInputUpdate();
 
+			GameScreen.getScreen().centerCameraAt(player.getCenterX(), player.getCenterY());
+			GameScreen.getScreen().repaint();
+		}
+
+	}
+	
+	private void playerInputUpdate() {
+		
 			player.updateBoundaries();
 			player.fall();
-			
-			synchronized (GameScreen.getScreen()) {
-				
-				if (InputUtility.getKeyPressed(CommandKey.LEFT))
-					player.walk(PlayerCharacter.LEFT);
-				else if (InputUtility.getKeyPressed(CommandKey.RIGHT))
-					player.walk(PlayerCharacter.RIGHT);
-				else
-					player.walk(0);
 
-				if (InputUtility.getKeyTriggered(CommandKey.JUMP)) {
-					if (player.isOnGround())
-						player.jump();
-				}
+			if (InputUtility.getKeyPressed(CommandKey.LEFT))
+				player.walk(PlayerCharacter.LEFT);
+			else if (InputUtility.getKeyPressed(CommandKey.RIGHT))
+				player.walk(PlayerCharacter.RIGHT);
+			else
+				player.walk(PlayerCharacter.IDLE);
+
+			if (InputUtility.getKeyTriggered(CommandKey.JUMP)) {
+				if (player.isOnGround())
+					player.jump();
+			}
 			//TODO slashing with the sabre
 			//TODO use skills
-			}
-			
+
 			player.moveX();
 			player.moveY();
 
 			InputUtility.clearKeyTriggered();
-			
-			GameScreen.getScreen().centerCameraAt(player.getCenterX(), player.getCenterY());
-			GameScreen.getScreen().repaint();
 
-			}
-		}).start();
 	}
 
 }
