@@ -4,10 +4,12 @@
 
 package thread;
 
-import java.awt.event.KeyEvent;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.Timer;
 
 import entity.PlayerCharacter;
-import entity.PlayerStatus;
 import input.InputUtility;
 import input.InputUtility.CommandKey;
 import render.GameScreen;
@@ -21,12 +23,16 @@ public class PlayerCharacterRunnable implements Runnable {
 	}
 
 	public void run() {
-		while (true) {
+//		while (true) {
+		new Timer(20, new ActionListener() {
+			
+	@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
 
 			player.updateBoundaries();
 			player.fall();
-
-			//TODO player controls
+			
 			synchronized (GameScreen.getScreen()) {
 				
 				if (InputUtility.getKeyPressed(CommandKey.LEFT))
@@ -49,13 +55,12 @@ public class PlayerCharacterRunnable implements Runnable {
 
 			InputUtility.clearKeyTriggered();
 			
+			GameScreen.getScreen().centerCameraAt(player.getCenterX(), player.getCenterY());
 			GameScreen.getScreen().repaint();
-	
-			try {
-				Thread.sleep(20);
-			} catch (InterruptedException e) {}
 
-		}
+			}
+		}).start();
+//		}
 	}
 
 }

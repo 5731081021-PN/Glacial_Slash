@@ -4,7 +4,11 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Point;
+import java.awt.RenderingHints;
+import java.awt.image.BufferedImage;
+
 import javax.swing.ActionMap;
 import javax.swing.InputMap;
 import javax.swing.JComponent;
@@ -27,6 +31,7 @@ public class GameScreen extends JComponent {
 	private PlayerStatus playerStatus;
 	private PlayerCharacter playerCharacter;
 	private Point camera;
+	private Image buffer;
 	
 	public static GameScreen getScreen() {
 		if (screen == null)
@@ -43,6 +48,7 @@ public class GameScreen extends JComponent {
 		currentMap = playerStatus.getCurrentMap();
 		playerCharacter = new PlayerCharacter();
 		camera = new Point(0, 0);
+		buffer = new BufferedImage(1280, 720, BufferedImage.OPAQUE);
 		
 		this.setKeyBinding();
 		// For testing purpose
@@ -53,7 +59,7 @@ public class GameScreen extends JComponent {
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		
-		Graphics2D g2d = (Graphics2D)g;
+		Graphics2D g2d = ((BufferedImage)buffer).createGraphics();
 
 		// placeholder background
 		g2d.setBackground(Color.BLACK);
@@ -65,6 +71,8 @@ public class GameScreen extends JComponent {
 		// draw player
 		playerCharacter.render(g2d);
 	
+		// draw things on actual screen
+		g.drawImage(buffer, 0, 0, null);
 	}
 	
 	public int getCameraX() {
@@ -73,6 +81,15 @@ public class GameScreen extends JComponent {
 	
 	public int getCameraY() {
 		return camera.y;
+	}
+	
+	public void centerCameraAt(int x, int y) {
+		camera.x = x - 640;
+		if (camera.x < 0) camera.x = 0;
+		if (camera.x + 1280 > currentMap.getScreenWidth()) camera.x = currentMap.getScreenWidth() - 1280;
+		camera.y = y - 640;
+		if (camera.y < 0) camera.y = 0;
+		if (camera.y + 720 > currentMap.getScreenHeight()) camera.y = currentMap.getScreenHeight() - 720;
 	}
 
 	private void setKeyBinding() {
