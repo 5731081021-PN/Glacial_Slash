@@ -52,21 +52,24 @@ public class PlayerCharacter implements Renderable {
 	public synchronized void walk(int direction) {
 		xTargetSpeed = direction*WALK_SPEED;
 	}
-
 	public synchronized void jump() {
 		// TODO implement jump
 		ySpeed = JUMP_INITIAL_SPEED;
 	}
 	
-	public synchronized void fall() {
-		// TODO implement fall
-		if (Math.abs(PlayerStatus.getPlayer().getCurrentMap().movableHeight(boundaries, 1)) > 0)
-			yTargetSpeed = TERMINAL_SPEED;
-		else
-			yTargetSpeed = 0f;
+	public boolean isOnGround() {
+		return PlayerStatus.getPlayer().getCurrentMap().movableHeight(boundaries, 1) == 0;
 	}
 	
-	public synchronized void updateBoundaries() {
+	public synchronized void fall() {
+		// TODO implement fall
+		if (this.isOnGround())
+			yTargetSpeed = 0f;
+		else
+			yTargetSpeed = TERMINAL_SPEED;
+	}
+	
+	public void updateBoundaries() {
 		boundaries.setLocation(x, y);
 	}
 
