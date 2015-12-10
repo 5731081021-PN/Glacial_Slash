@@ -20,6 +20,9 @@ import entity.PlayerCharacter;
 import entity.PlayerStatus;
 import entity.map.GameMap;
 import input.InputUtility;
+import input.InputUtility.CommandKey;
+import input.InputUtility.KeyPressedAction;
+import input.InputUtility.KeyReleasedAction;
 import thread.PlayerCharacterRunnable;
 
 public class GameScreen extends JComponent {
@@ -40,9 +43,6 @@ public class GameScreen extends JComponent {
 	
 	private GameScreen() {
 		this.setPreferredSize(new Dimension(1280, 720));
-		InputMap inputMap = this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
-		ActionMap actionMap = this.getActionMap();
-		// Using key binding
 		
 		this.setDoubleBuffered(true);
 		
@@ -51,6 +51,7 @@ public class GameScreen extends JComponent {
 		playerCharacter = new PlayerCharacter();
 		camera = new Point(0, 0);
 		
+		this.setKeyBinding();
 		// For testing purpose
 		new Thread(new PlayerCharacterRunnable(playerCharacter)).start();
 	}
@@ -79,6 +80,18 @@ public class GameScreen extends JComponent {
 	
 	public int getCameraY() {
 		return camera.y;
+	}
+
+	private void setKeyBinding() {
+		InputMap inputMap = this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+		ActionMap actionMap = this.getActionMap();
+			
+		for (CommandKey key : CommandKey.values()) {
+			inputMap.put(KeyStroke.getKeyStroke(key.getKey(), 0, false), "pressed " + key.getName());
+			actionMap.put("pressed " + key.getName(), new KeyPressedAction(key));
+			inputMap.put(KeyStroke.getKeyStroke(key.getKey(), 0, true), "released " + key.getName());
+			actionMap.put("released " + key.getName(), new KeyReleasedAction(key));
+		}
 	}
 
 }

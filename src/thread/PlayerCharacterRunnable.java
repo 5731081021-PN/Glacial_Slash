@@ -8,8 +8,8 @@ import java.awt.event.KeyEvent;
 
 import entity.PlayerCharacter;
 import entity.PlayerStatus;
-import entity.map.Terrain;
 import input.InputUtility;
+import input.InputUtility.CommandKey;
 import render.GameScreen;
 
 public class PlayerCharacterRunnable implements Runnable {
@@ -23,22 +23,36 @@ public class PlayerCharacterRunnable implements Runnable {
 	public void run() {
 		while (true) {
 
-			try {
-				Thread.sleep(20);
-			} catch (InterruptedException e) {}
-
-//			int terrain = PlayerStatus.getPlayer().getCurrentMap().getTerrain(player.getX(), player.getY());
-			
 			player.updateBoundaries();
+			player.fall();
 
 			//TODO player controls
+			synchronized (GameScreen.getScreen()) {
+				
+				if (InputUtility.getKeyPressed(CommandKey.LEFT))
+					player.walk(PlayerCharacter.LEFT);
+				else if (InputUtility.getKeyPressed(CommandKey.RIGHT))
+					player.walk(PlayerCharacter.RIGHT);
+				else
+					player.walk(0);
+
+				if (InputUtility.getKeyTriggered(CommandKey.JUMP))
+					player.jump();
 			//TODO slashing with the sabre
 			//TODO use skills
+			}
 			
 			player.moveX();
 			player.moveY();
 
+			InputUtility.clearKeyTriggered();
+			
 			GameScreen.getScreen().repaint();
+	
+			try {
+				Thread.sleep(20);
+			} catch (InterruptedException e) {}
+
 		}
 	}
 

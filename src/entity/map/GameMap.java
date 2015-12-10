@@ -31,29 +31,15 @@ public class GameMap implements Renderable {
 			return;
 		}
 		
-		// TODO change map file format
 		// TODO add some kind of file encoding
 		
-		String buffer = "";
-		height = 0;
-		while (fileScanner.hasNextLine()) {
-			buffer = fileScanner.nextLine().trim();
-			height++;
-		}
-		width = buffer.length();
-		fileScanner.close();
+		width = Integer.parseInt(fileScanner.nextLine());
+		height = Integer.parseInt(fileScanner.nextLine());
 		
 		tileMap = new Tile[width][height];
-	
-		try {
-			fileScanner = new Scanner(mapFile);
-		} catch (FileNotFoundException e) {
-			JOptionPane.showMessageDialog(null, "File not found", "Error", JOptionPane.ERROR_MESSAGE);
-			return;
-		}
-		
+			
 		for (int tileY = 0; tileY < height; tileY++) {
-			buffer = fileScanner.nextLine().trim();
+			String buffer = fileScanner.nextLine().trim();
 			for (int tileX = 0; tileX < width; tileX++) {
 				switch (buffer.charAt(tileX)) {
 				case '#': tileMap[tileX][tileY] = Tile.GROUND; break;
@@ -70,19 +56,44 @@ public class GameMap implements Renderable {
 	public int getHeight() {
 		return height;
 	}
-/* TODO implement collision checking	
+
 	public int movableWidth(Rectangle collisionBox, int direction) {
+		direction = Integer.signum(direction);
+		if (direction == 0)
+			return 0;
+		
 		int frontBoundary = (int)(collisionBox.getX() + (direction < 0 ? 0 : 1)*collisionBox.getWidth());
-		int upperBoundary = (int)collisionBox.getY(), lowerBoundary = (int)(upperBoundary + collisionBox.getHeight());
+		int upperBoundary = (int)collisionBox.getY() + 1, lowerBoundary = (int)(collisionBox.getY() + collisionBox.getHeight() - 1);
+		int upperBoundaryTile = upperBoundary/tileHeight, lowerBoundaryTile = lowerBoundary/tileHeight;
+		
+		int startTile = frontBoundary/tileWidth;
+		
+		int maxMovableWidth = direction*Integer.MAX_VALUE;
+
+		for (int tileY = upperBoundaryTile; tileY <= lowerBoundaryTile; tileY++) {
+			int tileX = startTile;
+			try {
+				while (tileMap[tileX][tileY].isPassable()) {
+					tileX += direction;
+				}
+			} catch (ArrayIndexOutOfBoundsException e) {
+				continue;
+			}
+			tileX += (direction < 0)? 1 : 0;
+			if (Math.abs(tileX*tileWidth - frontBoundary) < Math.abs(maxMovableWidth)) {
+				maxMovableWidth = tileX*tileWidth - frontBoundary;
+			}
+		}
+		return maxMovableWidth;
 	}
-*/	
+
 	public int movableHeight(Rectangle collisionBox, int direction) {
 		direction = Integer.signum(direction);
 		if (direction == 0)
 			return 0;
 		
 		int frontBoundary = (int)(collisionBox.getY() + (direction < 0 ? 0 : 1)*collisionBox.getHeight());
-		int leftBoundary = (int)collisionBox.getX(), rightBoundary = (int)(leftBoundary + collisionBox.getWidth());
+		int leftBoundary = (int)collisionBox.getX() + 1, rightBoundary = (int)(collisionBox.getX() + collisionBox.getWidth() - 1);
 		int leftBoundaryTile = leftBoundary/tileWidth, rightBoundaryTile = rightBoundary/tileWidth;
 		
 		int startTile = frontBoundary/tileHeight;
@@ -93,7 +104,7 @@ public class GameMap implements Renderable {
 			int tileY = startTile;
 			try {
 				while (tileMap[tileX][tileY].isPassable()) {
-					tileY++;
+					tileY += direction;
 				}
 			} catch (ArrayIndexOutOfBoundsException e) {
 				continue;
@@ -104,17 +115,6 @@ public class GameMap implements Renderable {
 			}
 		}
 		return maxMovableHeight;
-	}
-
-	public boolean isOnScreen(int x, int y) {
-		return (x >= 0 && x <= this.getWidth()) && (y >= 0 && y <= this.getHeight());
-	}
-
-	public int getTerrain(int x, int y) {
-		//TODO terrain
-		if (this.isOnScreen(x, y))
-			return 0;
-		return 0;
 	}
 
 	@Override
