@@ -117,17 +117,6 @@ public class GameMap implements Renderable {
 		return maxMovableHeight;
 	}
 
-	public boolean isOnScreen(int x, int y) {
-		return (x >= 0 && x <= this.getWidth()) && (y >= 0 && y <= this.getHeight());
-	}
-
-	public int getTerrain(int x, int y) {
-		//TODO terrain
-		if (this.isOnScreen(x, y))
-			return 0;
-		return 0;
-	}
-
 	@Override
 	public void render(Graphics2D g) {
 		int cameraX = GameScreen.getScreen().getCameraX();
