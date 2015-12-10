@@ -79,6 +79,7 @@ public class InputUtility {
 
 	public static class KeyPressedAction extends AbstractAction {
 
+		private static final long serialVersionUID = -993959668133133155L;
 		private CommandKey key;
 		
 		public KeyPressedAction(CommandKey key) {
@@ -99,6 +100,7 @@ public class InputUtility {
 
 	public static class KeyReleasedAction extends AbstractAction {
 
+		private static final long serialVersionUID = -8400782075699676312L;
 		private CommandKey key;
 		
 		public KeyReleasedAction(CommandKey key) {

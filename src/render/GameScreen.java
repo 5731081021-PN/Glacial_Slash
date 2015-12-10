@@ -6,7 +6,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
-import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 
 import javax.swing.ActionMap;
@@ -57,12 +56,11 @@ public class GameScreen extends JComponent {
 	
 	@Override
 	protected void paintComponent(Graphics g) {
-		super.paintComponent(g);
 		
 		Graphics2D g2d = ((BufferedImage)buffer).createGraphics();
 
 		// placeholder background
-		g2d.setBackground(Color.BLACK);
+		g2d.setBackground(Color.WHITE);
 		g2d.clearRect(0, 0, this.getWidth(), this.getHeight());
 	
 		// draw map

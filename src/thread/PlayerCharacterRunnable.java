@@ -23,7 +23,6 @@ public class PlayerCharacterRunnable implements Runnable {
 	}
 
 	public void run() {
-//		while (true) {
 		new Timer(20, new ActionListener() {
 			
 	@Override
@@ -60,7 +59,6 @@ public class PlayerCharacterRunnable implements Runnable {
 
 			}
 		}).start();
-//		}
 	}
 
 }
