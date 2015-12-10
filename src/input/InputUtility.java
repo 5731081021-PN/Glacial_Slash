@@ -4,63 +4,104 @@
 
 package input;
 
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.util.EnumMap;
-import java.util.Map;
+import java.util.Collections;
+import java.util.EnumSet;
+import java.util.Set;
+
+import javax.swing.AbstractAction;
 
 public class InputUtility {
 
 //	private static boolean[] keyPressed = new boolean[256], keyTriggered = new boolean[256];
-	private static Map<CommandKey, Boolean> keyPressed = new EnumMap<CommandKey, Boolean>(CommandKey.class);
-	private static Map<CommandKey, Boolean> keyTriggered = new EnumMap<CommandKey, Boolean>(CommandKey.class);
+	private static Set<CommandKey> keyPressed = Collections.synchronizedSet(EnumSet.noneOf(CommandKey.class));
+	private static Set<CommandKey> keyTriggered = Collections.synchronizedSet(EnumSet.noneOf(CommandKey.class));
 	
 	public static boolean getKeyPressed(CommandKey key) {
-		try {
-			return keyPressed.get(key);
-		} catch (NullPointerException e) {
-			keyPressed.put(key, false);
-			return false;
-		}
+		return keyPressed.contains(key);
 	}
 		
 	public static boolean getKeyTriggered(CommandKey key) {
-		try {
-			return keyTriggered.get(key);
-		} catch (NullPointerException e) {
-			keyTriggered.put(key, false);
-			return false;
-		}
+		return keyTriggered.contains(key);
 	}
 
 	public static void setKeyPressed(CommandKey key, boolean pressed) {
-		keyPressed.put(key, pressed);
+		if (pressed)
+			keyPressed.add(key);
+		else
+			keyPressed.remove(key);
 	}
 	
 	public static void setKeyTriggered(CommandKey key, boolean triggered) {
-		keyTriggered.put(key, triggered);
+		if (triggered)
+			keyTriggered.add(key);
+		else
+			keyTriggered.remove(key);
 	}
 
 	public static enum CommandKey {
 		// Direction keys
-		UP (KeyEvent.VK_UP),
-		LEFT (KeyEvent.VK_LEFT),
-		DOWN (KeyEvent.VK_DOWN),
-		RIGHT (KeyEvent.VK_RIGHT),
+		UP (KeyEvent.VK_UP, "UP"),
+		LEFT (KeyEvent.VK_LEFT, "LEFT"),
+		DOWN (KeyEvent.VK_DOWN, "DOWN"),
+		RIGHT (KeyEvent.VK_RIGHT, "RIGHT"),
 
 		// Action keys
-		SLASH (KeyEvent.VK_F),
-		HAND (KeyEvent.VK_D),
-		JUMP (KeyEvent.VK_SPACE);
+		SLASH (KeyEvent.VK_F, "SLASH"),
+		HAND (KeyEvent.VK_S, "HAND"),
+		DASH (KeyEvent.VK_D, "DASH"),
+		JUMP (KeyEvent.VK_SPACE, "JUMP");
 		
 		private int key;
+		private String name;
 		
-		private CommandKey(int key) {
+		private CommandKey(int key, String name) {
 			this.key = key;
+			this.name = name;
 		}
 		
 		public int getKey() {
 			return key;
 		}
+		
+		public String getName() {
+			return name;
+		}
+
+	}
+
+	public static class KeyPressedAction extends AbstractAction {
+
+		private CommandKey key;
+		
+		public KeyPressedAction(CommandKey key) {
+			this.key = key;
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (!InputUtility.getKeyPressed(key)) {
+				InputUtility.setKeyTriggered(key, true);
+				InputUtility.setKeyPressed(key, true);
+			}
+		}
+		
+	}
+
+	public static class KeyReleasedAction extends AbstractAction {
+
+		private CommandKey key;
+		
+		public KeyReleasedAction(CommandKey key) {
+			this.key = key;
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			InputUtility.setKeyPressed(key, false);
+		}
+		
 	}
 
 }
