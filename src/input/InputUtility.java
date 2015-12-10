@@ -12,6 +12,8 @@ import java.util.Set;
 
 import javax.swing.AbstractAction;
 
+import render.GameScreen;
+
 public class InputUtility {
 
 //	private static boolean[] keyPressed = new boolean[256], keyTriggered = new boolean[256];
@@ -38,6 +40,10 @@ public class InputUtility {
 			keyTriggered.add(key);
 		else
 			keyTriggered.remove(key);
+	}
+	
+	public static void clearKeyTriggered() {
+		keyTriggered.clear();
 	}
 
 	public static enum CommandKey {
@@ -81,9 +87,11 @@ public class InputUtility {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if (!InputUtility.getKeyPressed(key)) {
-				InputUtility.setKeyTriggered(key, true);
-				InputUtility.setKeyPressed(key, true);
+			synchronized (GameScreen.getScreen()) {
+				if (!InputUtility.getKeyPressed(key)) {
+					InputUtility.setKeyTriggered(key, true);
+					InputUtility.setKeyPressed(key, true);
+				}
 			}
 		}
 		
@@ -99,7 +107,9 @@ public class InputUtility {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			InputUtility.setKeyPressed(key, false);
+			synchronized (GameScreen.getScreen()) {
+				InputUtility.setKeyPressed(key, false);
+			}
 		}
 		
 	}

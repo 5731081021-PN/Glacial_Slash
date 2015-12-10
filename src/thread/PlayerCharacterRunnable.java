@@ -9,6 +9,7 @@ import java.awt.event.KeyEvent;
 import entity.PlayerCharacter;
 import entity.PlayerStatus;
 import input.InputUtility;
+import input.InputUtility.CommandKey;
 import render.GameScreen;
 
 public class PlayerCharacterRunnable implements Runnable {
@@ -22,20 +23,30 @@ public class PlayerCharacterRunnable implements Runnable {
 	public void run() {
 		while (true) {
 
-			try {
-				Thread.sleep(20);
-			} catch (InterruptedException e) {}
-
 			player.updateBoundaries();
+			player.fall();
 
 			//TODO player controls
+			synchronized (GameScreen.getScreen()) {
+
+				if (InputUtility.getKeyTriggered(CommandKey.JUMP)) {
+					player.jump();
+				}
 			//TODO slashing with the sabre
 			//TODO use skills
+			}
 			
 			player.moveX();
 			player.moveY();
 
+			InputUtility.clearKeyTriggered();
+			
 			GameScreen.getScreen().repaint();
+	
+			try {
+				Thread.sleep(20);
+			} catch (InterruptedException e) {}
+
 		}
 	}
 

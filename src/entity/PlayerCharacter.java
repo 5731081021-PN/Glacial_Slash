@@ -9,7 +9,6 @@ import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
-import entity.map.Terrain;
 import render.GameScreen;
 import render.Renderable;
 import res.Resource;
@@ -17,7 +16,7 @@ import res.Resource;
 public class PlayerCharacter implements Renderable {
 
 	public static final int LEFT = -1, RIGHT = 1;
-	public static final float WALK_SPEED = 16f, JUMP_INITIAL_SPEED = -5f, TERMINAL_SPEED = 40f;
+	public static final float WALK_SPEED = 16f, JUMP_INITIAL_SPEED = -80f, TERMINAL_SPEED = 40f;
 	private int x, y, facingDirection;
 	private float xRemainder, yRemainder, xSpeed, ySpeed;
 	private float xTargetSpeed, yTargetSpeed, xAcceleration, yAcceleration;
@@ -29,14 +28,14 @@ public class PlayerCharacter implements Renderable {
 		// implement x y
 		x = 640;
 		xRemainder = 0f;
-		y = 100;
+		y = 360;
 		yRemainder = 0f;
 		xSpeed = 0f;
 		ySpeed = 0f;
 		xTargetSpeed = 0f;
 		yTargetSpeed = TERMINAL_SPEED;
 		xAcceleration = 1f;
-		yAcceleration = 0.3f;
+		yAcceleration = 0.1f;
 		boundaries = new Rectangle(x, y, ((BufferedImage)sprite).getWidth(), ((BufferedImage)sprite).getHeight());
 		facingDirection = 1;
 	}
@@ -57,6 +56,14 @@ public class PlayerCharacter implements Renderable {
 	public synchronized void jump() {
 		// TODO implement jump
 		ySpeed = JUMP_INITIAL_SPEED;
+	}
+	
+	public synchronized void fall() {
+		// TODO implement fall
+		if (Math.abs(PlayerStatus.getPlayer().getCurrentMap().movableHeight(boundaries, 1)) > 0)
+			yTargetSpeed = TERMINAL_SPEED;
+		else
+			yTargetSpeed = 0f;
 	}
 	
 	public synchronized void updateBoundaries() {
@@ -91,7 +98,7 @@ public class PlayerCharacter implements Renderable {
 	}
 	
 	public synchronized void moveY() {
-		ySpeed = yTargetSpeed*yAcceleration + ySpeed*(1-xAcceleration);
+		ySpeed = yTargetSpeed*yAcceleration + ySpeed*(1-yAcceleration);
 		int speedFloor = (int)Math.floor(ySpeed);
 		int newY = y;
 		float newYRemainder = yRemainder;

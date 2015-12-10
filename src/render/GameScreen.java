@@ -43,9 +43,6 @@ public class GameScreen extends JComponent {
 	
 	private GameScreen() {
 		this.setPreferredSize(new Dimension(1280, 720));
-		InputMap inputMap = this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
-		ActionMap actionMap = this.getActionMap();
-		// Using key binding
 		
 		this.setDoubleBuffered(true);
 		
@@ -91,9 +88,9 @@ public class GameScreen extends JComponent {
 			
 		for (CommandKey key : CommandKey.values()) {
 			inputMap.put(KeyStroke.getKeyStroke(key.getKey(), 0, false), "pressed " + key.getName());
-			actionMap.put(key.getName(), new KeyPressedAction(key));
+			actionMap.put("pressed " + key.getName(), new KeyPressedAction(key));
 			inputMap.put(KeyStroke.getKeyStroke(key.getKey(), 0, true), "released " + key.getName());
-			actionMap.put(key.getName(), new KeyReleasedAction(key));
+			actionMap.put("released " + key.getName(), new KeyReleasedAction(key));
 		}
 	}
 
