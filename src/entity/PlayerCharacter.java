@@ -70,14 +70,24 @@ public class PlayerCharacter implements Renderable {
 		float newXRemainder = xRemainder;
 		newX += speedFloor;
 		newXRemainder += xSpeed - speedFloor;
+		facingDirection = Integer.signum(Float.compare(xSpeed, 0f));
 		if (Float.compare(newXRemainder, 1f) > 0) {
 			newXRemainder -= 1f;
 			newX++;
 		}
 		// TODO Check collision
 		
-		x = newX;
-		xRemainder = newXRemainder;
+		int movableWidth = PlayerStatus.getPlayer().getCurrentMap().movableWidth(boundaries, Float.compare(xSpeed, 0f));
+		if (Math.abs(movableWidth) <= Math.abs(newX - x)) {
+			x += movableWidth;
+			xRemainder = 0f;
+			xSpeed = 0f;
+		}
+		else {
+			x = newX;
+			xRemainder = newXRemainder;
+		}
+
 	}
 	
 	public synchronized void moveY() {
@@ -91,9 +101,8 @@ public class PlayerCharacter implements Renderable {
 			newYRemainder -= 1f;
 			newY++;
 		}
-		// TODO Check collision
-		int movableHeight = PlayerStatus.getPlayer().getCurrentMap().movableHeight(boundaries, Float.compare(ySpeed, 0f));
 
+		int movableHeight = PlayerStatus.getPlayer().getCurrentMap().movableHeight(boundaries, Float.compare(ySpeed, 0f));
 		if (Math.abs(movableHeight) <= Math.abs(newY - y)) {
 			y += movableHeight;
 			yRemainder = 0f;

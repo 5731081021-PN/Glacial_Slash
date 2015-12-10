@@ -25,7 +25,7 @@ public class Resource {
 		}
 
 		try {
-			floorTile = ImageIO.read(loader.getResource("res/tile/tile.png"));
+			floorTile = ImageIO.read(loader.getResource("res/tile/floor.png"));
 		} catch (IOException e) {
 			floorTile = null;
 		}
