@@ -16,7 +16,7 @@ import res.Resource;
 public class PlayerCharacter implements Renderable {
 
 	public static final int LEFT = -1, RIGHT = 1;
-	public static final float WALK_SPEED = 16f, JUMP_INITIAL_SPEED = -80f, TERMINAL_SPEED = 40f;
+	public static final float WALK_SPEED = 8f, JUMP_INITIAL_SPEED = -50f, TERMINAL_SPEED = 40f;
 	private int x, y, facingDirection;
 	private float xRemainder, yRemainder, xSpeed, ySpeed;
 	private float xTargetSpeed, yTargetSpeed, xAcceleration, yAcceleration;
@@ -77,7 +77,8 @@ public class PlayerCharacter implements Renderable {
 		float newXRemainder = xRemainder;
 		newX += speedFloor;
 		newXRemainder += xSpeed - speedFloor;
-		facingDirection = Integer.signum(Float.compare(xSpeed, 0f));
+		int movingDirection = Integer.signum(Float.compare(xSpeed, 0f));
+		facingDirection = (movingDirection != 0)? movingDirection : facingDirection;
 		if (Float.compare(newXRemainder, 1f) > 0) {
 			newXRemainder -= 1f;
 			newX++;

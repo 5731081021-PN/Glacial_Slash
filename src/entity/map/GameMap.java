@@ -56,6 +56,14 @@ public class GameMap implements Renderable {
 	public int getHeight() {
 		return height;
 	}
+	
+	public int getScreenWidth() {
+		return width*tileWidth;
+	}
+
+	public int getScreenHeight() {
+		return height*tileHeight;
+	}
 
 	public int movableWidth(Rectangle collisionBox, int direction) {
 		direction = Integer.signum(direction);
@@ -68,7 +76,7 @@ public class GameMap implements Renderable {
 		
 		int startTile = frontBoundary/tileWidth;
 		
-		int maxMovableWidth = direction*Integer.MAX_VALUE;
+		int maxMovableWidth = (direction < 0 ? 0 : 1)*(this.getScreenWidth()) - frontBoundary;
 
 		for (int tileY = upperBoundaryTile; tileY <= lowerBoundaryTile; tileY++) {
 			int tileX = startTile;
@@ -98,7 +106,7 @@ public class GameMap implements Renderable {
 		
 		int startTile = frontBoundary/tileHeight;
 		
-		int maxMovableHeight = direction*Integer.MAX_VALUE;
+		int maxMovableHeight = (direction < 0 ? 0 : 1)*(this.getScreenHeight()) - frontBoundary;
 
 		for (int tileX = leftBoundaryTile; tileX <= rightBoundaryTile; tileX++) {
 			int tileY = startTile;
