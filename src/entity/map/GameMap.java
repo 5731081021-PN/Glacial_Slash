@@ -19,7 +19,7 @@ public class GameMap implements Renderable {
 	
 	private int width, height;
 	private Tile[][] tileMap;
-	private static int tileWidth = 32, tileHeight = 32;
+	private static int tileWidth = 70, tileHeight = 70;
 
 	public GameMap(File mapFile) {
 		Scanner fileScanner;
