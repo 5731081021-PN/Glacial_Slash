@@ -6,6 +6,7 @@ package entity.card;
 
 import java.awt.Image;
 
+import exception.WrongCardNameFormatException;
 import render.Renderable;
 
 public abstract class SkillCard implements Renderable, Comparable<SkillCard> {
@@ -15,6 +16,11 @@ public abstract class SkillCard implements Renderable, Comparable<SkillCard> {
 	protected Image cardImage;
 	
 	public abstract void activate();
+	
+	public static final SkillCard createSkillCard(String name) throws WrongCardNameFormatException {
+		// TODO create new SkillCard from its name
+		throw new WrongCardNameFormatException();
+	}
 	
 	@Override
 	public int compareTo(SkillCard other) {

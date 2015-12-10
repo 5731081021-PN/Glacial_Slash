@@ -1,10 +1,14 @@
 package render;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
@@ -14,15 +18,16 @@ import javax.swing.KeyStroke;
 
 import entity.PlayerCharacter;
 import entity.PlayerStatus;
-import entity.map.Map;
+import entity.map.GameMap;
 import input.InputUtility;
+import thread.PlayerCharacterRunnable;
 
 public class GameScreen extends JComponent {
 
 	private static final long serialVersionUID = 8861317653703713044L;
 	
 	private static GameScreen screen;
-	private Map currentMap;
+	private GameMap currentMap;
 	private PlayerStatus playerStatus;
 	private PlayerCharacter playerCharacter;
 	private Point camera;
@@ -34,15 +39,46 @@ public class GameScreen extends JComponent {
 	}
 	
 	private GameScreen() {
-		this.setPreferredSize(new Dimension(1024, 576));
+		this.setPreferredSize(new Dimension(1280, 720));
 		InputMap inputMap = this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
 		ActionMap actionMap = this.getActionMap();
 		// Using key binding
+		
+		this.setDoubleBuffered(true);
+		
+		playerStatus = PlayerStatus.getPlayer();
+		currentMap = playerStatus.getCurrentMap();
+		playerCharacter = new PlayerCharacter();
+		camera = new Point(0, 0);
+		
+		// For testing purpose
+		new Thread(new PlayerCharacterRunnable(playerCharacter)).start();
 	}
 	
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
+		
+		Graphics2D g2d = (Graphics2D)g;
+
+		// placeholder background
+		g2d.setBackground(Color.BLACK);
+		g2d.clearRect(0, 0, this.getWidth(), this.getHeight());
+	
+		// draw map
+		currentMap.render(g2d);
+
+		// draw player
+		playerCharacter.render(g2d);
+	
+	}
+	
+	public int getCameraX() {
+		return camera.x;
+	}
+	
+	public int getCameraY() {
+		return camera.y;
 	}
 
 }

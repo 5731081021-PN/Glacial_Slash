@@ -10,20 +10,35 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 import entity.map.Terrain;
+import render.GameScreen;
 import render.Renderable;
+import res.Resource;
 
 public class PlayerCharacter implements Renderable {
 
 	public static final int LEFT = -1, RIGHT = 1;
-	public static final float WALK_SPEED = 16f, JUMP_INITIAL_SPEED = -5f, TERMINAL_SPEED = 32f;
+	public static final float WALK_SPEED = 16f, JUMP_INITIAL_SPEED = -5f, TERMINAL_SPEED = 40f;
 	private int x, y, facingDirection;
 	private float xRemainder, yRemainder, xSpeed, ySpeed;
 	private float xTargetSpeed, yTargetSpeed, xAcceleration, yAcceleration;
 	private Rectangle boundaries;
+	private Image sprite = Resource.playerIdleSprite;
 	
 	public PlayerCharacter() {
 		// TODO Auto-generated constructor stub
 		// implement x y
+		x = 640;
+		xRemainder = 0f;
+		y = 100;
+		yRemainder = 0f;
+		xSpeed = 0f;
+		ySpeed = 0f;
+		xTargetSpeed = 0f;
+		yTargetSpeed = TERMINAL_SPEED;
+		xAcceleration = 1f;
+		yAcceleration = 0.3f;
+		boundaries = new Rectangle(x, y, ((BufferedImage)sprite).getWidth(), ((BufferedImage)sprite).getHeight());
+		facingDirection = 1;
 	}
 	
 	public synchronized int getX() {
@@ -42,7 +57,10 @@ public class PlayerCharacter implements Renderable {
 	public synchronized void jump() {
 		// TODO implement jump
 		ySpeed = JUMP_INITIAL_SPEED;
-		yTargetSpeed = TERMINAL_SPEED;
+	}
+	
+	public synchronized void updateBoundaries() {
+		boundaries.setLocation(x, y);
 	}
 
 	public synchronized void moveX() {
@@ -57,6 +75,9 @@ public class PlayerCharacter implements Renderable {
 			newX++;
 		}
 		// TODO Check collision
+		
+		x = newX;
+		xRemainder = newXRemainder;
 	}
 	
 	public synchronized void moveY() {
@@ -71,19 +92,31 @@ public class PlayerCharacter implements Renderable {
 			newY++;
 		}
 		// TODO Check collision
-		// TODO Change sprite to upward or downward accordingly
+		int movableHeight = PlayerStatus.getPlayer().getCurrentMap().movableHeight(boundaries, Float.compare(ySpeed, 0f));
+
+		if (Math.abs(movableHeight) <= Math.abs(newY - y)) {
+			y += movableHeight;
+			yRemainder = 0f;
+			ySpeed = 0f;
+		}
+		else {
+			y = newY;
+			yRemainder = newYRemainder;
+		}
+
+		// TODO Change sprite to upward or downward motion accordingly
 	}
 
 	@Override
 	public void render(Graphics2D g) {
 		// TODO Auto-generated method stub
-		
+		g.drawImage(sprite, x - GameScreen.getScreen().getCameraX(), y - GameScreen.getScreen().getCameraY(), null);
 	}
 
 	@Override
 	public boolean isVisible() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
