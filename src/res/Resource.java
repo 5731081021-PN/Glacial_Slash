@@ -12,7 +12,7 @@ public class Resource {
 	public static BufferedImage playerIdleSprite;
 	public static BufferedImage floorTile;
 	
-	public static File emptyMap;
+	public static File emptyMap,testMap;
 
 	private static ClassLoader loader = Resource.class.getClassLoader();
 	
@@ -35,7 +35,12 @@ public class Resource {
 		} catch (URISyntaxException e) {
 			emptyMap = null;
 		}
-
+			try {
+				testMap = new File(loader.getResource("res/map/testMap.map").toURI());
+			} catch (URISyntaxException e) {
+				// TODO Auto-generated catch block
+				testMap = null;
+			}
 	}
 
 }
