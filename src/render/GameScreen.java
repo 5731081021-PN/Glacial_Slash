@@ -48,7 +48,7 @@ public class GameScreen extends JComponent {
 		currentMap = playerStatus.getCurrentMap();
 		playerCharacter = new PlayerCharacter();
 		camera = new Point(0, 0);
-		buffer = new BufferedImage(1280, 720, BufferedImage.OPAQUE);
+		buffer = new BufferedImage(1280, 720, BufferedImage.TYPE_INT_RGB);
 		
 		this.setKeyBinding();
 		// For testing purpose
@@ -87,7 +87,7 @@ public class GameScreen extends JComponent {
 		camera.x = x - 640;
 		if (camera.x < 0) camera.x = 0;
 		if (camera.x + 1280 > currentMap.getScreenWidth()) camera.x = currentMap.getScreenWidth() - 1280;
-		camera.y = y - 640;
+		camera.y = y - 360;
 		if (camera.y < 0) camera.y = 0;
 		if (camera.y + 720 > currentMap.getScreenHeight()) camera.y = currentMap.getScreenHeight() - 720;
 	}

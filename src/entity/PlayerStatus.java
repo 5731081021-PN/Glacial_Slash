@@ -42,7 +42,7 @@ public class PlayerStatus implements Renderable {
 		maxMana = 2;
 		currentMana = 2;
 		hand = new ArrayList<SkillCard>();
-		currentMap = new GameMap(Resource.testMap);
+		currentMap = new GameMap(Resource.bigMap);
 	}
 	
 	public int getCurrentMana() {
