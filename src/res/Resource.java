@@ -1,10 +1,8 @@
 package res;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
-import java.net.URISyntaxException;
-
+import java.io.InputStream;
 import javax.imageio.ImageIO;
 
 public class Resource {
@@ -12,7 +10,7 @@ public class Resource {
 	public static BufferedImage playerIdleSprite;
 	public static BufferedImage floorTile;
 	
-	public static File emptyMap,testMap,bigMap;
+	public static InputStream emptyMap, testMap, bigMap;
 
 	private static ClassLoader loader = Resource.class.getClassLoader();
 	
@@ -29,24 +27,12 @@ public class Resource {
 		} catch (IOException e) {
 			floorTile = null;
 		}
-	
-		try {
-			emptyMap = new File(loader.getResource("res/map/emptyMap.map").toURI());
-		} catch (URISyntaxException e) {
-			emptyMap = null;
-		}
-			try {
-				testMap = new File(loader.getResource("res/map/testMap.map").toURI());
-			} catch (URISyntaxException e) {
-				// TODO Auto-generated catch block
-				testMap = null;
-			}
-				try {
-					bigMap = new File(loader.getResource("res/map/bigMap.map").toURI());
-				} catch (URISyntaxException e) {
-					// TODO Auto-generated catch block
-					bigMap = null;
-				}
+
+		emptyMap = loader.getResourceAsStream("res/map/emptyMap.map");
+		testMap = loader.getResourceAsStream("res/map/testMap.map");
+		bigMap = loader.getResourceAsStream("res/map/bigMap.map");
+//			bigMap = new File();
+
 	}
 
 }
