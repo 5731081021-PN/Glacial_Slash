@@ -44,7 +44,6 @@ public class Resource {
 				try {
 					bigMap = new File(loader.getResource("res/map/bigMap.map").toURI());
 				} catch (URISyntaxException e) {
-					// TODO Auto-generated catch block
 					bigMap = null;
 				}
 	}
