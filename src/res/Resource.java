@@ -12,6 +12,7 @@ public class Resource {
 	public static BufferedImage[] mana = new BufferedImage[21], maxMana = new BufferedImage[21];
 	public static BufferedImage slash;
 	public static BufferedImage doubleJump, glacialDrift, iceSummon, skyUppercut;
+	public static BufferedImage iceBlock;
 
 	public static InputStream emptyMap, testMap, bigMap;
 
@@ -76,6 +77,13 @@ public class Resource {
 			// TODO Auto-generated catch block
 			skyUppercut = null;
 		}
+		 try {
+			iceBlock = ImageIO.read(loader.getResource("res/ice/iceBlock.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			iceBlock = null;
+		}
+				 
 
 		emptyMap = loader.getResourceAsStream("res/map/emptyMap.map");
 		testMap = loader.getResourceAsStream("res/map/testMap.map");
