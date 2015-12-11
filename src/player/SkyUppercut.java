@@ -6,7 +6,7 @@ import res.Resource;
 public class SkyUppercut extends SkillCard {
 
 	public SkyUppercut() {
-		cost = 2;
+		cost = 3;
 		cardImage = Resource.skyUppercut;
 	}
 

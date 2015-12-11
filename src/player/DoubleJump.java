@@ -6,7 +6,7 @@ import res.Resource;
 public class DoubleJump extends SkillCard {
 
 	public DoubleJump() {
-		cost = 3;
+		cost = 2;
 		cardImage = Resource.doubleJump;
 	}
 
