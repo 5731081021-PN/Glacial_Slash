@@ -49,7 +49,7 @@ public abstract class SkillCard implements Renderable, Comparable<SkillCard> {
 	
 	@Override
 	public void render(Graphics2D g) {
-		g.drawImage(cardImage, x, 400, null);
+		g.drawImage(cardImage, x, 430, null);
 	}
 	
 	@Override
