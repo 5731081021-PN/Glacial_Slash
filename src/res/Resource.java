@@ -9,6 +9,8 @@ public class Resource {
 
 	public static BufferedImage playerIdleSprite;
 	public static BufferedImage floorTile;
+	public static BufferedImage mana[],maxMana[],slash;
+	
 <<<<<<< HEAD
 =======
 	
@@ -16,7 +18,7 @@ public class Resource {
 >>>>>>> refs/remotes/5731025921-CJ/master
 
 	public static File emptyMap, testMap, bigMap;
-	public static File mana[], maxMana[], slash;
+	
 	private static ClassLoader loader = Resource.class.getClassLoader();
 
 	static {
@@ -54,21 +56,21 @@ public class Resource {
 		// Load mana,maxMana and slash
 		for (int i = 0; i <= 20; i++) {
 			try {
-				mana[i] = new File(loader.getResource("res/mana/i.png" ).toURI());
-			} catch (URISyntaxException e) {
+				mana[i] = ImageIO.read(loader.getResource("res/mana/i.png"));
+			} catch (IOException e ) {
 				mana[i] = null;
 			}
 		}
 		for (int i = 0; i <= 20; i++) {
 			try {
-				maxMana[i] = new File(loader.getResource("res/mana/mi.png" ).toURI());
-			} catch (URISyntaxException e) {
+				maxMana[i] = ImageIO.read(loader.getResource("res/mana/mi.png"));
+			} catch (IOException e ) {
 				maxMana[i] = null;
 			}
 		}
 			try {
-				slash = new File(loader.getResource("res/mana/slash.png").toURI());
-			} catch (URISyntaxException e) {
+				slash = ImageIO.read(loader.getResource("res/mana/slash.png"));
+			} catch (IOException e) {
 				slash = null;
 			}
 =======
