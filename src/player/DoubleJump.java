@@ -4,10 +4,10 @@ import java.awt.Graphics2D;
 
 import exception.CardUnusableException;
 
-public class SkyUppercut extends SkillCard {
+public class DoubleJump extends SkillCard {
 
-	public SkyUppercut() {
-		cost = 2;
+	public DoubleJump() {
+		cost = 3;
 	}
 
 	@Override
@@ -30,10 +30,9 @@ public class SkyUppercut extends SkillCard {
 
 	@Override
 	public void activate() throws CardUnusableException {
-		// TODO Auto-generated method stub
-		if (!PlayerStatus.getPlayer().getPlayerCharacter().isOnGround()) throw new CardUnusableException(CardUnusableException.UnusableType.WRONG_USE_CONDITION);
+		if (PlayerStatus.getPlayer().getPlayerCharacter().getAirJumpCount() <= 0) throw new CardUnusableException(CardUnusableException.UnusableType.WRONG_USE_CONDITION);
 		playActivateAnimation();
-		PlayerStatus.getPlayer().getPlayerCharacter().performSkyUpperCut();
+		PlayerStatus.getPlayer().getPlayerCharacter().jump();
 	}
 
 }

@@ -21,7 +21,8 @@ public class CardUnusableException extends Exception {
 	public static enum UnusableType {
 		
 		NO_SUCH_CARD_IN_HAND (1, "No such card in hand"),
-		NOT_ENOUGH_MANA (2, "Not enough mana");
+		NOT_ENOUGH_MANA (2, "Not enough mana"),
+		WRONG_USE_CONDITION (3, "Wrong use condition");
 		
 		private int typeNumber;
 		private String message;

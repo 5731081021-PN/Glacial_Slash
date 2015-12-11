@@ -22,6 +22,7 @@ public class PlayerCharacter implements Renderable {
 	private float xTargetSpeed, yTargetSpeed, xAcceleration, yAcceleration;
 	private Rectangle boundaries;
 	private Image sprite = Resource.playerIdleSprite;
+	private int freezePlayerControlCount, airJumpCount;
 	
 	public PlayerCharacter() {
 		// TODO Auto-generated constructor stub
@@ -37,6 +38,8 @@ public class PlayerCharacter implements Renderable {
 		xAcceleration = 0.9f;
 		yAcceleration = 0.04f;
 		boundaries = new Rectangle(x, y, ((BufferedImage)sprite).getWidth(), ((BufferedImage)sprite).getHeight());
+		airJumpCount = 0;
+		freezePlayerControlCount = 0;
 		facingDirection = 1;
 	}
 	
@@ -65,6 +68,20 @@ public class PlayerCharacter implements Renderable {
 	protected synchronized void jump() {
 		// TODO implement jump
 		ySpeed = JUMP_INITIAL_SPEED;
+		if (!this.isOnGround())
+			airJumpCount--;
+	}
+		
+	public synchronized int getFreezePlayerControlCount() {
+		return freezePlayerControlCount;
+	}	
+
+	public synchronized void decreseFreezePlayerControlCount() {
+		freezePlayerControlCount--;
+	}
+
+	public synchronized int getAirJumpCount() {
+		return airJumpCount;
 	}
 	
 	public boolean isOnGround() {
@@ -73,8 +90,10 @@ public class PlayerCharacter implements Renderable {
 	
 	protected synchronized void fall() {
 		// TODO implement fall
-		if (this.isOnGround())
+		if (this.isOnGround()) {
 			yTargetSpeed = 0f;
+			airJumpCount = 1;
+		}
 		else
 			yTargetSpeed = TERMINAL_SPEED;
 	}
@@ -139,6 +158,23 @@ public class PlayerCharacter implements Renderable {
 	// Special moves
 	protected void slash() {
 		// TODO play slash animation
+	}
+	
+	protected void performSkyUpperCut() {
+		freezePlayerControlCount = 30;
+		yAcceleration = 0f;
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				while (getFreezePlayerControlCount() > 0) {
+					xTargetSpeed = facingDirection*15f;
+					ySpeed = -12f;
+				}
+				yAcceleration = 0.04f;
+			}
+		}).start();
+		// TODO play sky uppercut animation
 	}
 
 	@Override

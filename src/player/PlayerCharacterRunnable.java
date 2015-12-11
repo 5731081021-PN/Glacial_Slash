@@ -4,6 +4,7 @@
 
 package player;
 
+import exception.CardUnusableException;
 import input.InputUtility;
 import input.InputUtility.CommandKey;
 import render.GameScreen;
@@ -12,8 +13,8 @@ public class PlayerCharacterRunnable implements Runnable {
 
 	private PlayerCharacter player;
 	
-	public PlayerCharacterRunnable(PlayerCharacter player) {
-		this.player = player;
+	public PlayerCharacterRunnable() {
+		this.player = PlayerStatus.getPlayer().getPlayerCharacter();
 	}
 
 	public void run() {
@@ -32,9 +33,11 @@ public class PlayerCharacterRunnable implements Runnable {
 	}
 	
 	private void playerInputUpdate() {
-		
-			player.updateBoundaries();
-			player.fall();
+	
+		player.updateBoundaries();
+		player.fall();
+	
+		if (player.getFreezePlayerControlCount() <= 0) {
 
 			if (InputUtility.getKeyPressed(CommandKey.LEFT))
 				player.walk(PlayerCharacter.LEFT);
@@ -46,20 +49,52 @@ public class PlayerCharacterRunnable implements Runnable {
 			if (InputUtility.getKeyTriggered(CommandKey.JUMP)) {
 				if (player.isOnGround())
 					player.jump();
+				else
+					try {
+						// Debug
+						PlayerStatus.getPlayer().addCard(SkillCard.createSkillCard("Double Jump"));
+						PlayerStatus.getPlayer().addCard(SkillCard.createSkillCard("Double Jump"));
+						PlayerStatus.getPlayer().addCard(SkillCard.createSkillCard("Double Jump"));
+						PlayerStatus.getPlayer().chargeMana(SkillCard.createSkillCard("Double Jump"));
+						PlayerStatus.getPlayer().chargeMana(SkillCard.createSkillCard("Double Jump"));
+						PlayerStatus.getPlayer().chargeMana(SkillCard.createSkillCard("Double Jump"));
+						PlayerStatus.getPlayer().addCard(SkillCard.createSkillCard("Double Jump"));
+
+						PlayerStatus.getPlayer().useCard(SkillCard.createSkillCard("Double Jump"));
+					} catch (CardUnusableException e) {}
 			}
 
 			//TODO slashing with the sabre
 			if (InputUtility.getKeyTriggered(CommandKey.SLASH)) {
-				if (!InputUtility.getKeyPressed(CommandKey.UP))
+				if (InputUtility.getKeyPressed(CommandKey.UP)) {
+					try {
+						// Debug
+						PlayerStatus.getPlayer().addCard(SkillCard.createSkillCard("Sky Uppercut"));
+						PlayerStatus.getPlayer().addCard(SkillCard.createSkillCard("Sky Uppercut"));
+						PlayerStatus.getPlayer().chargeMana(SkillCard.createSkillCard("Sky Uppercut"));
+						PlayerStatus.getPlayer().chargeMana(SkillCard.createSkillCard("Sky Uppercut"));
+						PlayerStatus.getPlayer().addCard(SkillCard.createSkillCard("Sky Uppercut"));
+
+						PlayerStatus.getPlayer().useCard(SkillCard.createSkillCard("Sky Uppercut"));
+					} catch (CardUnusableException e) {
+						player.slash();
+					}
+				}
+				else
 					player.slash();
 			}
 			//TODO use skills
 
-			player.moveX();
-			player.moveY();
+			
+		}
+		else {
+			player.decreseFreezePlayerControlCount();
+		}
 
-			InputUtility.clearKeyTriggered();
+		player.moveX();
+		player.moveY();
 
+		InputUtility.clearKeyTriggered();
 	}
 
 }
