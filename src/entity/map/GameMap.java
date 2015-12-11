@@ -126,8 +126,8 @@ public class GameMap implements Renderable {
 		int cameraY = GameScreen.getScreen().getCameraY();
 		int firstTileX = cameraX/tileWidth;
 		int firstTileY = cameraY/tileHeight;
-		int lastTileX = firstTileX + GameScreen.getScreen().getWidth()/tileWidth + 1;
-		int lastTileY = firstTileY + GameScreen.getScreen().getHeight()/tileHeight + 1;
+		int lastTileX = firstTileX + GameScreen.SCREEN_WIDTH/tileWidth + 1;
+		int lastTileY = firstTileY + GameScreen.SCREEN_HEIGHT/tileHeight + 1;
 		
 		try {
 			for (int tileX = firstTileX; tileX <= lastTileX; tileX++) {

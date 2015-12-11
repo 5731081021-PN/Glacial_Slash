@@ -8,14 +8,16 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 
 import exception.SkillCardUnusableException;
+import render.GameScreen;
 import render.Renderable;
 
 public abstract class SkillCard implements Renderable, Comparable<SkillCard> {
 
+	public static final SkillCard SKY_UPPERCUT = new SkyUppercut(), DOUBLE_JUMP = new DoubleJump(), GLACIAL_DRIFT = new GlacialDrift();
+	public static final int CARD_IMAGE_WIDTH = 120, CARD_IMAGE_HEIGHT = 180;
 	protected int cost;
-	protected int[] command; // maybe hardcode the command to player
 	protected Image cardImage;
-	private int x;
+	private int x, y = GameScreen.SCREEN_HEIGHT - (CARD_IMAGE_HEIGHT + 20);
 	
 	public abstract void activate() throws SkillCardUnusableException;
 	
@@ -43,13 +45,13 @@ public abstract class SkillCard implements Renderable, Comparable<SkillCard> {
 	}
 	
 	public void render(Graphics2D g, int index) {
-		x = 10 + 180*index;
+		x = 10 + CARD_IMAGE_WIDTH*index;
 		render(g);
 	}
 	
 	@Override
 	public void render(Graphics2D g) {
-		g.drawImage(cardImage, x, 430, null);
+		g.drawImage(cardImage, x, y, null);
 	}
 	
 	@Override
