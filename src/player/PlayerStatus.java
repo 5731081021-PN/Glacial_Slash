@@ -22,6 +22,7 @@ public class PlayerStatus implements Renderable {
 	private int currentMana, maxMana;
 	private List<SkillCard> hand;
 	private GameMap currentMap;
+	private PlayerCharacter playerCharacter;
 	
 	public static synchronized PlayerStatus newPlayer() {
 		player = new PlayerStatus();
@@ -43,6 +44,11 @@ public class PlayerStatus implements Renderable {
 		currentMana = 2;
 		hand = new ArrayList<SkillCard>();
 		currentMap = new GameMap(Resource.bigMap);
+		playerCharacter = new PlayerCharacter();
+	}
+	
+	public PlayerCharacter getPlayerCharacter() {
+		return playerCharacter;
 	}
 	
 	public int getCurrentMana() {
@@ -53,19 +59,19 @@ public class PlayerStatus implements Renderable {
 		return maxMana;
 	}
 	
-	public void chargeMana() {
-		maxMana++;
-		currentMana++;
+	public void chargeMana(SkillCard charged) {
+		if (hand.remove(charged)) {
+			maxMana++;
+			currentMana++;
+		}
 	}
 	
 	public List<SkillCard> getHand() {
 		return hand;
 	}
 	
-	public void addCard(SkillCard[] skillCards) {
-		for (SkillCard s: skillCards) {
-			hand.add(s);
-		}
+	public void addCard(SkillCard skillCard) {
+		hand.add(skillCard);
 	}
 	
 	public void useCard(SkillCard used) throws CardUnusableException {

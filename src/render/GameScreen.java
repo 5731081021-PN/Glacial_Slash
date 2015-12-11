@@ -45,13 +45,13 @@ public class GameScreen extends JComponent {
 		
 		playerStatus = PlayerStatus.getPlayer();
 		currentMap = playerStatus.getCurrentMap();
-		playerCharacter = new PlayerCharacter();
+		playerCharacter = playerStatus.getPlayerCharacter();
 		camera = new Point(0, 0);
 		buffer = new BufferedImage(1280, 720, BufferedImage.TYPE_INT_RGB);
 		
 		this.setKeyBinding();
 		// For testing purpose
-		new Thread(new PlayerCharacterRunnable(playerCharacter)).start();
+		new Thread(new PlayerCharacterRunnable()).start();
 	}
 	
 	@Override
