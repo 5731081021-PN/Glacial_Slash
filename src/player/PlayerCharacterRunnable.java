@@ -38,40 +38,41 @@ public class PlayerCharacterRunnable implements Runnable {
 		player.fall();
 	
 		if (player.getFreezePlayerControlCount() <= 0) {
-
-			if (InputUtility.getKeyPressed(CommandKey.LEFT))
-				player.walk(PlayerCharacter.LEFT);
-			else if (InputUtility.getKeyPressed(CommandKey.RIGHT))
-				player.walk(PlayerCharacter.RIGHT);
-			else
-				player.walk(PlayerCharacter.IDLE);
-
-			if (InputUtility.getKeyTriggered(CommandKey.JUMP)) {
-				if (player.isOnGround())
-					player.jump();
+			synchronized (PlayerStatus.getPlayer().getHand()) {
+				if (InputUtility.getKeyPressed(CommandKey.LEFT))
+					player.walk(PlayerCharacter.LEFT);
+				else if (InputUtility.getKeyPressed(CommandKey.RIGHT))
+					player.walk(PlayerCharacter.RIGHT);
 				else
-					try {
-						PlayerStatus.getPlayer().useCard(SkillCard.createSkillCard("Double Jump"));
-					} catch (SkillCardUnusableException e) {}
-			}
+					player.walk(PlayerCharacter.IDLE);
 
-			if (InputUtility.getKeyTriggered(CommandKey.SLASH)) {
-				if (InputUtility.getKeyPressed(CommandKey.UP)) {
-					try {
-						PlayerStatus.getPlayer().useCard(SkillCard.createSkillCard("Sky Uppercut"));
-					} catch (SkillCardUnusableException e) {
-						player.slash();
-					}
+				if (InputUtility.getKeyTriggered(CommandKey.JUMP)) {
+					if (player.isOnGround())
+						player.jump();
+					else
+						try {
+							PlayerStatus.getPlayer().useCard(SkillCard.createSkillCard("Double Jump"));
+						} catch (SkillCardUnusableException e) {}
 				}
-				else
-					player.slash();
-			}
 
-			if (InputUtility.getKeyTriggered(CommandKey.DASH)) {
-				if (InputUtility.getKeyPressed(CommandKey.LEFT) || InputUtility.getKeyPressed(CommandKey.RIGHT)) {
-					try {
-						PlayerStatus.getPlayer().useCard(SkillCard.createSkillCard("Glacial Drift"));
-					} catch (SkillCardUnusableException e) {}
+				if (InputUtility.getKeyTriggered(CommandKey.SLASH)) {
+					if (InputUtility.getKeyPressed(CommandKey.UP)) {
+						try {
+							PlayerStatus.getPlayer().useCard(SkillCard.createSkillCard("Sky Uppercut"));
+						} catch (SkillCardUnusableException e) {
+							player.slash();
+						}
+					}
+					else
+						player.slash();
+				}
+
+				if (InputUtility.getKeyTriggered(CommandKey.DASH)) {
+					if (InputUtility.getKeyPressed(CommandKey.LEFT) || InputUtility.getKeyPressed(CommandKey.RIGHT)) {
+						try {
+							PlayerStatus.getPlayer().useCard(SkillCard.createSkillCard("Glacial Drift"));
+						} catch (SkillCardUnusableException e) {}
+					}
 				}
 			}
 			

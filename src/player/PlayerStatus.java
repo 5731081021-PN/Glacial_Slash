@@ -41,6 +41,7 @@ public class PlayerStatus implements Renderable {
 	}
 
 	private PlayerStatus() {
+		// Mana debug
 		maxMana = 10;
 		currentMana = 10;
 		hand = new ArrayList<SkillCard>();
@@ -104,9 +105,12 @@ public class PlayerStatus implements Renderable {
 		g.drawImage(Resource.slash, null, 80, 20);
 		g.drawImage(Resource.maxMana[maxMana], null, 130, 50);
 		
-		int n = hand.size();
-		for (int i = 0; i < n; i++) {
-			hand.get(i).render(g, i);
+		// render cards in hand
+		synchronized (hand) {
+			int n = hand.size();
+			for (int i = 0; i < n; i++) {
+				hand.get(i).render(g, i);
+			}
 		}
 	}
 	
