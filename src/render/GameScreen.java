@@ -13,13 +13,13 @@ import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.KeyStroke;
 
-import entity.PlayerCharacter;
-import entity.PlayerStatus;
 import entity.map.GameMap;
 import input.InputUtility.CommandKey;
 import input.InputUtility.KeyPressedAction;
 import input.InputUtility.KeyReleasedAction;
-import thread.PlayerCharacterRunnable;
+import player.PlayerCharacter;
+import player.PlayerCharacterRunnable;
+import player.PlayerStatus;
 
 public class GameScreen extends JComponent {
 
@@ -45,13 +45,13 @@ public class GameScreen extends JComponent {
 		
 		playerStatus = PlayerStatus.getPlayer();
 		currentMap = playerStatus.getCurrentMap();
-		playerCharacter = new PlayerCharacter();
+		playerCharacter = playerStatus.getPlayerCharacter();
 		camera = new Point(0, 0);
 		buffer = new BufferedImage(1280, 720, BufferedImage.TYPE_INT_RGB);
 		
 		this.setKeyBinding();
 		// For testing purpose
-		new Thread(new PlayerCharacterRunnable(playerCharacter)).start();
+		new Thread(new PlayerCharacterRunnable()).start();
 	}
 	
 	@Override
@@ -68,6 +68,9 @@ public class GameScreen extends JComponent {
 
 		// draw player
 		playerCharacter.render(g2d);
+		
+		// draw playerStatus
+		PlayerStatus.getPlayer().render(g2d);
 	
 		// draw things on actual screen
 		g.drawImage(buffer, 0, 0, null);

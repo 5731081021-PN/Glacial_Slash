@@ -2,7 +2,7 @@
  * The character being controlled by the player
  */
 
-package entity;
+package player;
 
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -22,6 +22,7 @@ public class PlayerCharacter implements Renderable {
 	private float xTargetSpeed, yTargetSpeed, xAcceleration, yAcceleration;
 	private Rectangle boundaries;
 	private Image sprite = Resource.playerIdleSprite;
+	private int freezePlayerControlCount, airJumpCount;
 	
 	public PlayerCharacter() {
 		// TODO Auto-generated constructor stub
@@ -37,6 +38,8 @@ public class PlayerCharacter implements Renderable {
 		xAcceleration = 0.9f;
 		yAcceleration = 0.04f;
 		boundaries = new Rectangle(x, y, ((BufferedImage)sprite).getWidth(), ((BufferedImage)sprite).getHeight());
+		airJumpCount = 0;
+		freezePlayerControlCount = 0;
 		facingDirection = 1;
 	}
 	
@@ -58,31 +61,48 @@ public class PlayerCharacter implements Renderable {
 
 	// Motion
 	
-	public synchronized void walk(int direction) {
+	protected synchronized void walk(int direction) {
 		xTargetSpeed = direction*WALK_SPEED;
 	}
-	public synchronized void jump() {
+
+	protected synchronized void jump() {
 		// TODO implement jump
 		ySpeed = JUMP_INITIAL_SPEED;
+		if (!this.isOnGround())
+			airJumpCount--;
+	}
+		
+	public synchronized int getFreezePlayerControlCount() {
+		return freezePlayerControlCount;
+	}	
+
+	public synchronized void decreseFreezePlayerControlCount() {
+		freezePlayerControlCount--;
+	}
+
+	public synchronized int getAirJumpCount() {
+		return airJumpCount;
 	}
 	
 	public boolean isOnGround() {
 		return PlayerStatus.getPlayer().getCurrentMap().movableHeight(boundaries, 1) == 0;
 	}
 	
-	public synchronized void fall() {
+	protected synchronized void fall() {
 		// TODO implement fall
-		if (this.isOnGround())
+		if (this.isOnGround()) {
 			yTargetSpeed = 0f;
+			airJumpCount = 1;
+		}
 		else
 			yTargetSpeed = TERMINAL_SPEED;
 	}
 	
-	public void updateBoundaries() {
+	protected void updateBoundaries() {
 		boundaries.setLocation(x, y);
 	}
 
-	public synchronized void moveX() {
+	protected synchronized void moveX() {
 		xSpeed = xTargetSpeed*xAcceleration + xSpeed*(1-xAcceleration);
 		int speedFloor = (int)Math.floor(xSpeed);
 		int newX = x;
@@ -109,7 +129,7 @@ public class PlayerCharacter implements Renderable {
 
 	}
 	
-	public synchronized void moveY() {
+	protected synchronized void moveY() {
 		ySpeed = yTargetSpeed*yAcceleration + ySpeed*(1-yAcceleration);
 		int speedFloor = (int)Math.floor(ySpeed);
 		int newY = y;
@@ -133,6 +153,28 @@ public class PlayerCharacter implements Renderable {
 		}
 
 		// TODO Change sprite to upward or downward motion accordingly
+	}
+	
+	// Special moves
+	protected void slash() {
+		// TODO play slash animation
+	}
+	
+	protected void performSkyUpperCut() {
+		freezePlayerControlCount = 30;
+		yAcceleration = 0f;
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				while (getFreezePlayerControlCount() > 0) {
+					xTargetSpeed = facingDirection*15f;
+					ySpeed = -12f;
+				}
+				yAcceleration = 0.04f;
+			}
+		}).start();
+		// TODO play sky uppercut animation
 	}
 
 	@Override

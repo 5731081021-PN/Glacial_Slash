@@ -1,13 +1,13 @@
-package entity.card;
+package player;
 
 import java.awt.Graphics2D;
-import java.awt.event.KeyEvent;
+
+import exception.CardUnusableException;
 
 public class SkyUppercut extends SkillCard {
 
 	public SkyUppercut() {
 		cost = 2;
-		command = new int[]{KeyEvent.VK_UP, KeyEvent.VK_F};
 	}
 
 	@Override
@@ -29,9 +29,11 @@ public class SkyUppercut extends SkillCard {
 	}
 
 	@Override
-	public void activate() {
+	public void activate() throws CardUnusableException {
 		// TODO Auto-generated method stub
-		
+		if (!PlayerStatus.getPlayer().getPlayerCharacter().isOnGround()) throw new CardUnusableException(CardUnusableException.UnusableType.WRONG_USE_CONDITION);
+		playActivateAnimation();
+		PlayerStatus.getPlayer().getPlayerCharacter().performSkyUpperCut();
 	}
 
 }

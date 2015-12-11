@@ -3,12 +3,12 @@
  * Shows the status on the screen, such as mana and hand
  */
 
-package entity;
+package player;
 
 import java.util.List;
 
-import entity.card.SkillCard;
 import entity.map.GameMap;
+import exception.CardUnusableException;
 
 import java.awt.Graphics2D;
 import java.util.ArrayList;
@@ -22,6 +22,7 @@ public class PlayerStatus implements Renderable {
 	private int currentMana, maxMana;
 	private List<SkillCard> hand;
 	private GameMap currentMap;
+	private PlayerCharacter playerCharacter;
 	
 	public static synchronized PlayerStatus newPlayer() {
 		player = new PlayerStatus();
@@ -43,6 +44,11 @@ public class PlayerStatus implements Renderable {
 		currentMana = 2;
 		hand = new ArrayList<SkillCard>();
 		currentMap = new GameMap(Resource.bigMap);
+		playerCharacter = new PlayerCharacter();
+	}
+	
+	public PlayerCharacter getPlayerCharacter() {
+		return playerCharacter;
 	}
 	
 	public int getCurrentMana() {
@@ -53,19 +59,31 @@ public class PlayerStatus implements Renderable {
 		return maxMana;
 	}
 	
-	public void chargeMana() {
-		maxMana++;
-		currentMana++;
+	public void chargeMana(SkillCard charged) {
+		if (hand.remove(charged)) {
+			maxMana++;
+			currentMana++;
+		}
 	}
 	
 	public List<SkillCard> getHand() {
 		return hand;
 	}
 	
-	public void addCard(SkillCard[] skillCards) {
-		for (SkillCard s: skillCards) {
-			hand.add(s);
+	public void addCard(SkillCard skillCard) {
+		hand.add(skillCard);
+	}
+	
+	public void useCard(SkillCard used) throws CardUnusableException {
+		if (hand.contains(used)) {
+			if (currentMana >= used.cost) {
+				used.activate();
+				currentMana -= used.cost;
+				hand.remove(used);
+			}
+			else throw new CardUnusableException(CardUnusableException.UnusableType.NOT_ENOUGH_MANA);
 		}
+		else throw new CardUnusableException(CardUnusableException.UnusableType.NO_SUCH_CARD_IN_HAND);
 	}
 	
 	public GameMap getCurrentMap() {
@@ -73,7 +91,10 @@ public class PlayerStatus implements Renderable {
 	}
 
 	@Override
-	public void render(Graphics2D g) {}
+	public void render(Graphics2D g) {
+		// render mana
+		g.drawImage(Resource.mana[currentMana], null, 20, 20);
+	}
 	
 	@Override
 	public boolean isVisible() {
