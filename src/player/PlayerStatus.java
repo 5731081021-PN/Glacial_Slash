@@ -91,7 +91,10 @@ public class PlayerStatus implements Renderable {
 	}
 
 	@Override
-	public void render(Graphics2D g) {}
+	public void render(Graphics2D g) {
+		// render mana
+		g.drawImage(Resource.mana[currentMana], null, 20, 20);
+	}
 	
 	@Override
 	public boolean isVisible() {

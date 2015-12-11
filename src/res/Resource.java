@@ -9,7 +9,8 @@ public class Resource {
 
 	public static BufferedImage playerIdleSprite;
 	public static BufferedImage floorTile;
-	public static BufferedImage mana[],maxMana[],slash;
+	public static BufferedImage[] mana = new BufferedImage[21], maxMana = new BufferedImage[21];
+	public static BufferedImage slash;
 	
 	public static InputStream emptyMap, testMap, bigMap;
 	
@@ -44,11 +45,11 @@ public class Resource {
 				maxMana[i] = null;
 			}
 		}
-			try {
-				slash = ImageIO.read(loader.getResource("res/mana/slash.png"));
-			} catch (IOException e) {
-				slash = null;
-			}
+		try {
+			slash = ImageIO.read(loader.getResource("res/mana/slash.png"));
+		} catch (IOException e) {
+			slash = null;
+		}
 
 		emptyMap = loader.getResourceAsStream("res/map/emptyMap.map");
 		testMap = loader.getResourceAsStream("res/map/testMap.map");
