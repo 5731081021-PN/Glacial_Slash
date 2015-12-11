@@ -57,7 +57,8 @@ public class InputUtility {
 		SLASH (KeyEvent.VK_F, "SLASH"),
 		HAND (KeyEvent.VK_S, "HAND"),
 		DASH (KeyEvent.VK_D, "DASH"),
-		JUMP (KeyEvent.VK_SPACE, "JUMP");
+		JUMP (KeyEvent.VK_SPACE, "JUMP"),
+		DRAW (KeyEvent.VK_E, "DRAW");
 		
 		private int key;
 		private String name;
