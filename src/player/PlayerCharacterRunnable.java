@@ -75,6 +75,13 @@ public class PlayerCharacterRunnable implements Runnable {
 						} catch (SkillCardUnusableException e) {}
 					}
 				}
+				
+				if (InputUtility.getKeyTriggered(CommandKey.HAND)) {
+					if (InputUtility.getKeyPressed(CommandKey.DOWN))
+						try {
+							PlayerStatus.getPlayer().useCard(SkillCard.ICE_SUMMON);
+						} catch (SkillCardUnusableException e) {}
+				}
 			}
 
 		}

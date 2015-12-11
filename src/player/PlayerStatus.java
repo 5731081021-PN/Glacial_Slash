@@ -50,12 +50,11 @@ public class PlayerStatus implements Renderable {
 		
 		// Debug
 		addCard(SkillCard.createSkillCard("Sky Uppercut"));
-		addCard(SkillCard.createSkillCard("Sky Uppercut"));
-		addCard(SkillCard.createSkillCard("Sky Uppercut"));
-		addCard(SkillCard.createSkillCard("Double Jump"));
 		addCard(SkillCard.createSkillCard("Double Jump"));
 		addCard(SkillCard.createSkillCard("Glacial Drift"));
-		addCard(SkillCard.createSkillCard("Glacial Drift"));
+		addCard(SkillCard.createSkillCard("Ice Summon"));
+		addCard(SkillCard.createSkillCard("Ice Summon"));
+		addCard(SkillCard.createSkillCard("Ice Summon"));
 	}
 	
 	public PlayerCharacter getPlayerCharacter() {

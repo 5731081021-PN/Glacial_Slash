@@ -6,6 +6,7 @@ package player;
 
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
@@ -58,6 +59,10 @@ public class PlayerCharacter implements Renderable {
 	public synchronized int getCenterY() {
 		return y + (int)(boundaries.getHeight()/2);
 	}
+	
+	public synchronized Point getFrontTile() {
+		return PlayerStatus.getPlayer().getCurrentMap().getFrontTile(boundaries, facingDirection);
+	}
 
 	// Motion
 	
@@ -85,7 +90,7 @@ public class PlayerCharacter implements Renderable {
 	}
 	
 	public boolean isOnGround() {
-		return PlayerStatus.getPlayer().getCurrentMap().movableHeight(boundaries, 1) == 0;
+		return PlayerStatus.getPlayer().getCurrentMap().isOnGround(boundaries);
 	}
 	
 	protected synchronized void fall() {

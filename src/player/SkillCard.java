@@ -13,7 +13,7 @@ import render.Renderable;
 
 public abstract class SkillCard implements Renderable, Comparable<SkillCard> {
 
-	public static final SkillCard SKY_UPPERCUT = new SkyUppercut(), DOUBLE_JUMP = new DoubleJump(), GLACIAL_DRIFT = new GlacialDrift();
+	public static final SkillCard SKY_UPPERCUT = new SkyUppercut(), DOUBLE_JUMP = new DoubleJump(), GLACIAL_DRIFT = new GlacialDrift(), ICE_SUMMON = new IceSummon();
 	public static final int CARD_IMAGE_WIDTH = 120, CARD_IMAGE_HEIGHT = 180;
 	protected int cost;
 	protected Image cardImage;
@@ -33,6 +33,7 @@ public abstract class SkillCard implements Renderable, Comparable<SkillCard> {
 		case "Sky Uppercut": return new SkyUppercut();
 		case "Double Jump": return new DoubleJump();
 		case "Glacial Drift": return new GlacialDrift();
+		case "Ice Summon": return new IceSummon();
 		default: return null;
 		}
 	}
