@@ -6,8 +6,7 @@ import res.Resource;
 public class DoubleJump extends SkillCard {
 
 	public DoubleJump() {
-		cost = 2;
-		cardImage = Resource.doubleJump;
+		super(2, Resource.doubleJump);
 	}
 
 	@Override

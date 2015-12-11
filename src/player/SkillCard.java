@@ -21,8 +21,14 @@ public abstract class SkillCard implements Renderable, Comparable<SkillCard> {
 	
 	public abstract void activate() throws SkillCardUnusableException;
 	
+	public SkillCard(int cost, Image cardImage) {
+		this.cost = cost;
+		this.cardImage = cardImage;
+	}
+	
 	public static final SkillCard createSkillCard(String name) {
-		// TODO create new SkillCard from its name
+		// Use when add cards only
+		// Use dummy constants for reference
 		switch (name) {
 		case "Sky Uppercut": return new SkyUppercut();
 		case "Double Jump": return new DoubleJump();
