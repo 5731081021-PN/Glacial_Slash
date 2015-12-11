@@ -29,13 +29,11 @@ public abstract class SkillCard implements Renderable, Comparable<SkillCard> {
 	public static final SkillCard createSkillCard(String name) {
 		// Use when add cards only
 		// Use dummy constants for reference
-		switch (name) {
-		case "Sky Uppercut": return new SkyUppercut();
-		case "Double Jump": return new DoubleJump();
-		case "Glacial Drift": return new GlacialDrift();
-		case "Ice Summon": return new IceSummon();
-		default: return null;
-		}
+		if (name.startsWith("S")) return new SkyUppercut();
+		else if (name.startsWith("D")) return new DoubleJump();
+		else if (name.startsWith("G")) return new GlacialDrift();
+		else if (name.startsWith("I")) return new IceSummon();
+		else return null;
 	}
 	
 	public void playActivateAnimation() {
