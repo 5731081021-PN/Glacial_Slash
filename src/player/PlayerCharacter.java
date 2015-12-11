@@ -170,6 +170,10 @@ public class PlayerCharacter implements Renderable {
 				while (getFreezePlayerControlCount() > 0) {
 					xTargetSpeed = facingDirection*15f;
 					ySpeed = -12f;
+					Thread.yield();
+					try {
+						Thread.sleep(1);
+					} catch (InterruptedException e) {}
 				}
 				yAcceleration = 0.04f;
 			}
