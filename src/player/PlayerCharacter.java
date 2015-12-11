@@ -16,7 +16,7 @@ import res.Resource;
 public class PlayerCharacter implements Renderable {
 
 	public static final int LEFT = -1, RIGHT = 1, IDLE = 0;
-	public static final float WALK_SPEED = 8f, JUMP_INITIAL_SPEED = -30f, TERMINAL_SPEED = 16f;
+	public static final float WALK_SPEED = 16f, JUMP_INITIAL_SPEED = -60f, TERMINAL_SPEED = 32f, GRAVITY = 0.08f;
 	private int x, y, facingDirection;
 	private float xRemainder, yRemainder, xSpeed, ySpeed;
 	private float xTargetSpeed, yTargetSpeed, xAcceleration, yAcceleration;
@@ -36,7 +36,7 @@ public class PlayerCharacter implements Renderable {
 		xTargetSpeed = 0f;
 		yTargetSpeed = TERMINAL_SPEED;
 		xAcceleration = 0.9f;
-		yAcceleration = 0.04f;
+		yAcceleration = GRAVITY;
 		boundaries = new Rectangle(x, y, ((BufferedImage)sprite).getWidth(), ((BufferedImage)sprite).getHeight());
 		airJumpCount = 0;
 		freezePlayerControlCount = 0;
@@ -161,27 +161,6 @@ public class PlayerCharacter implements Renderable {
 	}
 	
 	protected void performSkyUpperCut() {
-		freezePlayerControlCount = 30;
-		yAcceleration = 0f;
-		new Thread(new Runnable() {
-			
-			@Override
-			public void run() {
-				while (getFreezePlayerControlCount() > 0) {
-					xTargetSpeed = facingDirection*15f;
-					ySpeed = -12f;
-					Thread.yield();
-					try {
-						Thread.sleep(1);
-					} catch (InterruptedException e) {}
-				}
-				yAcceleration = 0.04f;
-			}
-		}).start();
-		// TODO play sky uppercut animation
-	}
-	
-	protected void performGlacialDrift() {
 		freezePlayerControlCount = 15;
 		yAcceleration = 0f;
 		new Thread(new Runnable() {
@@ -189,14 +168,35 @@ public class PlayerCharacter implements Renderable {
 			@Override
 			public void run() {
 				while (getFreezePlayerControlCount() > 0) {
-					xTargetSpeed = facingDirection*50f;
+					xTargetSpeed = facingDirection*30f;
+					ySpeed = -30f;
+					Thread.yield();
+					try {
+						Thread.sleep(1);
+					} catch (InterruptedException e) {}
+				}
+				yAcceleration = GRAVITY;
+			}
+		}).start();
+		// TODO play sky uppercut animation
+	}
+	
+	protected void performGlacialDrift() {
+		freezePlayerControlCount = 8;
+		yAcceleration = 0f;
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				while (getFreezePlayerControlCount() > 0) {
+					xTargetSpeed = facingDirection*100f;
 					ySpeed = 0;
 					Thread.yield();
 					try {
 						Thread.sleep(1);
 					} catch (InterruptedException e) {}
 				}
-				yAcceleration = 0.04f;
+				yAcceleration = GRAVITY;
 			}
 		}).start();
 	}
