@@ -51,15 +51,6 @@ public class PlayerCharacterRunnable implements Runnable {
 					player.jump();
 				else
 					try {
-						// Debug
-						PlayerStatus.getPlayer().addCard(SkillCard.createSkillCard("Double Jump"));
-						PlayerStatus.getPlayer().addCard(SkillCard.createSkillCard("Double Jump"));
-						PlayerStatus.getPlayer().addCard(SkillCard.createSkillCard("Double Jump"));
-						PlayerStatus.getPlayer().chargeMana(SkillCard.createSkillCard("Double Jump"));
-						PlayerStatus.getPlayer().chargeMana(SkillCard.createSkillCard("Double Jump"));
-						PlayerStatus.getPlayer().chargeMana(SkillCard.createSkillCard("Double Jump"));
-						PlayerStatus.getPlayer().addCard(SkillCard.createSkillCard("Double Jump"));
-
 						PlayerStatus.getPlayer().useCard(SkillCard.createSkillCard("Double Jump"));
 					} catch (SkillCardUnusableException e) {}
 			}
@@ -67,13 +58,6 @@ public class PlayerCharacterRunnable implements Runnable {
 			if (InputUtility.getKeyTriggered(CommandKey.SLASH)) {
 				if (InputUtility.getKeyPressed(CommandKey.UP)) {
 					try {
-						// Debug
-						PlayerStatus.getPlayer().addCard(SkillCard.createSkillCard("Sky Uppercut"));
-						PlayerStatus.getPlayer().addCard(SkillCard.createSkillCard("Sky Uppercut"));
-						PlayerStatus.getPlayer().chargeMana(SkillCard.createSkillCard("Sky Uppercut"));
-						PlayerStatus.getPlayer().chargeMana(SkillCard.createSkillCard("Sky Uppercut"));
-						PlayerStatus.getPlayer().addCard(SkillCard.createSkillCard("Sky Uppercut"));
-
 						PlayerStatus.getPlayer().useCard(SkillCard.createSkillCard("Sky Uppercut"));
 					} catch (SkillCardUnusableException e) {
 						player.slash();
@@ -86,13 +70,6 @@ public class PlayerCharacterRunnable implements Runnable {
 			if (InputUtility.getKeyTriggered(CommandKey.DASH)) {
 				if (InputUtility.getKeyPressed(CommandKey.LEFT) || InputUtility.getKeyPressed(CommandKey.RIGHT)) {
 					try {
-						// Debug
-						PlayerStatus.getPlayer().addCard(SkillCard.createSkillCard("Glacial Drift"));
-						PlayerStatus.getPlayer().addCard(SkillCard.createSkillCard("Glacial Drift"));
-						PlayerStatus.getPlayer().chargeMana(SkillCard.createSkillCard("Glacial Drift"));
-						PlayerStatus.getPlayer().chargeMana(SkillCard.createSkillCard("Glacial Drift"));
-						PlayerStatus.getPlayer().addCard(SkillCard.createSkillCard("Glacial Drift"));
-						
 						PlayerStatus.getPlayer().useCard(SkillCard.createSkillCard("Glacial Drift"));
 					} catch (SkillCardUnusableException e) {}
 				}

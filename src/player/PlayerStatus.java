@@ -12,6 +12,7 @@ import exception.SkillCardUnusableException;
 
 import java.awt.Graphics2D;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import render.Renderable;
 import res.Resource;
@@ -40,11 +41,16 @@ public class PlayerStatus implements Renderable {
 	}
 
 	private PlayerStatus() {
-		maxMana = 2;
-		currentMana = 2;
+		maxMana = 10;
+		currentMana = 10;
 		hand = new ArrayList<SkillCard>();
 		currentMap = new GameMap(Resource.bigMap);
 		playerCharacter = new PlayerCharacter();
+		
+		// Debug
+		addCard(SkillCard.createSkillCard("Sky Uppercut"));
+		addCard(SkillCard.createSkillCard("Double Jump"));
+		addCard(SkillCard.createSkillCard("Glacial Drift"));
 	}
 	
 	public PlayerCharacter getPlayerCharacter() {
@@ -72,6 +78,7 @@ public class PlayerStatus implements Renderable {
 	
 	public void addCard(SkillCard skillCard) {
 		hand.add(skillCard);
+		Collections.sort(hand);
 	}
 	
 	public void useCard(SkillCard used) throws SkillCardUnusableException {
@@ -96,6 +103,11 @@ public class PlayerStatus implements Renderable {
 		g.drawImage(Resource.mana[currentMana], null, 20, 20);
 		g.drawImage(Resource.slash, null, 80, 20);
 		g.drawImage(Resource.maxMana[maxMana], null, 130, 50);
+		
+		int n = hand.size();
+		for (int i = 0; i < n; i++) {
+			hand.get(i).render(g, i);
+		}
 	}
 	
 	@Override

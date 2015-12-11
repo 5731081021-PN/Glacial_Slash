@@ -11,7 +11,7 @@ public class Resource {
 	public static BufferedImage floorTile;
 	public static BufferedImage[] mana = new BufferedImage[21], maxMana = new BufferedImage[21];
 	public static BufferedImage slash;
-	public static BufferedImage doubleJump, gracialDrift, iceSummon, skyUppercut;
+	public static BufferedImage doubleJump, glacialDrift, iceSummon, skyUppercut;
 
 	public static InputStream emptyMap, testMap, bigMap;
 
@@ -59,10 +59,10 @@ public class Resource {
 			doubleJump = null;
 		}
 		try {
-			gracialDrift = ImageIO.read(loader.getResource("res/card/GlacialDrift.png"));
+			glacialDrift = ImageIO.read(loader.getResource("res/card/GlacialDrift.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			gracialDrift = null;
+			glacialDrift = null;
 		}
 		try {
 			iceSummon = ImageIO.read(loader.getResource("res/card/IceSummon.png"));
