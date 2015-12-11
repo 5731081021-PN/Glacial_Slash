@@ -11,9 +11,10 @@ public class Resource {
 	public static BufferedImage floorTile;
 	public static BufferedImage[] mana = new BufferedImage[21], maxMana = new BufferedImage[21];
 	public static BufferedImage slash;
-	
+	public static BufferedImage doubleJump, gracialDrift, iceSummon, skyUppercut;
+
 	public static InputStream emptyMap, testMap, bigMap;
-	
+
 	private static ClassLoader loader = Resource.class.getClassLoader();
 
 	static {
@@ -34,14 +35,14 @@ public class Resource {
 		for (int i = 0; i <= 20; i++) {
 			try {
 				mana[i] = ImageIO.read(loader.getResource("res/mana/" + i + ".png"));
-			} catch (IOException e ) {
+			} catch (IOException e) {
 				mana[i] = null;
 			}
 		}
 		for (int i = 0; i <= 20; i++) {
 			try {
 				maxMana[i] = ImageIO.read(loader.getResource("res/mana/m" + i + ".png"));
-			} catch (IOException e ) {
+			} catch (IOException e) {
 				maxMana[i] = null;
 			}
 		}
@@ -49,6 +50,31 @@ public class Resource {
 			slash = ImageIO.read(loader.getResource("res/mana/slash.png"));
 		} catch (IOException e) {
 			slash = null;
+		}
+
+		try {
+			doubleJump = ImageIO.read(loader.getResource("res/card/DoubleJump.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			doubleJump = null;
+		}
+		try {
+			gracialDrift = ImageIO.read(loader.getResource("res/card/GlacialDrift.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			gracialDrift = null;
+		}
+		try {
+			iceSummon = ImageIO.read(loader.getResource("res/card/IceSummon.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			iceSummon = null;
+		}
+		try {
+			skyUppercut = ImageIO.read(loader.getResource("res/card/SkyUppercut.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			skyUppercut = null;
 		}
 
 		emptyMap = loader.getResourceAsStream("res/map/emptyMap.map");
