@@ -21,7 +21,7 @@ public class PlayerCharacterRunnable implements Runnable {
 		while (true) {
 			// TODO Auto-generated method stub
 			try {
-				Thread.sleep(17);
+				Thread.sleep(35);
 			} catch (InterruptedException e) {}
 			
 			playerInputUpdate();
@@ -38,6 +38,7 @@ public class PlayerCharacterRunnable implements Runnable {
 		player.fall();
 	
 		if (player.getFreezePlayerControlCount() <= 0) {
+
 			synchronized (PlayerStatus.getPlayer().getHand()) {
 				if (InputUtility.getKeyPressed(CommandKey.LEFT))
 					player.walk(PlayerCharacter.LEFT);
@@ -75,7 +76,7 @@ public class PlayerCharacterRunnable implements Runnable {
 					}
 				}
 			}
-			
+
 		}
 		else {
 			player.decreseFreezePlayerControlCount();
