@@ -6,7 +6,6 @@ package player;
 
 import java.awt.Image;
 
-import exception.WrongCardNameFormatException;
 import render.Renderable;
 
 public abstract class SkillCard implements Renderable, Comparable<SkillCard> {
@@ -17,9 +16,9 @@ public abstract class SkillCard implements Renderable, Comparable<SkillCard> {
 	
 	public abstract void activate();
 	
-	public static final SkillCard createSkillCard(String name) throws WrongCardNameFormatException {
+	public static final SkillCard createSkillCard(String name) {
 		// TODO create new SkillCard from its name
-		throw new WrongCardNameFormatException();
+		return null;
 	}
 	
 	public void playActivateAnimation() {
