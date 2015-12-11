@@ -1,37 +1,18 @@
 package player;
 
-import java.awt.Graphics2D;
-
-import exception.CardUnusableException;
+import exception.SkillCardUnusableException;
+import res.Resource;
 
 public class SkyUppercut extends SkillCard {
 
 	public SkyUppercut() {
 		cost = 2;
+		cardImage = Resource.skyUppercut;
 	}
 
 	@Override
-	public void render(Graphics2D g) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public boolean isVisible() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public int getZ() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public void activate() throws CardUnusableException {
-		// TODO Auto-generated method stub
-		if (!PlayerStatus.getPlayer().getPlayerCharacter().isOnGround()) throw new CardUnusableException(CardUnusableException.UnusableType.WRONG_USE_CONDITION);
+	public void activate() throws SkillCardUnusableException {
+		if (!PlayerStatus.getPlayer().getPlayerCharacter().isOnGround()) throw new SkillCardUnusableException(SkillCardUnusableException.UnusableType.ACTIVATE_CONDITION_NOT_MET);
 		playActivateAnimation();
 		PlayerStatus.getPlayer().getPlayerCharacter().performSkyUpperCut();
 	}

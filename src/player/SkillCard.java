@@ -4,9 +4,10 @@
 
 package player;
 
+import java.awt.Graphics2D;
 import java.awt.Image;
 
-import exception.CardUnusableException;
+import exception.SkillCardUnusableException;
 import render.Renderable;
 
 public abstract class SkillCard implements Renderable, Comparable<SkillCard> {
@@ -14,14 +15,16 @@ public abstract class SkillCard implements Renderable, Comparable<SkillCard> {
 	protected int cost;
 	protected int[] command; // maybe hardcode the command to player
 	protected Image cardImage;
+	private int x;
 	
-	public abstract void activate() throws CardUnusableException;
+	public abstract void activate() throws SkillCardUnusableException;
 	
 	public static final SkillCard createSkillCard(String name) {
 		// TODO create new SkillCard from its name
 		switch (name) {
 		case "Sky Uppercut": return new SkyUppercut();
 		case "Double Jump": return new DoubleJump();
+		case "Glacial Drift": return new GlacialDrift();
 		default: return null;
 		}
 	}
@@ -37,6 +40,26 @@ public abstract class SkillCard implements Renderable, Comparable<SkillCard> {
 			return this.getClass().getSimpleName().compareToIgnoreCase(other.getClass().getSimpleName());
 		else
 			return costCompare;
+	}
+	
+	public void render(Graphics2D g, int index) {
+		x = 10 + 180*index;
+		render(g);
+	}
+	
+	@Override
+	public void render(Graphics2D g) {
+		g.drawImage(cardImage, x, 430, null);
+	}
+	
+	@Override
+	public boolean isVisible() {
+		return true;
+	}
+	
+	@Override
+	public int getZ() {
+		return -1;
 	}
 
 	@Override
