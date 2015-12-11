@@ -2,14 +2,8 @@
  * Runnable to control the player character
  */
 
-package thread;
+package player;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.Timer;
-
-import entity.PlayerCharacter;
 import input.InputUtility;
 import input.InputUtility.CommandKey;
 import render.GameScreen;

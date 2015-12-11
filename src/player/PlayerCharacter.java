@@ -2,7 +2,7 @@
  * The character being controlled by the player
  */
 
-package entity;
+package player;
 
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -58,10 +58,11 @@ public class PlayerCharacter implements Renderable {
 
 	// Motion
 	
-	public synchronized void walk(int direction) {
+	protected synchronized void walk(int direction) {
 		xTargetSpeed = direction*WALK_SPEED;
 	}
-	public synchronized void jump() {
+
+	protected synchronized void jump() {
 		// TODO implement jump
 		ySpeed = JUMP_INITIAL_SPEED;
 	}
@@ -70,7 +71,7 @@ public class PlayerCharacter implements Renderable {
 		return PlayerStatus.getPlayer().getCurrentMap().movableHeight(boundaries, 1) == 0;
 	}
 	
-	public synchronized void fall() {
+	protected synchronized void fall() {
 		// TODO implement fall
 		if (this.isOnGround())
 			yTargetSpeed = 0f;
@@ -78,11 +79,11 @@ public class PlayerCharacter implements Renderable {
 			yTargetSpeed = TERMINAL_SPEED;
 	}
 	
-	public void updateBoundaries() {
+	protected void updateBoundaries() {
 		boundaries.setLocation(x, y);
 	}
 
-	public synchronized void moveX() {
+	protected synchronized void moveX() {
 		xSpeed = xTargetSpeed*xAcceleration + xSpeed*(1-xAcceleration);
 		int speedFloor = (int)Math.floor(xSpeed);
 		int newX = x;
@@ -109,7 +110,7 @@ public class PlayerCharacter implements Renderable {
 
 	}
 	
-	public synchronized void moveY() {
+	protected synchronized void moveY() {
 		ySpeed = yTargetSpeed*yAcceleration + ySpeed*(1-yAcceleration);
 		int speedFloor = (int)Math.floor(ySpeed);
 		int newY = y;

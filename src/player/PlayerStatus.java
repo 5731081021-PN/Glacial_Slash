@@ -3,11 +3,10 @@
  * Shows the status on the screen, such as mana and hand
  */
 
-package entity;
+package player;
 
 import java.util.List;
 
-import entity.card.SkillCard;
 import entity.map.GameMap;
 
 import java.awt.Graphics2D;

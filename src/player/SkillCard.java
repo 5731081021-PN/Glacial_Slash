@@ -2,7 +2,7 @@
  * Abstract class representing every kind of cards
  */
 
-package entity.card;
+package player;
 
 import java.awt.Image;
 

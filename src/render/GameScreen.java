@@ -13,13 +13,13 @@ import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.KeyStroke;
 
-import entity.PlayerCharacter;
-import entity.PlayerStatus;
 import entity.map.GameMap;
 import input.InputUtility.CommandKey;
 import input.InputUtility.KeyPressedAction;
 import input.InputUtility.KeyReleasedAction;
-import thread.PlayerCharacterRunnable;
+import player.PlayerCharacter;
+import player.PlayerCharacterRunnable;
+import player.PlayerStatus;
 
 public class GameScreen extends JComponent {
 

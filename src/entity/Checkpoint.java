@@ -6,7 +6,7 @@ package entity;
 
 import java.awt.Graphics2D;
 
-import entity.card.SkillCard;
+import player.SkillCard;
 import render.Renderable;
 
 public class Checkpoint implements Renderable {
