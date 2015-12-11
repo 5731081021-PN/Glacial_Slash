@@ -1,16 +1,19 @@
 package res;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
-import java.net.URISyntaxException;
-
+import java.io.InputStream;
 import javax.imageio.ImageIO;
 
 public class Resource {
 
 	public static BufferedImage playerIdleSprite;
 	public static BufferedImage floorTile;
+<<<<<<< HEAD
+=======
+	
+	public static InputStream emptyMap, testMap, bigMap;
+>>>>>>> refs/remotes/5731025921-CJ/master
 
 	public static File emptyMap, testMap, bigMap;
 	public static File mana[], maxMana[], slash;
@@ -30,6 +33,7 @@ public class Resource {
 			floorTile = null;
 		}
 
+<<<<<<< HEAD
 		try {
 			emptyMap = new File(loader.getResource("res/map/emptyMap.map").toURI());
 		} catch (URISyntaxException e) {
@@ -67,6 +71,12 @@ public class Resource {
 			} catch (URISyntaxException e) {
 				slash = null;
 			}
+=======
+		emptyMap = loader.getResourceAsStream("res/map/emptyMap.map");
+		testMap = loader.getResourceAsStream("res/map/testMap.map");
+		bigMap = loader.getResourceAsStream("res/map/bigMap.map");
+//			bigMap = new File();
+>>>>>>> refs/remotes/5731025921-CJ/master
 
 	}
 

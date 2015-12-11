@@ -6,11 +6,8 @@ package entity.map;
 
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.Scanner;
-
-import javax.swing.JOptionPane;
 
 import render.GameScreen;
 import render.Renderable;
@@ -21,15 +18,10 @@ public class GameMap implements Renderable {
 	private Tile[][] tileMap;
 	private static int tileWidth = 70, tileHeight = 70;
 
-	public GameMap(File mapFile) {
+	public GameMap(InputStream mapFile) {
 		Scanner fileScanner;
 
-		try {
-			fileScanner = new Scanner(mapFile);
-		} catch (FileNotFoundException e) {
-			JOptionPane.showMessageDialog(null, "File not found", "Error", JOptionPane.ERROR_MESSAGE);
-			return;
-		}
+		fileScanner = new Scanner(mapFile);
 		
 		// TODO add some kind of file encoding
 		
@@ -47,6 +39,9 @@ public class GameMap implements Renderable {
 				}
 			}
 		}
+		
+		fileScanner.close();
+		
 	}
 	
 	public int getWidth() {
@@ -55,6 +50,14 @@ public class GameMap implements Renderable {
 
 	public int getHeight() {
 		return height;
+	}
+	
+	public int getScreenWidth() {
+		return width*tileWidth;
+	}
+
+	public int getScreenHeight() {
+		return height*tileHeight;
 	}
 
 	public int movableWidth(Rectangle collisionBox, int direction) {
@@ -68,7 +71,7 @@ public class GameMap implements Renderable {
 		
 		int startTile = frontBoundary/tileWidth;
 		
-		int maxMovableWidth = direction*Integer.MAX_VALUE;
+		int maxMovableWidth = (direction < 0 ? 0 : 1)*(this.getScreenWidth()) - frontBoundary;
 
 		for (int tileY = upperBoundaryTile; tileY <= lowerBoundaryTile; tileY++) {
 			int tileX = startTile;
@@ -98,7 +101,7 @@ public class GameMap implements Renderable {
 		
 		int startTile = frontBoundary/tileHeight;
 		
-		int maxMovableHeight = direction*Integer.MAX_VALUE;
+		int maxMovableHeight = (direction < 0 ? 0 : 1)*(this.getScreenHeight()) - frontBoundary;
 
 		for (int tileX = leftBoundaryTile; tileX <= rightBoundaryTile; tileX++) {
 			int tileY = startTile;
@@ -123,8 +126,8 @@ public class GameMap implements Renderable {
 		int cameraY = GameScreen.getScreen().getCameraY();
 		int firstTileX = cameraX/tileWidth;
 		int firstTileY = cameraY/tileHeight;
-		int lastTileX = firstTileX + GameScreen.getScreen().getWidth()/tileWidth;
-		int lastTileY = firstTileY + GameScreen.getScreen().getHeight()/tileHeight;
+		int lastTileX = firstTileX + GameScreen.getScreen().getWidth()/tileWidth + 1;
+		int lastTileY = firstTileY + GameScreen.getScreen().getHeight()/tileHeight + 1;
 		
 		try {
 			for (int tileX = firstTileX; tileX <= lastTileX; tileX++) {

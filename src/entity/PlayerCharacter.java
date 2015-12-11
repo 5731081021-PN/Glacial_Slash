@@ -15,8 +15,8 @@ import res.Resource;
 
 public class PlayerCharacter implements Renderable {
 
-	public static final int LEFT = -1, RIGHT = 1;
-	public static final float WALK_SPEED = 16f, JUMP_INITIAL_SPEED = -80f, TERMINAL_SPEED = 40f;
+	public static final int LEFT = -1, RIGHT = 1, IDLE = 0;
+	public static final float WALK_SPEED = 8f, JUMP_INITIAL_SPEED = -30f, TERMINAL_SPEED = 16f;
 	private int x, y, facingDirection;
 	private float xRemainder, yRemainder, xSpeed, ySpeed;
 	private float xTargetSpeed, yTargetSpeed, xAcceleration, yAcceleration;
@@ -28,14 +28,14 @@ public class PlayerCharacter implements Renderable {
 		// implement x y
 		x = 640;
 		xRemainder = 0f;
-		y = 360;
+		y = 100;
 		yRemainder = 0f;
 		xSpeed = 0f;
 		ySpeed = 0f;
 		xTargetSpeed = 0f;
 		yTargetSpeed = TERMINAL_SPEED;
-		xAcceleration = 1f;
-		yAcceleration = 0.1f;
+		xAcceleration = 0.9f;
+		yAcceleration = 0.04f;
 		boundaries = new Rectangle(x, y, ((BufferedImage)sprite).getWidth(), ((BufferedImage)sprite).getHeight());
 		facingDirection = 1;
 	}
@@ -43,8 +43,17 @@ public class PlayerCharacter implements Renderable {
 	public synchronized int getX() {
 		return x;
 	}
+
 	public synchronized int getY() {
 		return y;
+	}
+	
+	public synchronized int getCenterX() {
+		return x + (int)(boundaries.getWidth()/2);
+	}
+	
+	public synchronized int getCenterY() {
+		return y + (int)(boundaries.getHeight()/2);
 	}
 
 	// Motion
@@ -52,21 +61,24 @@ public class PlayerCharacter implements Renderable {
 	public synchronized void walk(int direction) {
 		xTargetSpeed = direction*WALK_SPEED;
 	}
-
 	public synchronized void jump() {
 		// TODO implement jump
 		ySpeed = JUMP_INITIAL_SPEED;
 	}
 	
-	public synchronized void fall() {
-		// TODO implement fall
-		if (Math.abs(PlayerStatus.getPlayer().getCurrentMap().movableHeight(boundaries, 1)) > 0)
-			yTargetSpeed = TERMINAL_SPEED;
-		else
-			yTargetSpeed = 0f;
+	public boolean isOnGround() {
+		return PlayerStatus.getPlayer().getCurrentMap().movableHeight(boundaries, 1) == 0;
 	}
 	
-	public synchronized void updateBoundaries() {
+	public synchronized void fall() {
+		// TODO implement fall
+		if (this.isOnGround())
+			yTargetSpeed = 0f;
+		else
+			yTargetSpeed = TERMINAL_SPEED;
+	}
+	
+	public void updateBoundaries() {
 		boundaries.setLocation(x, y);
 	}
 
@@ -77,12 +89,12 @@ public class PlayerCharacter implements Renderable {
 		float newXRemainder = xRemainder;
 		newX += speedFloor;
 		newXRemainder += xSpeed - speedFloor;
-		facingDirection = Integer.signum(Float.compare(xSpeed, 0f));
+		int movingDirection = Integer.signum(Float.compare(xSpeed, 0f));
+		facingDirection = (movingDirection != 0)? movingDirection : facingDirection;
 		if (Float.compare(newXRemainder, 1f) > 0) {
 			newXRemainder -= 1f;
 			newX++;
 		}
-		// TODO Check collision
 		
 		int movableWidth = PlayerStatus.getPlayer().getCurrentMap().movableWidth(boundaries, Float.compare(xSpeed, 0f));
 		if (Math.abs(movableWidth) <= Math.abs(newX - x)) {
