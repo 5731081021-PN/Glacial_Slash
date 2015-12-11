@@ -180,6 +180,26 @@ public class PlayerCharacter implements Renderable {
 		}).start();
 		// TODO play sky uppercut animation
 	}
+	
+	protected void performGlacialDrift() {
+		freezePlayerControlCount = 15;
+		yAcceleration = 0f;
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				while (getFreezePlayerControlCount() > 0) {
+					xTargetSpeed = facingDirection*50f;
+					ySpeed = 0;
+					Thread.yield();
+					try {
+						Thread.sleep(1);
+					} catch (InterruptedException e) {}
+				}
+				yAcceleration = 0.04f;
+			}
+		}).start();
+	}
 
 	@Override
 	public void render(Graphics2D g) {

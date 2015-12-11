@@ -64,7 +64,6 @@ public class PlayerCharacterRunnable implements Runnable {
 					} catch (SkillCardUnusableException e) {}
 			}
 
-			//TODO slashing with the sabre
 			if (InputUtility.getKeyTriggered(CommandKey.SLASH)) {
 				if (InputUtility.getKeyPressed(CommandKey.UP)) {
 					try {
@@ -83,8 +82,21 @@ public class PlayerCharacterRunnable implements Runnable {
 				else
 					player.slash();
 			}
-			//TODO use skills
 
+			if (InputUtility.getKeyTriggered(CommandKey.DASH)) {
+				if (InputUtility.getKeyPressed(CommandKey.LEFT) || InputUtility.getKeyPressed(CommandKey.RIGHT)) {
+					try {
+						// Debug
+						PlayerStatus.getPlayer().addCard(SkillCard.createSkillCard("Glacial Drift"));
+						PlayerStatus.getPlayer().addCard(SkillCard.createSkillCard("Glacial Drift"));
+						PlayerStatus.getPlayer().chargeMana(SkillCard.createSkillCard("Glacial Drift"));
+						PlayerStatus.getPlayer().chargeMana(SkillCard.createSkillCard("Glacial Drift"));
+						PlayerStatus.getPlayer().addCard(SkillCard.createSkillCard("Glacial Drift"));
+						
+						PlayerStatus.getPlayer().useCard(SkillCard.createSkillCard("Glacial Drift"));
+					} catch (SkillCardUnusableException e) {}
+				}
+			}
 			
 		}
 		else {

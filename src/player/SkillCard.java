@@ -22,6 +22,7 @@ public abstract class SkillCard implements Renderable, Comparable<SkillCard> {
 		switch (name) {
 		case "Sky Uppercut": return new SkyUppercut();
 		case "Double Jump": return new DoubleJump();
+		case "Glacial Drift": return new GlacialDrift();
 		default: return null;
 		}
 	}
