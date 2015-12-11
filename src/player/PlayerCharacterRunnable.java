@@ -52,14 +52,14 @@ public class PlayerCharacterRunnable implements Runnable {
 						player.jump();
 					else
 						try {
-							PlayerStatus.getPlayer().useCard(SkillCard.createSkillCard("Double Jump"));
+							PlayerStatus.getPlayer().useCard(SkillCard.DOUBLE_JUMP);
 						} catch (SkillCardUnusableException e) {}
 				}
 
 				if (InputUtility.getKeyTriggered(CommandKey.SLASH)) {
 					if (InputUtility.getKeyPressed(CommandKey.UP)) {
 						try {
-							PlayerStatus.getPlayer().useCard(SkillCard.createSkillCard("Sky Uppercut"));
+							PlayerStatus.getPlayer().useCard(SkillCard.SKY_UPPERCUT);
 						} catch (SkillCardUnusableException e) {
 							player.slash();
 						}
@@ -71,7 +71,7 @@ public class PlayerCharacterRunnable implements Runnable {
 				if (InputUtility.getKeyTriggered(CommandKey.DASH)) {
 					if (InputUtility.getKeyPressed(CommandKey.LEFT) || InputUtility.getKeyPressed(CommandKey.RIGHT)) {
 						try {
-							PlayerStatus.getPlayer().useCard(SkillCard.createSkillCard("Glacial Drift"));
+							PlayerStatus.getPlayer().useCard(SkillCard.GLACIAL_DRIFT);
 						} catch (SkillCardUnusableException e) {}
 					}
 				}

@@ -25,6 +25,7 @@ public class GameScreen extends JComponent {
 
 	private static final long serialVersionUID = 8861317653703713044L;
 	
+	public static final int SCREEN_WIDTH = 1280, SCREEN_HEIGHT = 720;
 	private static GameScreen screen;
 	private GameMap currentMap;
 	private PlayerStatus playerStatus;
@@ -39,7 +40,7 @@ public class GameScreen extends JComponent {
 	}
 	
 	private GameScreen() {
-		this.setPreferredSize(new Dimension(1280, 720));
+		this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
 		
 		this.setDoubleBuffered(true);
 		
@@ -47,7 +48,7 @@ public class GameScreen extends JComponent {
 		currentMap = playerStatus.getCurrentMap();
 		playerCharacter = playerStatus.getPlayerCharacter();
 		camera = new Point(0, 0);
-		buffer = new BufferedImage(1280, 720, BufferedImage.TYPE_INT_RGB);
+		buffer = new BufferedImage(SCREEN_WIDTH, SCREEN_HEIGHT, BufferedImage.TYPE_INT_RGB);
 		
 		this.setKeyBinding();
 		// For testing purpose
@@ -85,12 +86,12 @@ public class GameScreen extends JComponent {
 	}
 	
 	public void centerCameraAt(int x, int y) {
-		camera.x = x - 640;
+		camera.x = x - SCREEN_WIDTH/2;
 		if (camera.x < 0) camera.x = 0;
-		if (camera.x + 1280 > currentMap.getScreenWidth()) camera.x = currentMap.getScreenWidth() - 1280;
-		camera.y = y - 360;
+		if (camera.x + SCREEN_WIDTH > currentMap.getScreenWidth()) camera.x = currentMap.getScreenWidth() - SCREEN_WIDTH;
+		camera.y = y - SCREEN_HEIGHT/2;
 		if (camera.y < 0) camera.y = 0;
-		if (camera.y + 720 > currentMap.getScreenHeight()) camera.y = currentMap.getScreenHeight() - 720;
+		if (camera.y + SCREEN_HEIGHT > currentMap.getScreenHeight()) camera.y = currentMap.getScreenHeight() - SCREEN_HEIGHT;
 	}
 
 	private void setKeyBinding() {
