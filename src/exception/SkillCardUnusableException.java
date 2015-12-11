@@ -22,7 +22,7 @@ public class SkillCardUnusableException extends Exception {
 		
 		NO_SUCH_CARD_IN_HAND (1, "No such card in hand"),
 		NOT_ENOUGH_MANA (2, "Not enough mana"),
-		WRONG_USE_CONDITION (3, "Wrong use condition");
+		ACTIVATE_CONDITION_NOT_MET (3, "Activate condition not met");
 		
 		private int typeNumber;
 		private String message;

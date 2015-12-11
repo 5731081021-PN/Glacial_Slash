@@ -31,7 +31,7 @@ public class SkyUppercut extends SkillCard {
 	@Override
 	public void activate() throws SkillCardUnusableException {
 		// TODO Auto-generated method stub
-		if (!PlayerStatus.getPlayer().getPlayerCharacter().isOnGround()) throw new SkillCardUnusableException(SkillCardUnusableException.UnusableType.WRONG_USE_CONDITION);
+		if (!PlayerStatus.getPlayer().getPlayerCharacter().isOnGround()) throw new SkillCardUnusableException(SkillCardUnusableException.UnusableType.ACTIVATE_CONDITION_NOT_MET);
 		playActivateAnimation();
 		PlayerStatus.getPlayer().getPlayerCharacter().performSkyUpperCut();
 	}
