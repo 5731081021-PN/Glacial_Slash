@@ -22,6 +22,10 @@ public abstract class SkillCard implements Renderable, Comparable<SkillCard> {
 		throw new WrongCardNameFormatException();
 	}
 	
+	public void playActivateAnimation() {
+		// TODO play activate animation
+	}
+	
 	@Override
 	public int compareTo(SkillCard other) {
 		int costCompare = Integer.compare(this.cost, other.cost);

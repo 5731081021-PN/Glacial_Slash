@@ -8,6 +8,7 @@ package player;
 import java.util.List;
 
 import entity.map.GameMap;
+import exception.CardUnusableException;
 
 import java.awt.Graphics2D;
 import java.util.ArrayList;
@@ -65,6 +66,18 @@ public class PlayerStatus implements Renderable {
 		for (SkillCard s: skillCards) {
 			hand.add(s);
 		}
+	}
+	
+	public void useCard(SkillCard used) throws CardUnusableException {
+		if (hand.contains(used)) {
+			if (currentMana >= used.cost) {
+				used.activate();
+				currentMana -= used.cost;
+				hand.remove(used);
+			}
+			else throw new CardUnusableException(CardUnusableException.UnusableType.NOT_ENOUGH_MANA);
+		}
+		else throw new CardUnusableException(CardUnusableException.UnusableType.NO_SUCH_CARD_IN_HAND);
 	}
 	
 	public GameMap getCurrentMap() {
