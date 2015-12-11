@@ -1,12 +1,12 @@
 package exception;
 
-public class CardUnusableException extends Exception {
+public class SkillCardUnusableException extends Exception {
 
 	private static final long serialVersionUID = 6541084900664503268L;
 	
 	private UnusableType type;
 	
-	public CardUnusableException(UnusableType type) {
+	public SkillCardUnusableException(UnusableType type) {
 		this.type = type;
 	}
 	

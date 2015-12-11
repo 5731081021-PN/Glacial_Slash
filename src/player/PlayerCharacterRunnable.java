@@ -4,7 +4,7 @@
 
 package player;
 
-import exception.CardUnusableException;
+import exception.SkillCardUnusableException;
 import input.InputUtility;
 import input.InputUtility.CommandKey;
 import render.GameScreen;
@@ -61,7 +61,7 @@ public class PlayerCharacterRunnable implements Runnable {
 						PlayerStatus.getPlayer().addCard(SkillCard.createSkillCard("Double Jump"));
 
 						PlayerStatus.getPlayer().useCard(SkillCard.createSkillCard("Double Jump"));
-					} catch (CardUnusableException e) {}
+					} catch (SkillCardUnusableException e) {}
 			}
 
 			//TODO slashing with the sabre
@@ -76,7 +76,7 @@ public class PlayerCharacterRunnable implements Runnable {
 						PlayerStatus.getPlayer().addCard(SkillCard.createSkillCard("Sky Uppercut"));
 
 						PlayerStatus.getPlayer().useCard(SkillCard.createSkillCard("Sky Uppercut"));
-					} catch (CardUnusableException e) {
+					} catch (SkillCardUnusableException e) {
 						player.slash();
 					}
 				}

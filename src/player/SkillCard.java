@@ -6,7 +6,7 @@ package player;
 
 import java.awt.Image;
 
-import exception.CardUnusableException;
+import exception.SkillCardUnusableException;
 import render.Renderable;
 
 public abstract class SkillCard implements Renderable, Comparable<SkillCard> {
@@ -15,7 +15,7 @@ public abstract class SkillCard implements Renderable, Comparable<SkillCard> {
 	protected int[] command; // maybe hardcode the command to player
 	protected Image cardImage;
 	
-	public abstract void activate() throws CardUnusableException;
+	public abstract void activate() throws SkillCardUnusableException;
 	
 	public static final SkillCard createSkillCard(String name) {
 		// TODO create new SkillCard from its name

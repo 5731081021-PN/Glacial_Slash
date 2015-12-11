@@ -2,7 +2,7 @@ package player;
 
 import java.awt.Graphics2D;
 
-import exception.CardUnusableException;
+import exception.SkillCardUnusableException;
 
 public class SkyUppercut extends SkillCard {
 
@@ -29,9 +29,9 @@ public class SkyUppercut extends SkillCard {
 	}
 
 	@Override
-	public void activate() throws CardUnusableException {
+	public void activate() throws SkillCardUnusableException {
 		// TODO Auto-generated method stub
-		if (!PlayerStatus.getPlayer().getPlayerCharacter().isOnGround()) throw new CardUnusableException(CardUnusableException.UnusableType.WRONG_USE_CONDITION);
+		if (!PlayerStatus.getPlayer().getPlayerCharacter().isOnGround()) throw new SkillCardUnusableException(SkillCardUnusableException.UnusableType.WRONG_USE_CONDITION);
 		playActivateAnimation();
 		PlayerStatus.getPlayer().getPlayerCharacter().performSkyUpperCut();
 	}

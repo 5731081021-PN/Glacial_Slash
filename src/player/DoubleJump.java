@@ -2,7 +2,7 @@ package player;
 
 import java.awt.Graphics2D;
 
-import exception.CardUnusableException;
+import exception.SkillCardUnusableException;
 
 public class DoubleJump extends SkillCard {
 
@@ -29,8 +29,8 @@ public class DoubleJump extends SkillCard {
 	}
 
 	@Override
-	public void activate() throws CardUnusableException {
-		if (PlayerStatus.getPlayer().getPlayerCharacter().getAirJumpCount() <= 0) throw new CardUnusableException(CardUnusableException.UnusableType.WRONG_USE_CONDITION);
+	public void activate() throws SkillCardUnusableException {
+		if (PlayerStatus.getPlayer().getPlayerCharacter().getAirJumpCount() <= 0) throw new SkillCardUnusableException(SkillCardUnusableException.UnusableType.WRONG_USE_CONDITION);
 		playActivateAnimation();
 		PlayerStatus.getPlayer().getPlayerCharacter().jump();
 	}
