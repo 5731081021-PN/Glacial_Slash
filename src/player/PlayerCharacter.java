@@ -135,6 +135,11 @@ public class PlayerCharacter implements Renderable {
 
 		// TODO Change sprite to upward or downward motion accordingly
 	}
+	
+	// Special moves
+	protected void slash() {
+		// TODO play slash animation
+	}
 
 	@Override
 	public void render(Graphics2D g) {

@@ -47,7 +47,12 @@ public class PlayerCharacterRunnable implements Runnable {
 				if (player.isOnGround())
 					player.jump();
 			}
+
 			//TODO slashing with the sabre
+			if (InputUtility.getKeyTriggered(CommandKey.SLASH)) {
+				if (!InputUtility.getKeyPressed(CommandKey.UP))
+					player.slash();
+			}
 			//TODO use skills
 
 			player.moveX();
