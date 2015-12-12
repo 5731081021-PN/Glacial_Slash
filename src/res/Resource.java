@@ -8,13 +8,14 @@ import javax.imageio.ImageIO;
 public class Resource {
 
 	public static BufferedImage playerIdleSprite;
-	public static BufferedImage floorTile, tileLeft, tileRight, tileMid, tileHalf;
+	public static BufferedImage floorTile, tileLeft, tileRight, tileMid, tileTop;
 	public static BufferedImage[] mana = new BufferedImage[21], maxMana = new BufferedImage[21];
 	public static BufferedImage slash;
 	public static BufferedImage doubleJump, glacialDrift, iceSummon, skyUppercut, concentration;
 	public static BufferedImage iceBlock;
+	public static BufferedImage[] stand = new BufferedImage[2];
 
-	public static InputStream emptyMap, testMap, bigMap;
+	public static InputStream emptyMap, testMap, bigMap ,tutorialMap;
 
 	private static ClassLoader loader = Resource.class.getClassLoader();
 
@@ -27,7 +28,7 @@ public class Resource {
 		}
 		// Load tileset
 		try {
-			floorTile = ImageIO.read(loader.getResource("res/tile/floor.png"));
+			floorTile = ImageIO.read(loader.getResource("res/tile/tile_ground.png"));
 		} catch (IOException e) {
 			floorTile = null;
 		}
@@ -35,13 +36,13 @@ public class Resource {
 			tileLeft = ImageIO.read(loader.getResource("res/tile/tile_left.png"));
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
-			tileLeft =null;
+			tileLeft = null;
 		}
 		try {
 			tileRight = ImageIO.read(loader.getResource("res/tile/tile_right.png"));
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
-			tileRight =null;
+			tileRight = null;
 		}
 		try {
 			tileMid = ImageIO.read(loader.getResource("res/tile/tile_mid.png"));
@@ -50,10 +51,16 @@ public class Resource {
 			tileMid = null;
 		}
 		try {
-			tileHalf = ImageIO.read(loader.getResource("res/tile/tile_half.png"));
+			tileTop = ImageIO.read(loader.getResource("res/tile/tile_top.png"));
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
-			tileHalf = null;
+			tileTop = null;
+		}
+		try {
+			iceBlock = ImageIO.read(loader.getResource("res/tile/tile_ice.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			iceBlock = null;
 		}
 
 		// Load mana,maxMana and slash
@@ -101,22 +108,31 @@ public class Resource {
 			// TODO Auto-generated catch block
 			skyUppercut = null;
 		}
-		try {
-			iceBlock = ImageIO.read(loader.getResource("res/ice/iceBlock.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			iceBlock = null;
-		}
+		
 		try {
 			concentration = ImageIO.read(loader.getResource("res/card/Concentration.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			concentration = null;
 		}
+		//Load sprite
+		try {
+			stand[0] = ImageIO.read(loader.getResource("res/sprite/stand/stl0.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			stand[0] = null;
+		}
+		try {
+			stand[1] = ImageIO.read(loader.getResource("res/sprite/stand/str0.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			stand[1] = null;
+		}
 
 		emptyMap = loader.getResourceAsStream("res/map/emptyMap.map");
 		testMap = loader.getResourceAsStream("res/map/testMap.map");
 		bigMap = loader.getResourceAsStream("res/map/bigMap.map");
+		tutorialMap = loader.getResourceAsStream("res/map/tutorialMap.map");
 
 	}
 
