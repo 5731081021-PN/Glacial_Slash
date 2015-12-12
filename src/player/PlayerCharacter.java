@@ -23,7 +23,7 @@ public class PlayerCharacter implements Renderable {
 	private float xTargetSpeed, yTargetSpeed, xAcceleration, yAcceleration;
 	private Rectangle boundaries;
 	private int boundaryX, boundaryY, boundaryWidth, boundaryHeight;
-	private Image sprite = Resource.stand[1];
+	private Image sprite = Resource.standSprite[1];
 	private int freezePlayerControlCount, airJumpCount;
 	
 	public PlayerCharacter() {
@@ -157,7 +157,7 @@ public class PlayerCharacter implements Renderable {
 			newY++;
 		}
 
-		sprite = Resource.stand[(facingDirection+1)/2];
+		sprite = Resource.standSprite[(facingDirection+1)/2];
 
 		int movableHeight = PlayerStatus.getPlayer().getCurrentMap().movableHeight(boundaries, Float.compare(ySpeed, 0f));
 		if (Math.abs(movableHeight) <= Math.abs(newY - y)) {

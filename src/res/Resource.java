@@ -13,7 +13,7 @@ public class Resource {
 	public static BufferedImage[] mana = new BufferedImage[21], maxMana = new BufferedImage[21];
 	public static BufferedImage slash;
 	public static BufferedImage doubleJump, glacialDrift, iceSummon, skyUppercut, concentration;
-	public static BufferedImage[] stand = new BufferedImage[2];
+	public static BufferedImage[] standSprite = new BufferedImage[2];
 
 	public static InputStream emptyMap, testMap, bigMap, tutorialMap;
 
@@ -135,16 +135,16 @@ public class Resource {
 		}
 		// Load sprite
 		try {
-			stand[0] = ImageIO.read(loader.getResource("res/sprite/stand/stl0.png"));
+			standSprite[0] = ImageIO.read(loader.getResource("res/sprite/stand/stl0.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			stand[0] = null;
+			standSprite[0] = null;
 		}
 		try {
-			stand[1] = ImageIO.read(loader.getResource("res/sprite/stand/str0.png"));
+			standSprite[1] = ImageIO.read(loader.getResource("res/sprite/stand/str0.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			stand[1] = null;
+			standSprite[1] = null;
 		}
 
 		emptyMap = loader.getResourceAsStream("res/map/emptyMap.map");
