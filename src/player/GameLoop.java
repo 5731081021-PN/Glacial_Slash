@@ -20,11 +20,22 @@ public class GameLoop implements Runnable {
 	}
 
 	public void run() {
+		
+		final long FRAME_RATE = 30;
+		final long UPDATE_TIME = 1000000000 / FRAME_RATE;
+		
+		long lastUpdateTime = System.nanoTime();
+
 		while (true) {
-			// TODO Auto-generated method stub
-			try {
-				Thread.sleep(35);
-			} catch (InterruptedException e) {}
+
+			long now = System.nanoTime();
+
+			while (now - lastUpdateTime < UPDATE_TIME) {
+				now = System.nanoTime();
+				Thread.yield();
+			}
+
+			lastUpdateTime = now;
 		
 			if (InputUtility.getKeyTriggered(CommandKey.EXIT)) {
 				InputUtility.clearKeyPressed();
@@ -37,8 +48,10 @@ public class GameLoop implements Runnable {
 		
 			playerInputUpdate();
 
-			GameScreen.getScreen().centerCameraAt(player.getCenterX(), player.getCenterY());
-			GameScreen.getScreen().repaint();
+			synchronized (GameScreen.getScreen()) {
+				GameScreen.getScreen().notifyAll();
+			}
+
 		}
 
 	}

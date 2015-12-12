@@ -4,6 +4,7 @@
 
 package entity.map;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
@@ -158,6 +159,9 @@ public class GameMap implements Renderable {
 		int lastTileY = firstTileY + GameScreen.SCREEN_HEIGHT/tileHeight + 1;
 		
 		g.drawImage(background, 0, 0, null);
+		// Placeholder
+		g.setBackground(Color.WHITE);
+		g.clearRect(0, 0, GameScreen.SCREEN_WIDTH, GameScreen.SCREEN_HEIGHT);
 		
 		try {
 			for (int tileX = firstTileX; tileX <= lastTileX; tileX++) {
