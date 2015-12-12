@@ -8,14 +8,14 @@ import javax.imageio.ImageIO;
 public class Resource {
 
 	public static BufferedImage playerIdleSprite;
-	public static BufferedImage tileGround, tileLeft, tileRight, tileMid, tileTop, tileIce;
+	public static BufferedImage tileGround, tileLeft, tileRight, tileMid, tileTop, tileTopLeft, tileTopRight, tileIce;
 	public static BufferedImage checkpoint;
 	public static BufferedImage[] mana = new BufferedImage[21], maxMana = new BufferedImage[21];
 	public static BufferedImage slash;
 	public static BufferedImage doubleJump, glacialDrift, iceSummon, skyUppercut, concentration;
 	public static BufferedImage[] standSprite = new BufferedImage[2];
 
-	public static InputStream emptyMap, testMap, bigMap ,tutorialMap;
+	public static InputStream emptyMap, testMap, bigMap, tutorialMap;
 
 	private static ClassLoader loader = Resource.class.getClassLoader();
 
@@ -26,7 +26,7 @@ public class Resource {
 		} catch (IOException e) {
 			playerIdleSprite = null;
 		}
-		// Load tileset
+		// Load tileset ..
 		try {
 			tileGround = ImageIO.read(loader.getResource("res/tile/tile_ground.png"));
 		} catch (IOException e) {
@@ -62,12 +62,24 @@ public class Resource {
 			// TODO Auto-generated catch block
 			tileIce = null;
 		}
-			try {
-				checkpoint = ImageIO.read(loader.getResource("res/tile/checkpoint.png"));
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				checkpoint = null;
-			}
+		try {
+			checkpoint = ImageIO.read(loader.getResource("res/tile/checkpoint.png"));
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			checkpoint = null;
+		}
+		try {
+			tileTopLeft = ImageIO.read(loader.getResource("res/tile/tile_topleft.png"));
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			tileTopLeft = null;
+		}
+		try {
+			tileTopRight = ImageIO.read(loader.getResource("res/tile/tile_topright.png"));
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			tileTopRight = null;
+		}
 
 		// Load mana,maxMana and slash
 		for (int i = 0; i <= 20; i++) {
@@ -114,14 +126,14 @@ public class Resource {
 			// TODO Auto-generated catch block
 			skyUppercut = null;
 		}
-		
+
 		try {
 			concentration = ImageIO.read(loader.getResource("res/card/Concentration.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			concentration = null;
 		}
-		//Load sprite
+		// Load sprite
 		try {
 			standSprite[0] = ImageIO.read(loader.getResource("res/sprite/stand/stl0.png"));
 		} catch (IOException e) {
