@@ -10,6 +10,8 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
+import input.InputUtility;
+import input.InputUtility.CommandKey;
 import render.PlayerAnimation;
 import render.Renderable;
 import res.Resource;
@@ -26,6 +28,7 @@ public class PlayerCharacter implements Renderable {
 	private int boundaryX, boundaryY, boundaryWidth, boundaryHeight;
 	private Image sprite = Resource.standSprite[1];
 	private int freezePlayerControlCount, airJumpCount;
+	private Thread walkAnimationThread = null;
 	
 	public PlayerCharacter() {
 		xSpeed = 0f;
@@ -91,13 +94,32 @@ public class PlayerCharacter implements Renderable {
 	
 	protected void walk(int direction) {
 		xTargetSpeed = direction*WALK_SPEED;
+		if (this.isOnGround() && direction != IDLE) {
+			if (walkAnimationThread == null) {
+				walkAnimationThread = new Thread(new PlayerAnimation(Resource.walkSprite, this, true));
+				walkAnimationThread.start();
+				new Thread(new Runnable() {
+					@Override
+					public void run() {
+						while (PlayerCharacter.this.isOnGround() && (InputUtility.getKeyPressed(CommandKey.LEFT) || InputUtility.getKeyPressed(CommandKey.RIGHT))) {
+							Thread.yield();
+							try {
+								Thread.sleep(1);
+							} catch (InterruptedException e) {}
+						}
+						walkAnimationThread.interrupt();
+						walkAnimationThread = null;
+					}
+				}).start();
+			}
+		}
 	}
 
 	protected void jump() {
 		ySpeed = JUMP_INITIAL_SPEED;
 		if (!this.isOnGround())
 			airJumpCount--;
-		Thread jumpAnimation = new Thread(new PlayerAnimation(Resource.jumpSprite, this));
+		Thread jumpAnimation = new Thread(new PlayerAnimation(Resource.jumpSprite, this, false));
 		jumpAnimation.start();
 
 		new Thread(new Runnable() {
@@ -199,9 +221,8 @@ public class PlayerCharacter implements Renderable {
 			yRemainder = newYRemainder;
 		}
 
-		// TODO Change sprite to upward or downward motion accordingly
 		if (!this.isOnGround() && Float.compare(ySpeed, 0f) >= 0) {
-			this.setSprite(Resource.jumpSprite[(facingDirection+1)/2][3]);
+			this.setSprite(Resource.jumpSprite[(facingDirection+1)/2][11]);
 		}
 	}
 	
@@ -257,6 +278,7 @@ public class PlayerCharacter implements Renderable {
 
 	@Override
 	public void render(Graphics2D g) {
+		// TODO fix render algorithm
 		g.drawImage(sprite, x - GameScreen.getScreen().getCameraX(), y - GameScreen.getScreen().getCameraY(), null);
 	}
 

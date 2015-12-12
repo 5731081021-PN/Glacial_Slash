@@ -9,11 +9,13 @@ public class PlayerAnimation extends Animation {
 	
 	private BufferedImage[][] animationSet;
 	private PlayerCharacter player;
+	private boolean isLooping;
 	
-	public PlayerAnimation(BufferedImage[][] animationSet, PlayerCharacter player) {
+	public PlayerAnimation(BufferedImage[][] animationSet, PlayerCharacter player, boolean isLooping) {
 		super(animationSet[0]);
 		this.animationSet = animationSet;
 		this.player = player;
+		this.isLooping = isLooping;
 	}
 
 	@Override
@@ -31,6 +33,9 @@ public class PlayerAnimation extends Animation {
 					return;
 				}
 			}
+			
+			if (isLooping && currentFrame >= frameCount)
+				currentFrame = 0;
 		}
 	}
 
