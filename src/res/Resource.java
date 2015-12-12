@@ -15,7 +15,7 @@ public class Resource {
 	public static BufferedImage doubleJump, glacialDrift, iceSummon, skyUppercut, concentration;
 	public static BufferedImage[] standSprite = new BufferedImage[2];
 	public static BufferedImage[][] jumpSprite = new BufferedImage[2][12];
-	public static BufferedImage[][] walkSprite = new BufferedImage[2][6];
+	public static BufferedImage[][] walkSprite = new BufferedImage[2][18];
 
 	public static InputStream emptyMap, testMap, bigMap, tutorialMap;
 
@@ -160,9 +160,9 @@ public class Resource {
 		}
 		
 		for (int i = 0; i <= 1; i++) {
-			for (int j = 0; j <= 5; j++) {
+			for (int j = 0; j <= 17; j++) {
 				try {
-					walkSprite[i][j] = ImageIO.read(loader.getResource("res/sprite/walk/w" + i + "" + j + ".png"));
+					walkSprite[i][j] = ImageIO.read(loader.getResource("res/sprite/walk/w" + i + "_" + j + ".png"));
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					walkSprite[i][j] = null;
