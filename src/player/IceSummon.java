@@ -20,6 +20,7 @@ public class IceSummon extends SkillCard {
 		if (!player.isOnGround()) throw new SkillCardUnusableException(SkillCardUnusableException.UnusableType.ACTIVATE_CONDITION_NOT_MET);
 		Point frontTile = player.getFrontTile();
 		if (!map.isOnGround(new Rectangle((int)frontTile.getX()*map.getTileWidth(), (int)frontTile.getY()*map.getTileHeight(), map.getTileWidth(), map.getTileHeight()))) throw new SkillCardUnusableException(SkillCardUnusableException.UnusableType.ACTIVATE_CONDITION_NOT_MET);
+		if (!map.getTileType((int)frontTile.getX(), (int)frontTile.getY()).isPassable()) throw new SkillCardUnusableException(SkillCardUnusableException.UnusableType.ACTIVATE_CONDITION_NOT_MET);
 		try {
 			map.freeze((int)frontTile.getX(), (int)frontTile.getY());
 		} catch (ArrayIndexOutOfBoundsException e) {

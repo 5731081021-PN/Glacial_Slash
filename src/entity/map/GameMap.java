@@ -87,6 +87,10 @@ public class GameMap implements Renderable {
 		tileMap[x][y] = Tile.ICE;
 	}
 	
+	public Tile getTileType(int tileX, int tileY) {
+		return tileMap[tileX][tileY];
+	}
+	
 	public Point getFrontTile(Rectangle collisionBox, int direction) {
 		direction = Integer.signum(direction);
 		int frontBoundary = (int)(collisionBox.getX() + (direction < 0 ? 0 : 1)*collisionBox.getWidth()) - direction;

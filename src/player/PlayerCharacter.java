@@ -70,7 +70,8 @@ public class PlayerCharacter implements Renderable {
 	}
 	
 	public Point getFrontTile() {
-		return PlayerStatus.getPlayer().getCurrentMap().getFrontTile(boundaries, facingDirection);
+		Rectangle spriteBoundary = new Rectangle(x, y, ((BufferedImage)sprite).getWidth(), ((BufferedImage)sprite).getHeight());
+		return PlayerStatus.getPlayer().getCurrentMap().getFrontTile(spriteBoundary, facingDirection);
 	}
 
 	// Motion
