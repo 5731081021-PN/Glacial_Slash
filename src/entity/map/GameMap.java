@@ -5,6 +5,7 @@
 package entity.map;
 
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.io.InputStream;
@@ -18,6 +19,7 @@ public class GameMap implements Renderable {
 	private int width, height;
 	private Tile[][] tileMap;
 	private static int tileWidth = 70, tileHeight = 70;
+	private Image background;
 
 	public GameMap(InputStream mapFile) {
 		Scanner fileScanner;
@@ -154,6 +156,8 @@ public class GameMap implements Renderable {
 		int firstTileY = cameraY/tileHeight;
 		int lastTileX = firstTileX + GameScreen.SCREEN_WIDTH/tileWidth + 1;
 		int lastTileY = firstTileY + GameScreen.SCREEN_HEIGHT/tileHeight + 1;
+		
+		g.drawImage(background, 0, 0, null);
 		
 		try {
 			for (int tileX = firstTileX; tileX <= lastTileX; tileX++) {

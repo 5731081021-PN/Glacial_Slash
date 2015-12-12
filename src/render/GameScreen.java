@@ -1,6 +1,5 @@
 package render;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -57,10 +56,8 @@ public class GameScreen extends JComponent {
 	protected void paintComponent(Graphics g) {
 		
 		Graphics2D g2d = ((BufferedImage)buffer).createGraphics();
-
-		// placeholder background
-		g2d.setBackground(Color.WHITE);
-		g2d.clearRect(0, 0, this.getWidth(), this.getHeight());
+		
+		g2d.clearRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 	
 		// draw map
 		currentMap.render(g2d);
