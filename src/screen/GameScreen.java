@@ -5,12 +5,13 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
-import java.awt.image.BufferedImage;
+import java.awt.image.VolatileImage;
 
 import javax.swing.ActionMap;
 import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.KeyStroke;
+import javax.swing.SwingUtilities;
 
 import entity.map.GameMap;
 import input.InputUtility.CommandKey;
@@ -47,15 +48,27 @@ public class GameScreen extends JComponent {
 		playerCharacter = playerStatus.getPlayerCharacter();
 		playerCharacter.setInitialPosition();
 		camera = new Point(0, 0);
-		buffer = new BufferedImage(SCREEN_WIDTH, SCREEN_HEIGHT, BufferedImage.TYPE_INT_RGB);
 		this.setKeyBinding();
 		
+		SwingUtilities.invokeLater(new Runnable() {
+			
+			@Override
+			public void run() {
+				while (!GameScreen.this.isDisplayable()) {
+					Thread.yield();
+					try {
+						Thread.sleep(1);
+					} catch (InterruptedException e) {}
+				}
+				buffer = GameScreen.this.createVolatileImage(SCREEN_WIDTH, SCREEN_HEIGHT);
+			}
+		});
 	}
-	
+
 	@Override
 	protected void paintComponent(Graphics g) {
 		
-		Graphics2D g2d = ((BufferedImage)buffer).createGraphics();
+		Graphics2D g2d = ((VolatileImage)buffer).createGraphics();
 		
 		g2d.clearRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 	
