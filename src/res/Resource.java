@@ -8,7 +8,7 @@ import javax.imageio.ImageIO;
 public class Resource {
 
 	public static BufferedImage playerIdleSprite;
-	public static BufferedImage floorTile, tileLeft, tileRight, tileMid, tileHalf;
+	public static BufferedImage tileGround, tileLeft, tileRight, tileMid, tileTop;
 	public static BufferedImage[] mana = new BufferedImage[21], maxMana = new BufferedImage[21];
 	public static BufferedImage slash;
 	public static BufferedImage doubleJump, glacialDrift, iceSummon, skyUppercut, concentration;
@@ -27,21 +27,21 @@ public class Resource {
 		}
 		// Load tileset
 		try {
-			floorTile = ImageIO.read(loader.getResource("res/tile/floor.png"));
+			tileGround = ImageIO.read(loader.getResource("res/tile/tile_ground.png"));
 		} catch (IOException e) {
-			floorTile = null;
+			tileGround = null;
 		}
 		try {
 			tileLeft = ImageIO.read(loader.getResource("res/tile/tile_left.png"));
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
-			tileLeft =null;
+			tileLeft = null;
 		}
 		try {
 			tileRight = ImageIO.read(loader.getResource("res/tile/tile_right.png"));
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
-			tileRight =null;
+			tileRight = null;
 		}
 		try {
 			tileMid = ImageIO.read(loader.getResource("res/tile/tile_mid.png"));
@@ -50,10 +50,10 @@ public class Resource {
 			tileMid = null;
 		}
 		try {
-			tileHalf = ImageIO.read(loader.getResource("res/tile/tile_half.png"));
+			tileTop = ImageIO.read(loader.getResource("res/tile/tile_top.png"));
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
-			tileHalf = null;
+			tileTop = null;
 		}
 
 		// Load mana,maxMana and slash
