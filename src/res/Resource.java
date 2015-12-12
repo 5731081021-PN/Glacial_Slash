@@ -16,6 +16,7 @@ public class Resource {
 	public static BufferedImage[] standSprite = new BufferedImage[2];
 	public static BufferedImage[][] jumpSprite = new BufferedImage[2][12];
 	public static BufferedImage[][] walkSprite = new BufferedImage[2][18];
+	public static BufferedImage[][] crushSprite = new BufferedImage[2][27];
 
 	public static InputStream emptyMap, testMap, bigMap, tutorialMap;
 
@@ -158,7 +159,7 @@ public class Resource {
 				}
 			}
 		}
-		
+
 		for (int i = 0; i <= 1; i++) {
 			for (int j = 0; j <= 17; j++) {
 				try {
@@ -169,8 +170,16 @@ public class Resource {
 				}
 			}
 		}
-		
-		
+		for (int i = 0; i <= 1; i++) {
+			for (int j = 0; j <= 26; j++) {
+				try {
+					crushSprite[i][j] = ImageIO.read(loader.getResource("res/sprite/walk/w" + i + "_" + j + ".png"));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					crushSprite[i][j] = null;
+				}
+			}
+		}
 
 		emptyMap = loader.getResourceAsStream("res/map/emptyMap.map");
 		testMap = loader.getResourceAsStream("res/map/testMap.map");
