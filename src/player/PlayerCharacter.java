@@ -10,9 +10,9 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
-import render.GameScreen;
 import render.Renderable;
 import res.Resource;
+import screen.GameScreen;
 
 public class PlayerCharacter implements Renderable {
 
@@ -26,8 +26,6 @@ public class PlayerCharacter implements Renderable {
 	private int freezePlayerControlCount, airJumpCount;
 	
 	public PlayerCharacter() {
-		// TODO Auto-generated constructor stub
-		// implement x y
 		x = 640;
 		xRemainder = 0f;
 		y = 100;
@@ -44,48 +42,47 @@ public class PlayerCharacter implements Renderable {
 		facingDirection = 1;
 	}
 	
-	public synchronized int getX() {
+	public int getX() {
 		return x;
 	}
 
-	public synchronized int getY() {
+	public int getY() {
 		return y;
 	}
 	
-	public synchronized int getCenterX() {
+	public int getCenterX() {
 		return x + (int)(boundaries.getWidth()/2);
 	}
 	
-	public synchronized int getCenterY() {
+	public int getCenterY() {
 		return y + (int)(boundaries.getHeight()/2);
 	}
 	
-	public synchronized Point getFrontTile() {
+	public Point getFrontTile() {
 		return PlayerStatus.getPlayer().getCurrentMap().getFrontTile(boundaries, facingDirection);
 	}
 
 	// Motion
 	
-	protected synchronized void walk(int direction) {
+	protected void walk(int direction) {
 		xTargetSpeed = direction*WALK_SPEED;
 	}
 
-	protected synchronized void jump() {
-		// TODO implement jump
+	protected void jump() {
 		ySpeed = JUMP_INITIAL_SPEED;
 		if (!this.isOnGround())
 			airJumpCount--;
 	}
 		
-	public synchronized int getFreezePlayerControlCount() {
+	public int getFreezePlayerControlCount() {
 		return freezePlayerControlCount;
 	}	
 
-	public synchronized void decreseFreezePlayerControlCount() {
+	public void decreseFreezePlayerControlCount() {
 		freezePlayerControlCount--;
 	}
 
-	public synchronized int getAirJumpCount() {
+	public int getAirJumpCount() {
 		return airJumpCount;
 	}
 	
@@ -93,8 +90,7 @@ public class PlayerCharacter implements Renderable {
 		return PlayerStatus.getPlayer().getCurrentMap().isOnGround(boundaries);
 	}
 	
-	protected synchronized void fall() {
-		// TODO implement fall
+	protected void fall() {
 		if (this.isOnGround()) {
 			yTargetSpeed = 0f;
 			airJumpCount = 1;
@@ -107,7 +103,7 @@ public class PlayerCharacter implements Renderable {
 		boundaries.setLocation(x, y);
 	}
 
-	protected synchronized void moveX() {
+	protected void moveX() {
 		xSpeed = xTargetSpeed*xAcceleration + xSpeed*(1-xAcceleration);
 		int speedFloor = (int)Math.floor(xSpeed);
 		int newX = x;
@@ -134,7 +130,7 @@ public class PlayerCharacter implements Renderable {
 
 	}
 	
-	protected synchronized void moveY() {
+	protected void moveY() {
 		ySpeed = yTargetSpeed*yAcceleration + ySpeed*(1-yAcceleration);
 		int speedFloor = (int)Math.floor(ySpeed);
 		int newY = y;
@@ -208,20 +204,7 @@ public class PlayerCharacter implements Renderable {
 
 	@Override
 	public void render(Graphics2D g) {
-		// TODO Auto-generated method stub
 		g.drawImage(sprite, x - GameScreen.getScreen().getCameraX(), y - GameScreen.getScreen().getCameraY(), null);
-	}
-
-	@Override
-	public boolean isVisible() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
-	@Override
-	public int getZ() {
-		// TODO Auto-generated method stub
-		return 0;
 	}
 
 }

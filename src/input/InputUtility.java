@@ -12,7 +12,7 @@ import java.util.Set;
 
 import javax.swing.AbstractAction;
 
-import render.GameScreen;
+import screen.GameScreen;
 
 public class InputUtility {
 
@@ -41,7 +41,11 @@ public class InputUtility {
 		else
 			keyTriggered.remove(key);
 	}
-	
+		
+	public static void clearKeyPressed() {
+		keyPressed.clear();
+	}
+
 	public static void clearKeyTriggered() {
 		keyTriggered.clear();
 	}
@@ -58,7 +62,9 @@ public class InputUtility {
 		HAND (KeyEvent.VK_S, "HAND"),
 		DASH (KeyEvent.VK_D, "DASH"),
 		JUMP (KeyEvent.VK_SPACE, "JUMP"),
-		DRAW (KeyEvent.VK_E, "DRAW");
+		DRAW (KeyEvent.VK_E, "DRAW"),
+		RETURN (KeyEvent.VK_R, "RETURN"),
+		EXIT (KeyEvent.VK_ESCAPE, "EXIT");
 		
 		private int key;
 		private String name;

@@ -4,30 +4,54 @@
 
 package player;
 
+import javax.swing.JOptionPane;
+
 import exception.SkillCardUnusableException;
 import input.InputUtility;
 import input.InputUtility.CommandKey;
-import render.GameScreen;
+import screen.GameScreen;
 
-public class PlayerCharacterRunnable implements Runnable {
+public class GameLoop implements Runnable {
 
 	private PlayerCharacter player;
 	
-	public PlayerCharacterRunnable() {
+	public GameLoop() {
 		this.player = PlayerStatus.getPlayer().getPlayerCharacter();
 	}
 
 	public void run() {
+		
+		final long FRAME_RATE = 30;
+		final long UPDATE_TIME = 1000000000 / FRAME_RATE;
+		
+		long lastUpdateTime = System.nanoTime();
+
 		while (true) {
-			// TODO Auto-generated method stub
-			try {
-				Thread.sleep(35);
-			} catch (InterruptedException e) {}
-			
+
+			long now = System.nanoTime();
+
+			while (now - lastUpdateTime < UPDATE_TIME) {
+				now = System.nanoTime();
+				Thread.yield();
+			}
+
+			lastUpdateTime = now;
+		
+			if (InputUtility.getKeyTriggered(CommandKey.EXIT)) {
+				InputUtility.clearKeyPressed();
+				if (JOptionPane.showConfirmDialog(null, "Are you sure want to exit?", "Exit", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+					synchronized (this) {
+						this.notifyAll();
+					}
+				}
+			}
+		
 			playerInputUpdate();
 
-			GameScreen.getScreen().centerCameraAt(player.getCenterX(), player.getCenterY());
-			GameScreen.getScreen().repaint();
+			synchronized (GameScreen.getScreen()) {
+				GameScreen.getScreen().notifyAll();
+			}
+
 		}
 
 	}
@@ -36,7 +60,7 @@ public class PlayerCharacterRunnable implements Runnable {
 	
 		player.updateBoundaries();
 		player.fall();
-	
+		
 		if (player.getFreezePlayerControlCount() <= 0) {
 
 			synchronized (PlayerStatus.getPlayer().getHand()) {

@@ -1,13 +1,35 @@
 import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 
-import render.MainFrame;
+import player.GameLoop;
+import render.RenderLoop;
+import screen.MainFrame;
 
 public class Main {
+	
+	private static Runnable gameLoop = new GameLoop(), renderLoop = new RenderLoop();
+	private static JFrame mainFrame;
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		JFrame mainFrame = new MainFrame();
-		mainFrame.setVisible(true);
+
+		SwingUtilities.invokeLater(new Runnable() {
+			
+			@Override
+			public void run() {
+				mainFrame = MainFrame.getFrame();
+				mainFrame.setVisible(true);
+			}
+		});
+
+		new Thread(gameLoop).start();
+		new Thread(renderLoop).start();
+
+		try {
+			synchronized (gameLoop) {
+				gameLoop.wait();
+			}
+		} catch (InterruptedException e) {}
+		mainFrame.dispose();
 	}
 
 }

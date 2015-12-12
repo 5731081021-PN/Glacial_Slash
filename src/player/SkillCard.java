@@ -8,8 +8,8 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 
 import exception.SkillCardUnusableException;
-import render.GameScreen;
 import render.Renderable;
+import screen.GameScreen;
 
 public abstract class SkillCard implements Renderable, Comparable<SkillCard> {
 
@@ -34,7 +34,6 @@ public abstract class SkillCard implements Renderable, Comparable<SkillCard> {
 		else if (name.startsWith("G")) return new GlacialDrift();
 		else if (name.startsWith("I")) return new IceSummon();
 		else if (name.startsWith("C")) {
-			// TODO implement concentration
 			String[] format = name.split("\\s+");
 			int n = Integer.parseInt(format[1]);
 			SkillCard[] drawnCards = new SkillCard[n];
@@ -67,16 +66,6 @@ public abstract class SkillCard implements Renderable, Comparable<SkillCard> {
 	@Override
 	public void render(Graphics2D g) {
 		g.drawImage(cardImage, x, y, null);
-	}
-	
-	@Override
-	public boolean isVisible() {
-		return true;
-	}
-	
-	@Override
-	public int getZ() {
-		return -1;
 	}
 
 	@Override
