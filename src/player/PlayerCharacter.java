@@ -26,10 +26,6 @@ public class PlayerCharacter implements Renderable {
 	private int freezePlayerControlCount, airJumpCount;
 	
 	public PlayerCharacter() {
-		x = 640;
-		xRemainder = 0f;
-		y = 100;
-		yRemainder = 0f;
 		xSpeed = 0f;
 		ySpeed = 0f;
 		xTargetSpeed = 0f;
@@ -40,6 +36,14 @@ public class PlayerCharacter implements Renderable {
 		airJumpCount = 0;
 		freezePlayerControlCount = 0;
 		facingDirection = 1;
+	}
+	
+	public void setInitialPosition() {
+		Point initialPosition = PlayerStatus.getPlayer().getCurrentMap().getInitialPosition();
+		x = (int)initialPosition.getX();
+		y = (int)initialPosition.getY() - ((BufferedImage)sprite).getHeight();
+		xRemainder = 0f;
+		yRemainder = 0f;
 	}
 	
 	public int getX() {
@@ -183,14 +187,14 @@ public class PlayerCharacter implements Renderable {
 	}
 	
 	protected void performGlacialDrift() {
-		freezePlayerControlCount = 8;
+		freezePlayerControlCount = 4;
 		yAcceleration = 0f;
 		new Thread(new Runnable() {
 			
 			@Override
 			public void run() {
 				while (getFreezePlayerControlCount() > 0) {
-					xTargetSpeed = facingDirection*100f;
+					xTargetSpeed = facingDirection*200f;
 					ySpeed = 0;
 					Thread.yield();
 					try {
