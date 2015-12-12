@@ -56,6 +56,7 @@ public class PlayerStatus implements Renderable {
 		addCard(SkillCard.createSkillCard("Ice Summon"));
 		addCard(SkillCard.createSkillCard("Ice Summon"));
 		addCard(SkillCard.createSkillCard("Concentration 2 S D"));
+
 	}
 	
 	public PlayerCharacter getPlayerCharacter() {

@@ -20,11 +20,11 @@ public class GameMap implements Renderable {
 	private int width, height;
 	private Tile[][] tileMap;
 	private static int tileWidth = 70, tileHeight = 70;
+	private Point initialPosition;
 	private Image background;
 
 	public GameMap(InputStream mapFile) {
 		Scanner fileScanner;
-
 		fileScanner = new Scanner(mapFile);
 		
 		// TODO add some kind of file encoding
@@ -39,6 +39,7 @@ public class GameMap implements Renderable {
 			for (int tileX = 0; tileX < width; tileX++) {
 				switch (buffer.charAt(tileX)) {
 				case '#': tileMap[tileX][tileY] = Tile.GROUND; break;
+				case 'P': initialPosition = new Point(tileX*tileWidth, (tileY+1)*tileHeight);
 				default : tileMap[tileX][tileY] = Tile.AIR;
 				}
 			}
@@ -46,6 +47,10 @@ public class GameMap implements Renderable {
 		
 		fileScanner.close();
 		
+	}
+	
+	public Point getInitialPosition() {
+		return initialPosition;
 	}
 	
 	public int getWidth() {
