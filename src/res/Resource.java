@@ -8,11 +8,10 @@ import javax.imageio.ImageIO;
 public class Resource {
 
 	public static BufferedImage playerIdleSprite;
-	public static BufferedImage floorTile, tileLeft, tileRight, tileMid, tileTop;
+	public static BufferedImage tileGround, tileLeft, tileRight, tileMid, tileTop, tileIce;
 	public static BufferedImage[] mana = new BufferedImage[21], maxMana = new BufferedImage[21];
 	public static BufferedImage slash;
 	public static BufferedImage doubleJump, glacialDrift, iceSummon, skyUppercut, concentration;
-	public static BufferedImage iceBlock;
 	public static BufferedImage[] stand = new BufferedImage[2];
 
 	public static InputStream emptyMap, testMap, bigMap ,tutorialMap;
@@ -28,9 +27,9 @@ public class Resource {
 		}
 		// Load tileset
 		try {
-			floorTile = ImageIO.read(loader.getResource("res/tile/tile_ground.png"));
+			tileGround = ImageIO.read(loader.getResource("res/tile/tile_ground.png"));
 		} catch (IOException e) {
-			floorTile = null;
+			tileGround = null;
 		}
 		try {
 			tileLeft = ImageIO.read(loader.getResource("res/tile/tile_left.png"));
@@ -57,10 +56,10 @@ public class Resource {
 			tileTop = null;
 		}
 		try {
-			iceBlock = ImageIO.read(loader.getResource("res/tile/tile_ice.png"));
+			tileIce = ImageIO.read(loader.getResource("res/tile/tile_ice.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			iceBlock = null;
+			tileIce = null;
 		}
 
 		// Load mana,maxMana and slash
