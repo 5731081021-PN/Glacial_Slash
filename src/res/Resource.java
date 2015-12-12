@@ -8,10 +8,10 @@ import javax.imageio.ImageIO;
 public class Resource {
 
 	public static BufferedImage playerIdleSprite;
-	public static BufferedImage floorTile;
+	public static BufferedImage floorTile, tileLeft, tileRight, tileMid, tileHalf;
 	public static BufferedImage[] mana = new BufferedImage[21], maxMana = new BufferedImage[21];
 	public static BufferedImage slash;
-	public static BufferedImage doubleJump, glacialDrift, iceSummon, skyUppercut,concentration;
+	public static BufferedImage doubleJump, glacialDrift, iceSummon, skyUppercut, concentration;
 	public static BufferedImage iceBlock;
 
 	public static InputStream emptyMap, testMap, bigMap;
@@ -25,11 +25,35 @@ public class Resource {
 		} catch (IOException e) {
 			playerIdleSprite = null;
 		}
-
+		// Load tileset
 		try {
 			floorTile = ImageIO.read(loader.getResource("res/tile/floor.png"));
 		} catch (IOException e) {
 			floorTile = null;
+		}
+		try {
+			tileLeft = ImageIO.read(loader.getResource("res/tile/tile_left.png"));
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			tileLeft =null;
+		}
+		try {
+			tileRight = ImageIO.read(loader.getResource("res/tile/tile_right.png"));
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			tileRight =null;
+		}
+		try {
+			tileMid = ImageIO.read(loader.getResource("res/tile/tile_mid.png"));
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			tileMid = null;
+		}
+		try {
+			tileHalf = ImageIO.read(loader.getResource("res/tile/tile_half.png"));
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			tileHalf = null;
 		}
 
 		// Load mana,maxMana and slash
@@ -77,19 +101,18 @@ public class Resource {
 			// TODO Auto-generated catch block
 			skyUppercut = null;
 		}
-		 try {
+		try {
 			iceBlock = ImageIO.read(loader.getResource("res/ice/iceBlock.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			iceBlock = null;
 		}
-		 try {
+		try {
 			concentration = ImageIO.read(loader.getResource("res/card/Concentration.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			concentration = null;
 		}
-				 
 
 		emptyMap = loader.getResourceAsStream("res/map/emptyMap.map");
 		testMap = loader.getResourceAsStream("res/map/testMap.map");
