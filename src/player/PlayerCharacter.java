@@ -10,6 +10,7 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
+import render.PlayerAnimation;
 import render.Renderable;
 import res.Resource;
 import screen.GameScreen;
@@ -53,6 +54,10 @@ public class PlayerCharacter implements Renderable {
 		boundaries = new Rectangle(boundaryX, boundaryY, boundaryWidth, boundaryHeight);
 	}
 	
+	public void setSprite(Image sprite) {
+		this.sprite = sprite;
+	}
+	
 	public int getX() {
 		return x;
 	}
@@ -67,6 +72,10 @@ public class PlayerCharacter implements Renderable {
 	
 	public int getCenterY() {
 		return y + (int)(boundaries.getHeight()/2);
+	}
+	
+	public int getFacingDirection() {
+		return facingDirection;
 	}
 		
 	public Point getFrontTile() {
@@ -88,6 +97,22 @@ public class PlayerCharacter implements Renderable {
 		ySpeed = JUMP_INITIAL_SPEED;
 		if (!this.isOnGround())
 			airJumpCount--;
+		Thread jumpAnimation = new Thread(new PlayerAnimation(Resource.jumpSprite, this));
+		jumpAnimation.start();
+
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					while (Float.compare(ySpeed, 0f) < 0) {
+						Thread.yield();
+						Thread.sleep(1);
+					}
+				} catch (InterruptedException e) {}
+				jumpAnimation.interrupt();
+			}
+		}).start();
+
 	}
 		
 	public int getFreezePlayerControlCount() {
@@ -110,6 +135,7 @@ public class PlayerCharacter implements Renderable {
 		if (this.isOnGround()) {
 			yTargetSpeed = 0f;
 			airJumpCount = 1;
+			this.setSprite(Resource.standSprite[(facingDirection+1)/2]);
 		}
 		else
 			yTargetSpeed = TERMINAL_SPEED;
@@ -162,8 +188,6 @@ public class PlayerCharacter implements Renderable {
 			newY++;
 		}
 
-		sprite = Resource.standSprite[(facingDirection+1)/2];
-
 		int movableHeight = PlayerStatus.getPlayer().getCurrentMap().movableHeight(boundaries, Float.compare(ySpeed, 0f));
 		if (Math.abs(movableHeight) <= Math.abs(newY - y)) {
 			y += movableHeight;
@@ -176,6 +200,9 @@ public class PlayerCharacter implements Renderable {
 		}
 
 		// TODO Change sprite to upward or downward motion accordingly
+		if (!this.isOnGround() && Float.compare(ySpeed, 0f) >= 0) {
+			this.setSprite(Resource.jumpSprite[(facingDirection+1)/2][3]);
+		}
 	}
 	
 	// Special moves
