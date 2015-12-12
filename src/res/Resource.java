@@ -12,9 +12,9 @@ public class Resource {
 	public static BufferedImage[] mana = new BufferedImage[21], maxMana = new BufferedImage[21];
 	public static BufferedImage slash;
 	public static BufferedImage doubleJump, glacialDrift, iceSummon, skyUppercut, concentration;
-	public static BufferedImage iceBlock;
+	public static BufferedImage tileIce;
 
-	public static InputStream emptyMap, testMap, bigMap;
+	public static InputStream emptyMap, testMap, bigMap ,tutorialMap;
 
 	private static ClassLoader loader = Resource.class.getClassLoader();
 
@@ -54,6 +54,12 @@ public class Resource {
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			tileTop = null;
+		}
+		try {
+			tileIce = ImageIO.read(loader.getResource("res/tile/tile_ice.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			tileIce = null;
 		}
 
 		// Load mana,maxMana and slash
@@ -101,12 +107,7 @@ public class Resource {
 			// TODO Auto-generated catch block
 			skyUppercut = null;
 		}
-		try {
-			iceBlock = ImageIO.read(loader.getResource("res/ice/iceBlock.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			iceBlock = null;
-		}
+		
 		try {
 			concentration = ImageIO.read(loader.getResource("res/card/Concentration.png"));
 		} catch (IOException e) {
@@ -117,6 +118,7 @@ public class Resource {
 		emptyMap = loader.getResourceAsStream("res/map/emptyMap.map");
 		testMap = loader.getResourceAsStream("res/map/testMap.map");
 		bigMap = loader.getResourceAsStream("res/map/bigMap.map");
+		tutorialMap = loader.getResourceAsStream("res/map/tutorialMap.map");
 
 	}
 
