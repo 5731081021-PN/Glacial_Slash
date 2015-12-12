@@ -13,10 +13,12 @@ import screen.GameScreen;
 
 public class GameLoop implements Runnable {
 
-	private PlayerCharacter player;
+	private PlayerStatus playerStatus;
+	private PlayerCharacter playerCharacter;
 	
 	public GameLoop() {
-		this.player = PlayerStatus.getPlayer().getPlayerCharacter();
+		this.playerStatus = PlayerStatus.getPlayer();
+		this.playerCharacter = playerStatus.getPlayerCharacter();
 	}
 
 	public void run() {
@@ -33,6 +35,9 @@ public class GameLoop implements Runnable {
 			while (now - lastUpdateTime < UPDATE_TIME) {
 				now = System.nanoTime();
 				Thread.yield();
+				try {
+					Thread.sleep(1);
+				} catch (InterruptedException e) {}
 			}
 
 			lastUpdateTime = now;
@@ -58,44 +63,44 @@ public class GameLoop implements Runnable {
 	
 	private void playerInputUpdate() {
 	
-		player.updateBoundaries();
-		player.fall();
+		playerCharacter.updateBoundaries();
+		playerCharacter.fall();
 		
-		if (player.getFreezePlayerControlCount() <= 0) {
+		if (playerCharacter.getFreezePlayerControlCount() <= 0) {
 
-			synchronized (PlayerStatus.getPlayer().getHand()) {
+			synchronized (playerStatus.getHand()) {
 				if (InputUtility.getKeyPressed(CommandKey.LEFT))
-					player.walk(PlayerCharacter.LEFT);
+					playerCharacter.walk(PlayerCharacter.LEFT);
 				else if (InputUtility.getKeyPressed(CommandKey.RIGHT))
-					player.walk(PlayerCharacter.RIGHT);
+					playerCharacter.walk(PlayerCharacter.RIGHT);
 				else
-					player.walk(PlayerCharacter.IDLE);
+					playerCharacter.walk(PlayerCharacter.IDLE);
 
 				if (InputUtility.getKeyTriggered(CommandKey.JUMP)) {
-					if (player.isOnGround())
-						player.jump();
+					if (playerCharacter.isOnGround())
+						playerCharacter.jump();
 					else
 						try {
-							PlayerStatus.getPlayer().useCard(SkillCard.DOUBLE_JUMP);
+							playerStatus.useCard(SkillCard.DOUBLE_JUMP);
 						} catch (SkillCardUnusableException e) {}
 				}
 
 				if (InputUtility.getKeyTriggered(CommandKey.SLASH)) {
 					if (InputUtility.getKeyPressed(CommandKey.UP)) {
 						try {
-							PlayerStatus.getPlayer().useCard(SkillCard.SKY_UPPERCUT);
+							playerStatus.useCard(SkillCard.SKY_UPPERCUT);
 						} catch (SkillCardUnusableException e) {
-							player.slash();
+							playerCharacter.slash();
 						}
 					}
 					else
-						player.slash();
+						playerCharacter.slash();
 				}
 
 				if (InputUtility.getKeyTriggered(CommandKey.DASH)) {
 					if (InputUtility.getKeyPressed(CommandKey.LEFT) || InputUtility.getKeyPressed(CommandKey.RIGHT)) {
 						try {
-							PlayerStatus.getPlayer().useCard(SkillCard.GLACIAL_DRIFT);
+							playerStatus.useCard(SkillCard.GLACIAL_DRIFT);
 						} catch (SkillCardUnusableException e) {}
 					}
 				}
@@ -103,13 +108,13 @@ public class GameLoop implements Runnable {
 				if (InputUtility.getKeyTriggered(CommandKey.HAND)) {
 					if (InputUtility.getKeyPressed(CommandKey.DOWN))
 						try {
-							PlayerStatus.getPlayer().useCard(SkillCard.ICE_SUMMON);
+							playerStatus.useCard(SkillCard.ICE_SUMMON);
 						} catch (SkillCardUnusableException e) {}
 				}
 				
 				if (InputUtility.getKeyTriggered(CommandKey.DRAW)) {
 					try {
-						PlayerStatus.getPlayer().useCard(SkillCard.CONCENTRATION);
+						playerStatus.useCard(SkillCard.CONCENTRATION);
 					} catch (SkillCardUnusableException e) {}
 				}
 
@@ -117,11 +122,11 @@ public class GameLoop implements Runnable {
 
 		}
 		else {
-			player.decreseFreezePlayerControlCount();
+			playerCharacter.decreseFreezePlayerControlCount();
 		}
 
-		player.moveX();
-		player.moveY();
+		playerCharacter.moveX();
+		playerCharacter.moveY();
 
 		InputUtility.clearKeyTriggered();
 	}
