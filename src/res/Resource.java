@@ -9,6 +9,7 @@ public class Resource {
 
 	public static BufferedImage playerIdleSprite;
 	public static BufferedImage tileGround, tileLeft, tileRight, tileMid, tileTop, tileIce;
+	public static BufferedImage checkpoint;
 	public static BufferedImage[] mana = new BufferedImage[21], maxMana = new BufferedImage[21];
 	public static BufferedImage slash;
 	public static BufferedImage doubleJump, glacialDrift, iceSummon, skyUppercut, concentration;
@@ -61,6 +62,12 @@ public class Resource {
 			// TODO Auto-generated catch block
 			tileIce = null;
 		}
+			try {
+				checkpoint = ImageIO.read(loader.getResource("res/tile/checkpoint.png"));
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				checkpoint = null;
+			}
 
 		// Load mana,maxMana and slash
 		for (int i = 0; i <= 20; i++) {
