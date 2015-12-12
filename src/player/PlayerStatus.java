@@ -45,7 +45,7 @@ public class PlayerStatus implements Renderable {
 		maxMana = 10;
 		currentMana = 10;
 		hand = new ArrayList<SkillCard>();
-		currentMap = new GameMap(Resource.bigMap);
+		currentMap = new GameMap(Resource.tutorialMap);
 		playerCharacter = new PlayerCharacter();
 		
 		// Debug
