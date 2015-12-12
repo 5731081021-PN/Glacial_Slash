@@ -18,11 +18,12 @@ public class PlayerCharacter implements Renderable {
 
 	public static final int LEFT = -1, RIGHT = 1, IDLE = 0;
 	public static final float WALK_SPEED = 16f, JUMP_INITIAL_SPEED = -60f, TERMINAL_SPEED = 32f, GRAVITY = 0.08f;
-	private int x, y, facingDirection;
+	private int x, y, facingDirection, prevX, prevY;
 	private float xRemainder, yRemainder, xSpeed, ySpeed;
 	private float xTargetSpeed, yTargetSpeed, xAcceleration, yAcceleration;
 	private Rectangle boundaries;
-	private Image sprite = Resource.playerIdleSprite;
+	private int boundaryX, boundaryY, boundaryWidth, boundaryHeight;
+	private Image sprite = Resource.stand[1];
 	private int freezePlayerControlCount, airJumpCount;
 	
 	public PlayerCharacter() {
@@ -32,7 +33,6 @@ public class PlayerCharacter implements Renderable {
 		yTargetSpeed = TERMINAL_SPEED;
 		xAcceleration = 0.9f;
 		yAcceleration = GRAVITY;
-		boundaries = new Rectangle(x, y, ((BufferedImage)sprite).getWidth(), ((BufferedImage)sprite).getHeight());
 		airJumpCount = 0;
 		freezePlayerControlCount = 0;
 		facingDirection = 1;
@@ -44,6 +44,13 @@ public class PlayerCharacter implements Renderable {
 		y = (int)initialPosition.getY() - ((BufferedImage)sprite).getHeight();
 		xRemainder = 0f;
 		yRemainder = 0f;
+		prevX = x;
+		prevY = y;
+		boundaryWidth = 42;
+		boundaryHeight = 135;
+		boundaryX = x + ((BufferedImage)sprite).getWidth()/2 - boundaryWidth/2;
+		boundaryY = y;
+		boundaries = new Rectangle(boundaryX, boundaryY, boundaryWidth, boundaryHeight);
 	}
 	
 	public int getX() {
@@ -104,10 +111,13 @@ public class PlayerCharacter implements Renderable {
 	}
 	
 	protected void updateBoundaries() {
-		boundaries.setLocation(x, y);
+		boundaryX += x - prevX;
+		boundaryY += y - prevY;
+		boundaries.setLocation(boundaryX, boundaryY);
 	}
 
 	protected void moveX() {
+		prevX = x;
 		xSpeed = xTargetSpeed*xAcceleration + xSpeed*(1-xAcceleration);
 		int speedFloor = (int)Math.floor(xSpeed);
 		int newX = x;
@@ -135,6 +145,7 @@ public class PlayerCharacter implements Renderable {
 	}
 	
 	protected void moveY() {
+		prevY = y;
 		ySpeed = yTargetSpeed*yAcceleration + ySpeed*(1-yAcceleration);
 		int speedFloor = (int)Math.floor(ySpeed);
 		int newY = y;
@@ -145,6 +156,8 @@ public class PlayerCharacter implements Renderable {
 			newYRemainder -= 1f;
 			newY++;
 		}
+
+		sprite = Resource.stand[(facingDirection+1)/2];
 
 		int movableHeight = PlayerStatus.getPlayer().getCurrentMap().movableHeight(boundaries, Float.compare(ySpeed, 0f));
 		if (Math.abs(movableHeight) <= Math.abs(newY - y)) {
