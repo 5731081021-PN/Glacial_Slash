@@ -34,16 +34,4 @@ public class Checkpoint implements Renderable {
 		
 	}
 
-	@Override
-	public boolean isVisible() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
-	@Override
-	public int getZ() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
 }

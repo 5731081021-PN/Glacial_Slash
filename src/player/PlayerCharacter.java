@@ -204,20 +204,7 @@ public class PlayerCharacter implements Renderable {
 
 	@Override
 	public void render(Graphics2D g) {
-		// TODO Auto-generated method stub
 		g.drawImage(sprite, x - GameScreen.getScreen().getCameraX(), y - GameScreen.getScreen().getCameraY(), null);
-	}
-
-	@Override
-	public boolean isVisible() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
-	@Override
-	public int getZ() {
-		// TODO Auto-generated method stub
-		return 0;
 	}
 
 }

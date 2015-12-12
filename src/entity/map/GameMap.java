@@ -174,14 +174,4 @@ public class GameMap implements Renderable {
 		} catch (ArrayIndexOutOfBoundsException e) {}
 	}
 
-	@Override
-	public boolean isVisible() {
-		return true;
-	}
-
-	@Override
-	public int getZ() {
-		return Integer.MAX_VALUE;
-	}
-
 }

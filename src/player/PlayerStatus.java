@@ -119,15 +119,5 @@ public class PlayerStatus implements Renderable {
 			}
 		}
 	}
-	
-	@Override
-	public boolean isVisible() {
-		return true;
-	}
-	
-	@Override
-	public int getZ() {
-		return 0;
-	}
 
 }
