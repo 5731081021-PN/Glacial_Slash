@@ -18,7 +18,6 @@ import input.InputUtility.CommandKey;
 import input.InputUtility.KeyPressedAction;
 import input.InputUtility.KeyReleasedAction;
 import player.PlayerCharacter;
-import player.PlayerCharacterRunnable;
 import player.PlayerStatus;
 
 public class GameScreen extends JComponent {
@@ -51,8 +50,7 @@ public class GameScreen extends JComponent {
 		buffer = new BufferedImage(SCREEN_WIDTH, SCREEN_HEIGHT, BufferedImage.TYPE_INT_RGB);
 		
 		this.setKeyBinding();
-		// For testing purpose
-		new Thread(new PlayerCharacterRunnable()).start();
+		
 	}
 	
 	@Override

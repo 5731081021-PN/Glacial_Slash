@@ -4,6 +4,8 @@
 
 package player;
 
+import javax.swing.JOptionPane;
+
 import exception.SkillCardUnusableException;
 import input.InputUtility;
 import input.InputUtility.CommandKey;
@@ -23,7 +25,16 @@ public class PlayerCharacterRunnable implements Runnable {
 			try {
 				Thread.sleep(35);
 			} catch (InterruptedException e) {}
-			
+		
+			if (InputUtility.getKeyTriggered(CommandKey.EXIT)) {
+				InputUtility.clearKeyPressed();
+				if (JOptionPane.showConfirmDialog(null, "Are you sure want to exit?", "Exit", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+					synchronized (this) {
+						this.notifyAll();
+					}
+				}
+			}
+		
 			playerInputUpdate();
 
 			GameScreen.getScreen().centerCameraAt(player.getCenterX(), player.getCenterY());
@@ -36,7 +47,7 @@ public class PlayerCharacterRunnable implements Runnable {
 	
 		player.updateBoundaries();
 		player.fall();
-	
+		
 		if (player.getFreezePlayerControlCount() <= 0) {
 
 			synchronized (PlayerStatus.getPlayer().getHand()) {
