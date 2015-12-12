@@ -11,11 +11,11 @@ import input.InputUtility;
 import input.InputUtility.CommandKey;
 import render.GameScreen;
 
-public class PlayerCharacterRunnable implements Runnable {
+public class GameLoop implements Runnable {
 
 	private PlayerCharacter player;
 	
-	public PlayerCharacterRunnable() {
+	public GameLoop() {
 		this.player = PlayerStatus.getPlayer().getPlayerCharacter();
 	}
 
