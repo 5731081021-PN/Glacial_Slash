@@ -68,8 +68,12 @@ public class PlayerCharacter implements Renderable {
 	public int getCenterY() {
 		return y + (int)(boundaries.getHeight()/2);
 	}
-	
+		
 	public Point getFrontTile() {
+		return PlayerStatus.getPlayer().getCurrentMap().getFrontTile(boundaries, facingDirection);
+	}
+
+	public Point getSpriteFrontTile() {
 		Rectangle spriteBoundary = new Rectangle(x, y, ((BufferedImage)sprite).getWidth(), ((BufferedImage)sprite).getHeight());
 		return PlayerStatus.getPlayer().getCurrentMap().getFrontTile(spriteBoundary, facingDirection);
 	}
@@ -218,6 +222,10 @@ public class PlayerCharacter implements Renderable {
 				yAcceleration = GRAVITY;
 			}
 		}).start();
+	}
+	
+	protected void performIceSummon() {
+		// TODO play ice summon animation
 	}
 
 	@Override

@@ -7,10 +7,13 @@ import screen.MainFrame;
 
 public class Main {
 	
-	private static Runnable gameLoop = new GameLoop(), renderLoop = new RenderLoop();
+	private static Runnable gameLoop, renderLoop;
 	private static JFrame mainFrame;
 
 	public static void main(String[] args) {
+	
+		gameLoop = new GameLoop();
+		renderLoop = new RenderLoop();
 
 		SwingUtilities.invokeLater(new Runnable() {
 			
@@ -19,7 +22,7 @@ public class Main {
 				mainFrame = MainFrame.getFrame();
 			}
 		});
-
+	
 		new Thread(gameLoop).start();
 		new Thread(renderLoop).start();
 
