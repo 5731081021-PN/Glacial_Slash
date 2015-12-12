@@ -17,7 +17,6 @@ public class Main {
 			@Override
 			public void run() {
 				mainFrame = MainFrame.getFrame();
-				mainFrame.setVisible(true);
 			}
 		});
 

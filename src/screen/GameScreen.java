@@ -40,7 +40,7 @@ public class GameScreen extends JComponent {
 	private GameScreen() {
 		this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
 		
-		this.setDoubleBuffered(true);
+		this.setDoubleBuffered(false);
 		
 		playerStatus = PlayerStatus.getPlayer();
 		currentMap = playerStatus.getCurrentMap();

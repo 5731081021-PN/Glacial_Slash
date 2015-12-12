@@ -20,6 +20,7 @@ public class MainFrame extends JFrame {
 		this.add(GameScreen.getScreen());
 		this.setResizable(false);
 		this.pack();
+		this.setVisible(true);
 	}
 
 }
