@@ -26,7 +26,7 @@ public class Resource {
 		} catch (IOException e) {
 			playerIdleSprite = null;
 		}
-		// Load tileset
+		// Load tileset ..
 		try {
 			tileGround = ImageIO.read(loader.getResource("res/tile/tile_ground.png"));
 		} catch (IOException e) {
