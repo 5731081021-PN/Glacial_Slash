@@ -7,8 +7,8 @@ import res.Resource;
 public enum Tile {
 	
 	AIR (true, null),
-	ICE (false, Resource.iceBlock),
-	GROUND (false, Resource.floorTile);
+	ICE (false, Resource.tileIce),
+	GROUND (false, Resource.tileGround);
 	
 	private boolean passable;
 	private Image tileSprite;
