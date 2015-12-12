@@ -8,7 +8,13 @@ public enum Tile {
 	
 	AIR (true, null),
 	ICE (false, Resource.tileIce),
-	GROUND (false, Resource.tileGround);
+	GROUND (false, Resource.tileGround),
+	TOPLEFT (false, Resource.tileTopLeft),
+	TOP (false, Resource.tileTop),
+	TOPRIGHT (false, Resource.tileTopRight),
+	LEFT (false, Resource.tileLeft),
+	MID (false, Resource.tileMid),
+	RIGHT (false, Resource.tileRight);
 	
 	private boolean passable;
 	private Image tileSprite;
