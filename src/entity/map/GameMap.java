@@ -39,6 +39,12 @@ public class GameMap implements Renderable {
 			for (int tileX = 0; tileX < width; tileX++) {
 				switch (buffer.charAt(tileX)) {
 				case '#': tileMap[tileX][tileY] = Tile.GROUND; break;
+				case '<': tileMap[tileX][tileY] = Tile.TOPLEFT; break;
+				case '_': tileMap[tileX][tileY] = Tile.TOP; break;
+				case '>': tileMap[tileX][tileY] = Tile.TOPRIGHT; break;
+				case '+': tileMap[tileX][tileY] = Tile.LEFT; break;
+				case '-': tileMap[tileX][tileY] = Tile.MID; break;
+				case '*': tileMap[tileX][tileY] = Tile.RIGHT; break;
 				case 'P': initialPosition = new Point(tileX*tileWidth, (tileY+1)*tileHeight);
 				default : tileMap[tileX][tileY] = Tile.AIR;
 				}
