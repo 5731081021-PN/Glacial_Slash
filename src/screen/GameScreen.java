@@ -1,4 +1,4 @@
-package render;
+package screen;
 
 import java.awt.Dimension;
 import java.awt.Graphics;

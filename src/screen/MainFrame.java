@@ -1,4 +1,4 @@
-package render;
+package screen;
 
 import javax.swing.JFrame;
 

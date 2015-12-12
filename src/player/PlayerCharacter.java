@@ -10,9 +10,9 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
-import render.GameScreen;
 import render.Renderable;
 import res.Resource;
+import screen.GameScreen;
 
 public class PlayerCharacter implements Renderable {
 

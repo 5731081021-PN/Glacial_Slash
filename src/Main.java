@@ -1,7 +1,7 @@
 import javax.swing.JFrame;
 
 import player.GameLoop;
-import render.MainFrame;
+import screen.MainFrame;
 
 public class Main {
 

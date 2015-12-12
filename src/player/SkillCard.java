@@ -8,8 +8,8 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 
 import exception.SkillCardUnusableException;
-import render.GameScreen;
 import render.Renderable;
+import screen.GameScreen;
 
 public abstract class SkillCard implements Renderable, Comparable<SkillCard> {
 

@@ -12,7 +12,7 @@ import java.util.Set;
 
 import javax.swing.AbstractAction;
 
-import render.GameScreen;
+import screen.GameScreen;
 
 public class InputUtility {
 
