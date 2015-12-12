@@ -50,12 +50,12 @@ public class PlayerStatus implements Renderable {
 		
 		// Debug
 		addCard(SkillCard.createSkillCard("Sky Uppercut"));
-		addCard(SkillCard.createSkillCard("Sky Uppercut"));
-		addCard(SkillCard.createSkillCard("Sky Uppercut"));
-		addCard(SkillCard.createSkillCard("Double Jump"));
 		addCard(SkillCard.createSkillCard("Double Jump"));
 		addCard(SkillCard.createSkillCard("Glacial Drift"));
-		addCard(SkillCard.createSkillCard("Glacial Drift"));
+		addCard(SkillCard.createSkillCard("Ice Summon"));
+		addCard(SkillCard.createSkillCard("Ice Summon"));
+		addCard(SkillCard.createSkillCard("Ice Summon"));
+		addCard(SkillCard.createSkillCard("Concentration 2 S D"));
 	}
 	
 	public PlayerCharacter getPlayerCharacter() {
@@ -87,15 +87,17 @@ public class PlayerStatus implements Renderable {
 	}
 	
 	public void useCard(SkillCard used) throws SkillCardUnusableException {
-		if (hand.contains(used)) {
-			if (currentMana >= used.cost) {
-				used.activate();
-				currentMana -= used.cost;
-				hand.remove(used);
+		try {
+			SkillCard using = hand.get(hand.indexOf(used));
+			if (currentMana >= using.cost) {
+				using.activate();
+				currentMana -= using.cost;
+				hand.remove(using);
 			}
 			else throw new SkillCardUnusableException(SkillCardUnusableException.UnusableType.NOT_ENOUGH_MANA);
+		} catch (ArrayIndexOutOfBoundsException e) {
+			throw new SkillCardUnusableException(SkillCardUnusableException.UnusableType.NO_SUCH_CARD_IN_HAND);
 		}
-		else throw new SkillCardUnusableException(SkillCardUnusableException.UnusableType.NO_SUCH_CARD_IN_HAND);
 	}
 	
 	public GameMap getCurrentMap() {

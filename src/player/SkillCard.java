@@ -13,7 +13,7 @@ import render.Renderable;
 
 public abstract class SkillCard implements Renderable, Comparable<SkillCard> {
 
-	public static final SkillCard SKY_UPPERCUT = new SkyUppercut(), DOUBLE_JUMP = new DoubleJump(), GLACIAL_DRIFT = new GlacialDrift();
+	public static final SkillCard SKY_UPPERCUT = new SkyUppercut(), DOUBLE_JUMP = new DoubleJump(), GLACIAL_DRIFT = new GlacialDrift(), ICE_SUMMON = new IceSummon(), CONCENTRATION = new Concentration(null);
 	public static final int CARD_IMAGE_WIDTH = 120, CARD_IMAGE_HEIGHT = 180;
 	protected int cost;
 	protected Image cardImage;
@@ -21,14 +21,29 @@ public abstract class SkillCard implements Renderable, Comparable<SkillCard> {
 	
 	public abstract void activate() throws SkillCardUnusableException;
 	
+	public SkillCard(int cost, Image cardImage) {
+		this.cost = cost;
+		this.cardImage = cardImage;
+	}
+	
 	public static final SkillCard createSkillCard(String name) {
-		// TODO create new SkillCard from its name
-		switch (name) {
-		case "Sky Uppercut": return new SkyUppercut();
-		case "Double Jump": return new DoubleJump();
-		case "Glacial Drift": return new GlacialDrift();
-		default: return null;
+		// Use when add cards only
+		// Use dummy constants for reference
+		if (name.startsWith("S")) return new SkyUppercut();
+		else if (name.startsWith("D")) return new DoubleJump();
+		else if (name.startsWith("G")) return new GlacialDrift();
+		else if (name.startsWith("I")) return new IceSummon();
+		else if (name.startsWith("C")) {
+			// TODO implement concentration
+			String[] format = name.split("\\s+");
+			int n = Integer.parseInt(format[1]);
+			SkillCard[] drawnCards = new SkillCard[n];
+			for (int i = 0; i < n; i++) {
+				drawnCards[i] = SkillCard.createSkillCard(format[2+i]);
+			}
+			return new Concentration(drawnCards);
 		}
+		else return null;
 	}
 	
 	public void playActivateAnimation() {

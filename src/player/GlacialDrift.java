@@ -6,8 +6,7 @@ import res.Resource;
 public class GlacialDrift extends SkillCard {
 	
 	public GlacialDrift() {
-		cost = 2;
-		cardImage = Resource.glacialDrift;
+		super (2, Resource.glacialDrift);
 	}
 	
 	@Override

@@ -5,6 +5,7 @@
 package entity.map;
 
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.io.InputStream;
 import java.util.Scanner;
@@ -52,12 +53,37 @@ public class GameMap implements Renderable {
 		return height;
 	}
 	
+	public int getTileWidth() {
+		return tileWidth;
+	}
+		
+	public int getTileHeight() {
+		return tileHeight;
+	}
+
 	public int getScreenWidth() {
 		return width*tileWidth;
 	}
 
 	public int getScreenHeight() {
 		return height*tileHeight;
+	}
+	
+	public void freeze(int x, int y) {
+		tileMap[x][y] = Tile.ICE;
+	}
+	
+	public Point getFrontTile(Rectangle collisionBox, int direction) {
+		direction = Integer.signum(direction);
+		int frontBoundary = (int)(collisionBox.getX() + (direction < 0 ? 0 : 1)*collisionBox.getWidth()) - direction;
+		int lowerBoundary = (int)(collisionBox.getY() + collisionBox.getHeight()) - 1;
+		int currentTileX = frontBoundary / tileWidth;
+		int currentTileY = lowerBoundary / tileHeight;
+		return new Point(currentTileX + direction, currentTileY);
+	}
+	
+	public boolean isOnGround(Rectangle collisionBox) {
+		return movableHeight(collisionBox, 1) == 0;
 	}
 
 	public int movableWidth(Rectangle collisionBox, int direction) {
