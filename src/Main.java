@@ -7,7 +7,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		JFrame mainFrame = new MainFrame();
+		JFrame mainFrame = MainFrame.getFrame();
 		mainFrame.setVisible(true);
 		Runnable gameLoop = new GameLoop();
 		new Thread(gameLoop).start();
