@@ -13,6 +13,7 @@ public class Resource {
 	public static BufferedImage slash;
 	public static BufferedImage doubleJump, glacialDrift, iceSummon, skyUppercut, concentration;
 	public static BufferedImage tileIce;
+	public static BufferedImage[] stand = new BufferedImage[2];
 
 	public static InputStream emptyMap, testMap, bigMap ,tutorialMap;
 
@@ -113,6 +114,19 @@ public class Resource {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			concentration = null;
+		}
+		//Load sprite
+		try {
+			stand[0] = ImageIO.read(loader.getResource("res/sprite/stand/stl0.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			stand[0] = null;
+		}
+		try {
+			stand[1] = ImageIO.read(loader.getResource("res/sprite/stand/str0.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			stand[1] = null;
 		}
 
 		emptyMap = loader.getResourceAsStream("res/map/emptyMap.map");
