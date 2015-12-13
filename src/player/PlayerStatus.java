@@ -16,6 +16,7 @@ import map.TutorialMap;
 
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -68,7 +69,7 @@ public class PlayerStatus implements Renderable, Serializable {
 	}
 	
 	public synchronized void savePlayer() {
-		currentPosition.setLocation(playerCharacter.getX(), playerCharacter.getY());
+		currentPosition.setLocation(playerCharacter.getX(), playerCharacter.getY() + Resource.standSprite[0].getHeight());
 		try (FileOutputStream fileOut = new FileOutputStream(saveLocation)){
 			try (ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
 				out.writeObject(player);
