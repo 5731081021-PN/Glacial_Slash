@@ -23,17 +23,17 @@ public class RenderLoop implements Runnable {
 				lastRenderTime = now;
 				GameScreen.getScreen().centerCameraAt(player.getCenterX(), player.getCenterY());
 				GameScreen.getScreen().repaint();
-			}
 
-			synchronized (player) {
-				player.notifyAll();
-			}
+				synchronized (player) {
+					player.notifyAll();
+				}
 
-			synchronized (GameScreen.getScreen()) {
-				GameScreen.getScreen().notifyAll();
-				try {
-					GameScreen.getScreen().wait();
-				} catch (InterruptedException e) {}
+				synchronized (GameScreen.getScreen()) {
+					GameScreen.getScreen().notifyAll();
+					try {
+						GameScreen.getScreen().wait();
+					} catch (InterruptedException e) {}
+				}
 			}
 
 		}

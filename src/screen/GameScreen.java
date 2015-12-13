@@ -46,7 +46,6 @@ public class GameScreen extends JComponent {
 		playerStatus = PlayerStatus.getPlayer();
 		currentMap = playerStatus.getCurrentMap();
 		playerCharacter = playerStatus.getPlayerCharacter();
-		playerCharacter.setInitialPosition();
 		camera = new Point(0, 0);
 		this.setKeyBinding();
 		
