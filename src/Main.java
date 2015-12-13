@@ -19,8 +19,8 @@ public class Main {
 
 				@Override
 				public void run() {
-					TitleWindow.getWindow().setVisible(true);
-					TitleWindow.getWindow().requestFocus();
+					titleWindow.setVisible(true);
+					titleWindow.requestFocus();
 				}
 			});
 		} catch (InterruptedException e) {
@@ -31,11 +31,20 @@ public class Main {
 				titleWindow.wait();
 			} catch (InterruptedException e) {}
 		}
-		
-		GameWindow gameWindow = GameWindow.getWindow();
-		titleWindow.dispose();
-		gameWindow.setVisible(true);
-		gameWindow.requestFocus();
+
+		try {
+			SwingUtilities.invokeAndWait(new Runnable() {
+
+				@Override
+				public void run() {
+					GameWindow gameWindow = GameWindow.getWindow();
+					titleWindow.dispose();
+					gameWindow.setVisible(true);
+					gameWindow.requestFocus();
+				}
+			});
+		} catch (InterruptedException e) {
+		} catch (InvocationTargetException e) {}
 		
 		gameLoop = new GameLoop();
 		renderLoop = new RenderLoop();
