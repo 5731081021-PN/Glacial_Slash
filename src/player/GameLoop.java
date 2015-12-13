@@ -55,6 +55,9 @@ public class GameLoop implements Runnable {
 
 			synchronized (GameScreen.getScreen()) {
 				GameScreen.getScreen().notifyAll();
+				try {
+					GameScreen.getScreen().wait();
+				} catch (InterruptedException e) {}
 			}
 
 		}

@@ -3,7 +3,6 @@ package render;
 import java.awt.image.BufferedImage;
 
 import player.PlayerCharacter;
-import screen.GameScreen;
 
 public class PlayerAnimation extends Animation {
 	
@@ -26,9 +25,9 @@ public class PlayerAnimation extends Animation {
 			player.setSprite(animation[currentFrame]);
 			currentFrame++;
 	
-			synchronized (GameScreen.getScreen()) {
+			synchronized (player) {
 				try {
-					GameScreen.getScreen().wait();
+					player.wait();
 				} catch (InterruptedException e) {
 					return;
 				}
