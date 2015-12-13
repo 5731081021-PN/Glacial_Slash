@@ -9,7 +9,7 @@ public class Resource {
 
 	public static BufferedImage playerIdleSprite;
 	public static BufferedImage tileGround, tileLeft, tileRight, tileMid, tileTop, tileTopLeft, tileTopRight, tileIce;
-	public static BufferedImage checkpoint , lastCheckpoint;
+	public static BufferedImage checkpoint , usedCheckpoint;
 	public static BufferedImage[] mana = new BufferedImage[21], maxMana = new BufferedImage[21];
 	public static BufferedImage slash;
 	public static BufferedImage doubleJump, glacialDrift, iceSummon, skyUppercut, concentration;
@@ -79,10 +79,10 @@ public class Resource {
 			checkpoint = null;
 		}
 			try {
-				lastCheckpoint = ImageIO.read(loader.getResource("res/tile/lastcheckpoint.png"));
+				usedCheckpoint = ImageIO.read(loader.getResource("res/tile/usedcheckpoint.png"));
 			} catch (IOException e2) {
 				// TODO Auto-generated catch block
-				lastCheckpoint = null;
+				usedCheckpoint = null;
 			}
 		try {
 			tileTopLeft = ImageIO.read(loader.getResource("res/tile/tile_topleft.png"));

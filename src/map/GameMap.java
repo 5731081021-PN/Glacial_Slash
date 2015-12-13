@@ -12,8 +12,10 @@ import java.awt.Rectangle;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
+import player.SkillCard;
 import render.Renderable;
 import res.Resource;
 import ui.GameScreen;
@@ -22,17 +24,13 @@ public class GameMap implements Renderable, Serializable {
 	
 	private int width, height;
 	private Tile[][] tileMap;
-	private ArrayList<Checkpoint> checkPoints;
+	private Checkpoint[] checkpoints;
 	private static int tileWidth = 70, tileHeight = 70;
 	private Point initialPosition;
 
 	public GameMap(InputStream mapFile) {
 		Scanner fileScanner;
 		fileScanner = new Scanner(mapFile);
-		
-		checkPoints = new ArrayList<>();
-		
-		// TODO add some kind of file encoding
 		
 		width = Integer.parseInt(fileScanner.nextLine());
 		height = Integer.parseInt(fileScanner.nextLine());
@@ -56,6 +54,23 @@ public class GameMap implements Renderable, Serializable {
 			}
 		}
 		
+		int checkpointCount = Integer.parseInt(fileScanner.nextLine());
+		checkpoints = new Checkpoint[checkpointCount];
+		for (int i = 0; i < checkpointCount; i++) {
+			int tileX = Integer.parseInt(fileScanner.nextLine());
+			int tileY = Integer.parseInt(fileScanner.nextLine());
+			int screenX = tileX*tileWidth + (tileWidth-Resource.checkpoint.getWidth())/2;
+			int screenY = (tileY-1)*tileHeight + (tileHeight-Resource.checkpoint.getHeight());
+	
+			int cardCount = Integer.parseInt(fileScanner.nextLine());
+			List<SkillCard> hand = new ArrayList<>();
+			for (int j = 0; j < cardCount; j++) {
+				hand.add(SkillCard.createSkillCard(fileScanner.nextLine().trim()));
+			}
+			
+			checkpoints[i] = new Checkpoint(screenX, screenY, hand);
+		}
+
 		fileScanner.close();
 		
 	}
@@ -189,6 +204,10 @@ public class GameMap implements Renderable, Serializable {
 				} catch (ArrayIndexOutOfBoundsException e) {}
 			}
 		} catch (ArrayIndexOutOfBoundsException e) {}
+		
+		for (Checkpoint c : checkpoints) {
+			c.render(g);
+		}
 	}
 
 }
