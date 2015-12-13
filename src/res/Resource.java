@@ -7,7 +7,6 @@ import javax.imageio.ImageIO;
 
 public class Resource {
 
-	public static BufferedImage playerIdleSprite;
 	public static BufferedImage tileGround, tileLeft, tileRight, tileMid, tileTop, tileTopLeft, tileTopRight, tileIce;
 	public static BufferedImage checkpoint , usedCheckpoint;
 	public static BufferedImage[] mana = new BufferedImage[21], maxMana = new BufferedImage[21];
@@ -23,18 +22,12 @@ public class Resource {
 	public static BufferedImage background;
 	public static BufferedImage title, startButton, loadButton, exitButton;
 
-	public static InputStream emptyMap, testMap, bigMap, tutorialMap;
-	public static InputStream map5to8 ,map9to12;
+	public static InputStream tutorialMap, map5to8, map9to12, map13to14, map15;
 
 	private static ClassLoader loader = Resource.class.getClassLoader();
 
 	static {
 
-		try {
-			playerIdleSprite = ImageIO.read(loader.getResource("res/sprite/player.png"));
-		} catch (IOException e) {
-			playerIdleSprite = null;
-		}
 		// Load tileset ..
 		try {
 			tileGround = ImageIO.read(loader.getResource("res/tile/tile_ground.png"));
@@ -254,9 +247,6 @@ public class Resource {
 			exitButton = null;
 		}
 
-		emptyMap = loader.getResourceAsStream("res/map/emptyMap.map");
-		testMap = loader.getResourceAsStream("res/map/testMap.map");
-		bigMap = loader.getResourceAsStream("res/map/bigMap.map");
 		tutorialMap = loader.getResourceAsStream("res/map/tutorialMap.map");
 		map5to8 = loader.getResourceAsStream("res/map/map5to8.map");
 		map9to12 = loader.getResourceAsStream("res/map/map9to12.map");
