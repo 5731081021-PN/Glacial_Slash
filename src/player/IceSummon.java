@@ -3,8 +3,8 @@ package player;
 import java.awt.Point;
 import java.awt.Rectangle;
 
-import entity.map.GameMap;
 import exception.SkillCardUnusableException;
+import map.GameMap;
 import res.Resource;
 
 public class IceSummon extends SkillCard {

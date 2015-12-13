@@ -1,4 +1,4 @@
-package entity.map;
+package map;
 
 import java.awt.Image;
 

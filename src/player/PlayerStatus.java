@@ -7,8 +7,8 @@ package player;
 
 import java.util.List;
 
-import entity.map.GameMap;
 import exception.SkillCardUnusableException;
+import map.GameMap;
 
 import java.awt.Graphics2D;
 import java.util.ArrayList;

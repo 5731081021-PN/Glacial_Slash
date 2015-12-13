@@ -13,10 +13,10 @@ import javax.swing.JComponent;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 
-import entity.map.GameMap;
 import input.InputUtility.CommandKey;
 import input.InputUtility.KeyPressedAction;
 import input.InputUtility.KeyReleasedAction;
+import map.GameMap;
 import player.PlayerCharacter;
 import player.PlayerStatus;
 
