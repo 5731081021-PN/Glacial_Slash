@@ -93,7 +93,7 @@ public class PlayerStatus implements Renderable, Serializable {
 		currentMana = 10;
 		hand = new ArrayList<SkillCard>();
 //		currentMap = new TutorialMap();
-		currentMap = new GameMap(Resource.map5to8);
+		currentMap = new GameMap(Resource.map9to12);
 		currentPosition = currentMap.getInitialPosition();
 		playerCharacter = new PlayerCharacter();
 		playerCharacter.setPosition(currentPosition);

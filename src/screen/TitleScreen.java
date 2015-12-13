@@ -6,14 +6,15 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JFileChooser;
 import javax.swing.JPanel;
-
+import player.GameLoop;
+import player.PlayerStatus;
+import render.RenderLoop;
 import res.Resource;
 
 public class TitleScreen extends JComponent {
@@ -44,7 +45,13 @@ public class TitleScreen extends JComponent {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				JFileChooser fileChooser = new JFileChooser();
+				if (fileChooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
+					PlayerStatus.newPlayer(fileChooser.getSelectedFile().getPath());
+					synchronized (MainFrame.getFrame()) {
+						MainFrame.getFrame().notifyAll();
+					}
+				}
 			}
 		});
 		loadGameButton.addActionListener(new ActionListener() {
@@ -90,6 +97,30 @@ public class TitleScreen extends JComponent {
 		button.setContentAreaFilled(false);
 		button.setBorderPainted(false);
 		button.setFocusPainted(false);
+	}
+	
+	private void startGame() {
+		MainFrame mainFrame = MainFrame.getFrame();
+		GameWindow gameWindow = GameWindow.getWindow();
+		GameLoop gameLoop = new GameLoop();
+		RenderLoop renderLoop = new RenderLoop();
+
+		mainFrame.setVisible(false);
+		gameWindow.setVisible(true);
+		gameWindow.requestFocus();
+
+		new Thread(gameLoop).start();
+		new Thread(renderLoop).start();
+		synchronized (gameLoop) {
+			try {
+				gameLoop.wait();
+			} catch (InterruptedException e) {}
+		}
+
+		mainFrame.setVisible(true);
+		gameWindow.setVisible(false);
+		mainFrame.requestFocus();
+
 	}
 
 }
