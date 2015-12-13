@@ -17,7 +17,8 @@ public class Resource {
 	public static BufferedImage[][] jumpSprite = new BufferedImage[2][12];
 	public static BufferedImage[][] walkSprite = new BufferedImage[2][30];
 	public static BufferedImage[][] cutSprite = new BufferedImage[2][27];
-	public static BufferedImage[][] dashSprite = new BufferedImage[2][6];
+	public static BufferedImage[][] dashSprite = new BufferedImage[2][16];
+	public static BufferedImage[][] iceSummonSprite = new BufferedImage[2][54];
 
 	public static InputStream emptyMap, testMap, bigMap, tutorialMap;
 
@@ -182,12 +183,24 @@ public class Resource {
 			}
 		}
 		for (int i = 0; i <= 1; i++) {
-			for (int j = 0; j <= 5; j++) {
+			for (int j = 0; j <= 7; j++) {
 				try {
 					dashSprite[i][j] = ImageIO.read(loader.getResource("res/sprite/dash/d" + i + "_" + j + ".png"));
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					dashSprite[i][j] = null;
+				}
+			}
+		}
+
+		for (int i = 0; i <= 1; i++) {
+			for (int j = 0; j <= 26; j++) {
+				try {
+					iceSummonSprite[i][j] = ImageIO
+							.read(loader.getResource("res/sprite/icesummon/i" + i + "_" + j + ".png"));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					iceSummonSprite[i][j] = null;
 				}
 			}
 		}
