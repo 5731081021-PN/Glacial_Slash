@@ -4,9 +4,7 @@
 
 package map;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.io.InputStream;
@@ -27,8 +25,18 @@ public class GameMap implements Renderable, Serializable {
 	private Checkpoint[] checkpoints;
 	private static int tileWidth = 70, tileHeight = 70;
 	private Point initialPosition;
+	private String nextMapName;
+	
+	public static GameMap getGameMap(String mapName) {
+		if ("tutorialMap".equalsIgnoreCase(mapName)) return new GameMap(Resource.tutorialMap);
+		else if ("map5to8".equalsIgnoreCase(mapName)) return new GameMap(Resource.map5to8);
+		else if ("map9to12".equalsIgnoreCase(mapName)) return new GameMap(Resource.map9to12);
+		else if ("map13to14".equalsIgnoreCase(mapName)) return new GameMap(Resource.map13to14);
+		else if ("map15".equalsIgnoreCase(mapName)) return new GameMap(Resource.map15);
+		else return null;
+	}
 
-	public GameMap(InputStream mapFile) {
+	protected GameMap(InputStream mapFile) {
 		Scanner fileScanner;
 		fileScanner = new Scanner(mapFile);
 		
@@ -70,6 +78,8 @@ public class GameMap implements Renderable, Serializable {
 			
 			checkpoints[i] = new Checkpoint(screenX, screenY, hand);
 		}
+		
+		nextMapName = fileScanner.nextLine().trim();
 
 		fileScanner.close();
 		
