@@ -20,7 +20,8 @@ public class Resource {
 	public static BufferedImage[][] dashSprite = new BufferedImage[2][6];
 	public static BufferedImage[][] iceSummonSprite = new BufferedImage[2][27];
 	public static BufferedImage[] cardAnimation = new BufferedImage[12];
-
+	public static BufferedImage background;
+	
 	public static InputStream emptyMap, testMap, bigMap, tutorialMap;
 	public static InputStream map5to8;
 
@@ -215,12 +216,20 @@ public class Resource {
 				cardAnimation = null;
 			}
 		}
+		
+		try {
+			background = ImageIO.read(loader.getResource("res/map/background.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			background = null;
+		}
 
 		emptyMap = loader.getResourceAsStream("res/map/emptyMap.map");
 		testMap = loader.getResourceAsStream("res/map/testMap.map");
 		bigMap = loader.getResourceAsStream("res/map/bigMap.map");
 		tutorialMap = loader.getResourceAsStream("res/map/tutorialMap.map");
 		map5to8 = loader.getResourceAsStream("res/map/map5to8.map");
+		
 	}
 
 }
