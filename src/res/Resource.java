@@ -22,6 +22,7 @@ public class Resource {
 	public static BufferedImage[] cardAnimation = new BufferedImage[12];
 
 	public static InputStream emptyMap, testMap, bigMap, tutorialMap;
+	public static InputStream map5to8;
 
 	private static ClassLoader loader = Resource.class.getClassLoader();
 
@@ -219,7 +220,7 @@ public class Resource {
 		testMap = loader.getResourceAsStream("res/map/testMap.map");
 		bigMap = loader.getResourceAsStream("res/map/bigMap.map");
 		tutorialMap = loader.getResourceAsStream("res/map/tutorialMap.map");
-
+		map5to8 = loader.getResourceAsStream("res/map/map5to8.map");
 	}
 
 }
