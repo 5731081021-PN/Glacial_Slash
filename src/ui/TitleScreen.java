@@ -6,6 +6,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+
 import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -13,6 +15,7 @@ import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import exception.UnableToLoadGameException;
 import player.PlayerStatus;
@@ -43,10 +46,19 @@ public class TitleScreen extends JComponent {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null, "Choose save file location", "New game", JOptionPane.PLAIN_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Choose save file location\nFile name will be appended with \".gls\"", "New game", JOptionPane.PLAIN_MESSAGE);
 				JFileChooser fileChooser = new JFileChooser();
 				if (fileChooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
-					PlayerStatus.newPlayer(fileChooser.getSelectedFile().getPath());
+					File saveFile = fileChooser.getSelectedFile();
+					String filePath = saveFile.getPath();
+					String extension = "";
+					int lastDot = filePath.lastIndexOf(".");
+					if (lastDot >= 0)
+						extension = filePath.substring(lastDot+1);
+					if (!"gls".equalsIgnoreCase(extension)) {
+						saveFile = new File(saveFile.toString() + ".gls");
+					}
+					PlayerStatus.newPlayer(saveFile.getPath());
 					synchronized (TitleWindow.getWindow()) {
 						TitleWindow.getWindow().notifyAll();
 					}
@@ -58,6 +70,7 @@ public class TitleScreen extends JComponent {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser fileChooser = new JFileChooser();
+				fileChooser.setFileFilter(new FileNameExtensionFilter("Glacial Slash save", "gls"));
 				if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 					try {
 						PlayerStatus.loadPlayer(fileChooser.getSelectedFile().getPath());

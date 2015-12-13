@@ -59,7 +59,11 @@ public class PlayerCharacter implements Renderable {
 	public void setSprite(Image sprite) {
 		this.sprite = sprite;
 	}
-	
+		
+	public Image getSprite() {
+		return sprite;
+	}
+
 	public int getX() {
 		return x;
 	}
