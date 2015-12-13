@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.Timer;
+import javax.swing.WindowConstants;
 
 import input.InputUtility;
 
@@ -22,7 +23,7 @@ public class MainFrame extends JFrame {
 
 	private MainFrame() {
 		super("Glacial Slash");
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		this.add(GameScreen.getScreen());
 		this.setResizable(false);
 		this.pack();

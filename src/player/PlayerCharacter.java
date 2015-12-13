@@ -250,6 +250,7 @@ public class PlayerCharacter implements Renderable {
 			}
 		}).start();
 		// TODO play sky uppercut animation
+		new Thread(new PlayerAnimation(Resource.cutSprite, this, false)).start();
 	}
 	
 	protected void performGlacialDrift() {
@@ -270,6 +271,7 @@ public class PlayerCharacter implements Renderable {
 				yAcceleration = GRAVITY;
 			}
 		}).start();
+		new Thread(new PlayerAnimation(Resource.dashSprite, this, false)).start();
 	}
 	
 	protected void performIceSummon() {
@@ -278,8 +280,7 @@ public class PlayerCharacter implements Renderable {
 
 	@Override
 	public void render(Graphics2D g) {
-		// TODO fix render algorithm
-		g.drawImage(sprite, x - GameScreen.getScreen().getCameraX(), y - GameScreen.getScreen().getCameraY(), null);
+		g.drawImage(sprite, x + boundaryWidth - (facingDirection < 0 ? 1 : 0)*((BufferedImage)sprite).getWidth() - facingDirection*boundaryWidth - GameScreen.getScreen().getCameraX(), y + boundaryHeight - ((BufferedImage)sprite).getHeight() - GameScreen.getScreen().getCameraY(), null);
 	}
 
 }
