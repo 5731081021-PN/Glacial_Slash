@@ -107,8 +107,12 @@ public class PlayerCharacter implements Renderable {
 								Thread.sleep(1);
 							} catch (InterruptedException e) {}
 						}
-						walkAnimationThread.interrupt();
-						walkAnimationThread = null;
+						try {
+							walkAnimationThread.interrupt();
+						} catch (NullPointerException e) {
+						} finally {
+							walkAnimationThread = null;
+						}
 					}
 				}).start();
 			}
@@ -272,6 +276,12 @@ public class PlayerCharacter implements Renderable {
 			}
 		}).start();
 		new Thread(new PlayerAnimation(Resource.dashSprite, this, false)).start();
+		try {
+			walkAnimationThread.interrupt();
+		} catch (NullPointerException e) {
+		} finally {
+			walkAnimationThread = null;
+		}
 	}
 	
 	protected void performIceSummon() {
