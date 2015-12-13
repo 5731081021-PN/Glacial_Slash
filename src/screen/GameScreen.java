@@ -49,8 +49,8 @@ public class GameScreen extends JComponent {
 		camera = new Point(0, 0);
 		this.setKeyBinding();
 		
-		SwingUtilities.invokeLater(new Runnable() {
-			
+		new Thread(new Runnable() {
+
 			@Override
 			public void run() {
 				while (!GameScreen.this.isDisplayable()) {
@@ -59,9 +59,10 @@ public class GameScreen extends JComponent {
 						Thread.sleep(1);
 					} catch (InterruptedException e) {}
 				}
+
 				buffer = GameScreen.this.createVolatileImage(SCREEN_WIDTH, SCREEN_HEIGHT);
 			}
-		});
+		}).start();
 	}
 
 	@Override

@@ -1,13 +1,7 @@
 package screen;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import javax.swing.JFrame;
-import javax.swing.Timer;
 import javax.swing.WindowConstants;
-
-import input.InputUtility;
 
 public class MainFrame extends JFrame {
 
@@ -27,17 +21,6 @@ public class MainFrame extends JFrame {
 		this.add(TitleScreen.getScreen());
 		this.setResizable(false);
 		this.pack();
-		this.setVisible(true);
-		
-		new Timer(1, new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (!frame.isFocused()) {
-					InputUtility.clearKeyPressed();
-				}
-			}
-		}).start();
 	}
-
+	
 }
