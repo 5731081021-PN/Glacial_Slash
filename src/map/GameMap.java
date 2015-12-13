@@ -59,12 +59,16 @@ public class GameMap implements Renderable, Serializable {
 		for (int i = 0; i < checkpointCount; i++) {
 			int tileX = Integer.parseInt(fileScanner.nextLine());
 			int tileY = Integer.parseInt(fileScanner.nextLine());
+			int screenX = tileX*tileWidth + (tileWidth-Resource.checkpoint.getWidth())/2;
+			int screenY = (tileY-1)*tileHeight + (tileHeight-Resource.checkpoint.getHeight());
+	
 			int cardCount = Integer.parseInt(fileScanner.nextLine());
 			List<SkillCard> hand = new ArrayList<>();
 			for (int j = 0; j < cardCount; j++) {
 				hand.add(SkillCard.createSkillCard(fileScanner.nextLine().trim()));
 			}
-			int screenX = tileX*tileWidth + (tileWidth-Resource.checkpoint.getWidth())/2;
+			
+			checkpoints[i] = new Checkpoint(screenX, screenY, hand);
 		}
 
 		fileScanner.close();
