@@ -21,7 +21,8 @@ public class Resource {
 	public static BufferedImage[][] iceSummonSprite = new BufferedImage[2][27];
 	public static BufferedImage[] cardAnimation = new BufferedImage[12];
 	public static BufferedImage background;
-	
+	public static BufferedImage title, startButton, loadButton, exitButton;
+
 	public static InputStream emptyMap, testMap, bigMap, tutorialMap;
 	public static InputStream map5to8;
 
@@ -216,7 +217,7 @@ public class Resource {
 				cardAnimation = null;
 			}
 		}
-		
+
 		try {
 			background = ImageIO.read(loader.getResource("res/map/background.png"));
 		} catch (IOException e) {
@@ -224,12 +225,34 @@ public class Resource {
 			background = null;
 		}
 
+		// Load title image
+		try {
+			title = ImageIO.read(loader.getResource("res/title/title.png"));
+		} catch (IOException e1) {
+			title = null;
+		}
+		try {
+			startButton = ImageIO.read(loader.getResource("res/title/new.png"));
+		} catch (IOException e) {
+			startButton = null;
+		}
+		try {
+			loadButton = ImageIO.read(loader.getResource("res/title/load.png"));
+		} catch (IOException e) {
+			loadButton = null;
+		}
+		try {
+			exitButton = ImageIO.read(loader.getResource("res/title/exit.png"));
+		} catch (IOException e) {
+			exitButton = null;
+		}
+
 		emptyMap = loader.getResourceAsStream("res/map/emptyMap.map");
 		testMap = loader.getResourceAsStream("res/map/testMap.map");
 		bigMap = loader.getResourceAsStream("res/map/bigMap.map");
 		tutorialMap = loader.getResourceAsStream("res/map/tutorialMap.map");
 		map5to8 = loader.getResourceAsStream("res/map/map5to8.map");
-		
+
 	}
 
 }
