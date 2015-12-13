@@ -21,7 +21,7 @@ public class Resource {
 	public static BufferedImage[] cardAnimation = new BufferedImage[12];
 	public static BufferedImage background;
 	public static BufferedImage title, startButton, loadButton, exitButton;
-	public static BufferedImage upButton, leftButton, downButton, rightButton, dButton, escButton, fbutton, qButton,
+	public static BufferedImage upButton, leftButton, downButton, rightButton, dButton, escButton, fbutton,
 			rButton, sButton, spaceButton;
 
 	public static InputStream tutorialMap, map5to8, map9to12, map13to14, map15;
@@ -251,25 +251,25 @@ public class Resource {
 
 		// load tutorial button
 		try {
-			upButton = ImageIO.read(loader.getResource("res/map/tutorial/1_up.png"));
+			upButton = ImageIO.read(loader.getResource("res/map/tutorial/up.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			upButton = null;
 		}
 		try {
-			leftButton = ImageIO.read(loader.getResource("res/map/tutorial/2_left.png"));
+			leftButton = ImageIO.read(loader.getResource("res/map/tutorial/left.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			leftButton = null;
 		}
 		try {
-			downButton = ImageIO.read(loader.getResource("res/map/tutorial/3_down.png"));
+			downButton = ImageIO.read(loader.getResource("res/map/tutorial/down.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			downButton = null;
 		}
 		try {
-			rightButton = ImageIO.read(loader.getResource("res/map/tutorial/4_right.png"));
+			rightButton = ImageIO.read(loader.getResource("res/map/tutorial/right.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			rightButton = null;
@@ -291,12 +291,6 @@ public class Resource {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			fbutton = null;
-		}
-		try {
-			qButton = ImageIO.read(loader.getResource("res/map/tutorial/Q.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			qButton = null;
 		}
 		try {
 			rButton = ImageIO.read(loader.getResource("res/map/tutorial/R.png"));
