@@ -7,22 +7,23 @@ package player;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.io.Serializable;
 
 import exception.SkillCardUnusableException;
 import render.Animation;
 import render.Renderable;
 import res.Resource;
-import screen.GameScreen;
+import ui.GameScreen;
 
-public abstract class SkillCard implements Renderable, Comparable<SkillCard> {
+public abstract class SkillCard implements Renderable, Comparable<SkillCard>, Serializable {
 
 	public static final SkillCard SKY_UPPERCUT = new SkyUppercut(), DOUBLE_JUMP = new DoubleJump(), GLACIAL_DRIFT = new GlacialDrift(), ICE_SUMMON = new IceSummon(), CONCENTRATION = new Concentration(null);
 	public static final int CARD_IMAGE_WIDTH = 120, CARD_IMAGE_HEIGHT = 180;
 	protected int cost;
-	protected Image cardImage;
-	protected Image originalCardImage;
+	protected transient Image cardImage;
+	protected transient Image originalCardImage;
 	private int x, y = GameScreen.SCREEN_HEIGHT - (CARD_IMAGE_HEIGHT + 20);
-	protected Thread activateAnimationThread;
+	protected transient Thread activateAnimationThread;
 	
 	public abstract void activate() throws SkillCardUnusableException;
 	

@@ -2,6 +2,8 @@ package player;
 
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 
 import exception.SkillCardUnusableException;
 import map.GameMap;
@@ -24,6 +26,9 @@ public class IceSummon extends SkillCard {
 		if (!map.isOnGround(new Rectangle((int)spriteFrontTile.getX()*map.getTileWidth(), (int)spriteFrontTile.getY()*map.getTileHeight(), map.getTileWidth(), map.getTileHeight()))) throw new SkillCardUnusableException(SkillCardUnusableException.UnusableType.ACTIVATE_CONDITION_NOT_MET);
 		if (!map.getTileType((int)spriteFrontTile.getX(), (int)spriteFrontTile.getY()).isPassable()) throw new SkillCardUnusableException(SkillCardUnusableException.UnusableType.ACTIVATE_CONDITION_NOT_MET);
 		playActivateAnimation();
+		synchronized (activateAnimationThread) {
+			activateAnimationThread.notifyAll();
+		}
 		player.performIceSummon();
 		new Thread (new Runnable() {
 			
@@ -35,6 +40,12 @@ public class IceSummon extends SkillCard {
 				map.freeze((int)spriteFrontTile.getX(), (int)spriteFrontTile.getY());
 			}
 		}).start();
+	}
+	
+	private void readObject(ObjectInputStream in) throws ClassNotFoundException, IOException {
+		in.defaultReadObject();
+		originalCardImage = SkillCard.ICE_SUMMON.cardImage;
+		cardImage = originalCardImage;
 	}
 
 }
