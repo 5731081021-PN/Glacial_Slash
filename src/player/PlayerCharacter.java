@@ -28,7 +28,7 @@ public class PlayerCharacter implements Renderable {
 	private int boundaryX, boundaryY, boundaryWidth, boundaryHeight;
 	private Image sprite = Resource.standSprite[1];
 	private int freezePlayerControlCount, airJumpCount;
-	private Thread walkAnimationThread = null;
+	private Thread walkAnimationThread = null, iceSummonAnimationThread = null;
 	
 	public PlayerCharacter() {
 		xSpeed = 0f;
@@ -286,13 +286,18 @@ public class PlayerCharacter implements Renderable {
 	protected void performIceSummon() {
 		// TODO play ice summon animation
 		freezePlayerControlCount = 30;
-		new Thread(new PlayerAnimation(Resource.iceSummonSprite, this, false)).start();
+		iceSummonAnimationThread = new Thread(new PlayerAnimation(Resource.iceSummonSprite, this, false));
+		iceSummonAnimationThread.start();
 		try {
 			walkAnimationThread.interrupt();
 		} catch (NullPointerException e) {
 		} finally {
 			walkAnimationThread = null;
 		}
+	}
+	
+	protected Thread getIceSummonAnimationThread() {
+		return iceSummonAnimationThread;
 	}
 
 	@Override
