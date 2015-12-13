@@ -11,6 +11,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import exception.UnableToLoadGameException;
@@ -42,6 +43,7 @@ public class TitleScreen extends JComponent {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, "Choose save file location", "New game", JOptionPane.PLAIN_MESSAGE);
 				JFileChooser fileChooser = new JFileChooser();
 				if (fileChooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
 					PlayerStatus.newPlayer(fileChooser.getSelectedFile().getPath());
