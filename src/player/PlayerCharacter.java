@@ -42,10 +42,9 @@ public class PlayerCharacter implements Renderable {
 		facingDirection = 1;
 	}
 	
-	public void setInitialPosition() {
-		Point initialPosition = PlayerStatus.getPlayer().getCurrentMap().getInitialPosition();
-		x = (int)initialPosition.getX();
-		y = (int)initialPosition.getY() - ((BufferedImage)sprite).getHeight();
+	public void setPosition(Point currentPosition) {
+		x = (int)currentPosition.getX();
+		y = (int)currentPosition.getY() - ((BufferedImage)sprite).getHeight();
 		xRemainder = 0f;
 		yRemainder = 0f;
 		prevX = x;
@@ -284,8 +283,7 @@ public class PlayerCharacter implements Renderable {
 	}
 	
 	protected void performIceSummon() {
-		// TODO play ice summon animation
-		freezePlayerControlCount = 30;
+		freezePlayerControlCount = 24;
 		iceSummonAnimationThread = new Thread(new PlayerAnimation(Resource.iceSummonSprite, this, false));
 		iceSummonAnimationThread.start();
 		try {
@@ -296,6 +294,10 @@ public class PlayerCharacter implements Renderable {
 		}
 	}
 	
+	protected void performConcentration() {
+		freezePlayerControlCount = 15;
+	}
+
 	protected Thread getIceSummonAnimationThread() {
 		return iceSummonAnimationThread;
 	}

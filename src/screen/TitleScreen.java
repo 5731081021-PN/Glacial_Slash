@@ -2,32 +2,94 @@ package screen;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
+
+import res.Resource;
 
 public class TitleScreen extends JComponent {
 
 	private static final long serialVersionUID = 8480810473369561460L;
 	
-	public TitleScreen() {
+	private static TitleScreen screen;
+	
+	public static synchronized TitleScreen getScreen() {
+		if (screen == null)
+			screen = new TitleScreen();
+		return screen;
+	}
+	
+	private TitleScreen() {
 		// Placeholder
-		JButton newGameButton = new JButton("New Game");
-		JButton loadGameButton = new JButton("Load Game");
-		JButton exitButton = new JButton("Exit");
+		JButton newGameButton = new JButton(new ImageIcon(Resource.startButton));
+		JButton loadGameButton = new JButton(new ImageIcon(Resource.loadButton));
+		JButton exitButton = new JButton(new ImageIcon(Resource.exitButton));
+		makeTransparent(newGameButton);
+		makeTransparent(loadGameButton);
+		makeTransparent(exitButton);
 		
 		this.setPreferredSize(new Dimension(GameScreen.SCREEN_WIDTH, GameScreen.SCREEN_HEIGHT));
 		// TODO Add ActionListener to buttons
+		// Decided to put JFileChoosers here
+		newGameButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		loadGameButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		exitButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
 		this.setLayout(new BorderLayout());
-		JPanel buttonPanel = new JPanel();
-		buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
-		buttonPanel.add(newGameButton);
-		buttonPanel.add(loadGameButton);
-		buttonPanel.add(exitButton);
+		JPanel outerButtonPanel = new JPanel(), buttonPanel = new JPanel();
+		buttonPanel.setLayout(new BorderLayout());
+		buttonPanel.add(newGameButton, BorderLayout.WEST);
+		buttonPanel.add(loadGameButton, BorderLayout.CENTER);
+		buttonPanel.add(exitButton, BorderLayout.EAST);
+		buttonPanel.add(Box.createRigidArea(new Dimension(0, 100)), BorderLayout.SOUTH);
+		buttonPanel.setOpaque(false);
 		
-		this.add(buttonPanel, BorderLayout.SOUTH);
+		outerButtonPanel.setLayout(new BorderLayout());
+		outerButtonPanel.add(buttonPanel, BorderLayout.CENTER);
+		outerButtonPanel.add(Box.createRigidArea(new Dimension(100, 0)), BorderLayout.WEST);
+		outerButtonPanel.add(Box.createRigidArea(new Dimension(100, 0)), BorderLayout.EAST);
+		outerButtonPanel.setOpaque(false);
+
+		this.add(outerButtonPanel, BorderLayout.SOUTH);
+	}
+	
+	@Override
+	public void paintComponent(Graphics g) {
+		Graphics2D g2d = (Graphics2D)g;
+		g2d.drawImage(Resource.title, null, 0, 0);
+	}
+	
+	private void makeTransparent(JButton button) {
+		button.setOpaque(false);
+		button.setContentAreaFilled(false);
+		button.setBorderPainted(false);
+		button.setFocusPainted(false);
 	}
 
 }

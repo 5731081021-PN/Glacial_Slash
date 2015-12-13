@@ -1,7 +1,6 @@
 package map;
 
 import java.awt.Image;
-
 import res.Resource;
 
 public enum Tile {
