@@ -15,7 +15,7 @@ import input.InputUtility.CommandKey;
 import render.PlayerAnimation;
 import render.Renderable;
 import res.Resource;
-import screen.GameScreen;
+import ui.GameScreen;
 
 public class PlayerCharacter implements Renderable {
 

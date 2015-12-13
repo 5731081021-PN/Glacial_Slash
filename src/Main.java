@@ -4,8 +4,8 @@ import javax.swing.SwingUtilities;
 
 import player.GameLoop;
 import render.RenderLoop;
-import screen.GameWindow;
-import screen.TitleWindow;
+import ui.GameWindow;
+import ui.TitleWindow;
 
 public class Main {
 	

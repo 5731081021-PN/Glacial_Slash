@@ -12,11 +12,10 @@ import java.util.Set;
 
 import javax.swing.AbstractAction;
 
-import screen.GameScreen;
+import ui.GameScreen;
 
 public class InputUtility {
 
-//	private static boolean[] keyPressed = new boolean[256], keyTriggered = new boolean[256];
 	private static Set<CommandKey> keyPressed = Collections.synchronizedSet(EnumSet.noneOf(CommandKey.class));
 	private static Set<CommandKey> keyTriggered = Collections.synchronizedSet(EnumSet.noneOf(CommandKey.class));
 	
