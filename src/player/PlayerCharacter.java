@@ -253,7 +253,6 @@ public class PlayerCharacter implements Renderable {
 				yAcceleration = GRAVITY;
 			}
 		}).start();
-		// TODO play sky uppercut animation
 		new Thread(new PlayerAnimation(Resource.cutSprite, this, false)).start();
 	}
 	
@@ -286,6 +285,14 @@ public class PlayerCharacter implements Renderable {
 	
 	protected void performIceSummon() {
 		// TODO play ice summon animation
+		freezePlayerControlCount = 30;
+		new Thread(new PlayerAnimation(Resource.iceSummonSprite, this, false)).start();
+		try {
+			walkAnimationThread.interrupt();
+		} catch (NullPointerException e) {
+		} finally {
+			walkAnimationThread = null;
+		}
 	}
 
 	@Override

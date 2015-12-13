@@ -15,8 +15,17 @@ public class Concentration extends SkillCard {
 	@Override
 	public void activate() throws SkillCardUnusableException {
 		playActivateAnimation();
-		for (SkillCard s : drawnCards)
-			PlayerStatus.getPlayer().addCard(s);
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				try {
+					activateAnimationThread.join();
+				} catch (InterruptedException e) {}
+				for (SkillCard s : drawnCards)
+					PlayerStatus.getPlayer().addCard(s);
+			}
+		}).start();
 	}
 	
 }

@@ -6,9 +6,12 @@ package player;
 
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 
 import exception.SkillCardUnusableException;
+import render.Animation;
 import render.Renderable;
+import res.Resource;
 import screen.GameScreen;
 
 public abstract class SkillCard implements Renderable, Comparable<SkillCard> {
@@ -17,13 +20,16 @@ public abstract class SkillCard implements Renderable, Comparable<SkillCard> {
 	public static final int CARD_IMAGE_WIDTH = 120, CARD_IMAGE_HEIGHT = 180;
 	protected int cost;
 	protected Image cardImage;
+	protected Image originalCardImage;
 	private int x, y = GameScreen.SCREEN_HEIGHT - (CARD_IMAGE_HEIGHT + 20);
+	protected Thread activateAnimationThread;
 	
 	public abstract void activate() throws SkillCardUnusableException;
 	
 	public SkillCard(int cost, Image cardImage) {
 		this.cost = cost;
 		this.cardImage = cardImage;
+		this.originalCardImage = cardImage;
 	}
 	
 	public static final SkillCard createSkillCard(String name) {
@@ -47,6 +53,34 @@ public abstract class SkillCard implements Renderable, Comparable<SkillCard> {
 	
 	public void playActivateAnimation() {
 		// TODO play activate animation
+		activateAnimationThread = new Thread(new Animation(Resource.cardAnimation) {
+			
+			@Override
+			public void run() {
+				BufferedImage originalCardImage = (BufferedImage)SkillCard.this.originalCardImage;
+				Graphics2D imageGraphics;
+				while (currentFrame < frameCount) {
+					cardImage = new BufferedImage(originalCardImage.getWidth(), originalCardImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
+					imageGraphics = ((BufferedImage)cardImage).createGraphics();
+					imageGraphics.drawImage(originalCardImage, null, 0, 0);
+					imageGraphics.drawImage(animation[currentFrame], null, 0, 0);
+					synchronized (PlayerStatus.getPlayer().getPlayerCharacter()) {
+						try {
+							PlayerStatus.getPlayer().getPlayerCharacter().wait();
+						} catch (InterruptedException e) {}
+					}
+					currentFrame++;
+				}
+				cardImage = new BufferedImage(originalCardImage.getWidth(), originalCardImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
+				imageGraphics = ((BufferedImage)cardImage).createGraphics();
+				imageGraphics.drawImage(originalCardImage, null, 0, 0);
+			}
+		});
+		activateAnimationThread.start();
+	}
+	
+	public Thread getActivateAnimationThread() {
+		return activateAnimationThread;
 	}
 	
 	@Override

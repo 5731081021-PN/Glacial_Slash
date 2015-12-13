@@ -93,7 +93,16 @@ public class PlayerStatus implements Renderable {
 			if (currentMana >= using.cost) {
 				using.activate();
 				currentMana -= using.cost;
-				hand.remove(using);
+				new Thread(new Runnable() {
+					
+					@Override
+					public void run() {
+						try {
+							using.getActivateAnimationThread().join();
+						} catch (InterruptedException e) {}
+						hand.remove(using);
+					}
+				}).start();
 			}
 			else throw new SkillCardUnusableException(SkillCardUnusableException.UnusableType.NOT_ENOUGH_MANA);
 		} catch (ArrayIndexOutOfBoundsException e) {
