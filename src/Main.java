@@ -1,3 +1,5 @@
+import java.lang.reflect.InvocationTargetException;
+
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
@@ -8,20 +10,22 @@ import screen.MainFrame;
 public class Main {
 	
 	private static Runnable gameLoop, renderLoop;
-	private static JFrame mainFrame;
 
 	public static void main(String[] args) {
 	
 		gameLoop = new GameLoop();
 		renderLoop = new RenderLoop();
 
-		SwingUtilities.invokeLater(new Runnable() {
-			
-			@Override
-			public void run() {
-				mainFrame = MainFrame.getFrame();
-			}
-		});
+		try {
+			SwingUtilities.invokeAndWait(new Runnable() {
+
+				@Override
+				public void run() {
+					MainFrame.getFrame();
+				}
+			});
+		} catch (InterruptedException e) {
+		} catch (InvocationTargetException e) {}
 	
 		new Thread(gameLoop).start();
 		new Thread(renderLoop).start();
@@ -31,7 +35,7 @@ public class Main {
 				gameLoop.wait();
 			}
 		} catch (InterruptedException e) {}
-		mainFrame.dispose();
+		System.exit(0);
 	}
 
 }
