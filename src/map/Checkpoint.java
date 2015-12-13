@@ -2,7 +2,7 @@
  * Checkpoints act as a save point and also a turn indicator
  */
 
-package entity;
+package map;
 
 import java.awt.Graphics2D;
 

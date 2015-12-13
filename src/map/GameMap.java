@@ -2,7 +2,7 @@
  * Represent each map of the game
  */
 
-package entity.map;
+package map;
 
 import java.awt.Color;
 import java.awt.Graphics2D;

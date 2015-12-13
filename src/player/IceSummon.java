@@ -3,8 +3,8 @@ package player;
 import java.awt.Point;
 import java.awt.Rectangle;
 
-import entity.map.GameMap;
 import exception.SkillCardUnusableException;
+import map.GameMap;
 import res.Resource;
 
 public class IceSummon extends SkillCard {
@@ -23,13 +23,18 @@ public class IceSummon extends SkillCard {
 		Point spriteFrontTile = player.getSpriteFrontTile();
 		if (!map.isOnGround(new Rectangle((int)spriteFrontTile.getX()*map.getTileWidth(), (int)spriteFrontTile.getY()*map.getTileHeight(), map.getTileWidth(), map.getTileHeight()))) throw new SkillCardUnusableException(SkillCardUnusableException.UnusableType.ACTIVATE_CONDITION_NOT_MET);
 		if (!map.getTileType((int)spriteFrontTile.getX(), (int)spriteFrontTile.getY()).isPassable()) throw new SkillCardUnusableException(SkillCardUnusableException.UnusableType.ACTIVATE_CONDITION_NOT_MET);
-		try {
-			map.freeze((int)spriteFrontTile.getX(), (int)spriteFrontTile.getY());
-			player.performIceSummon();
-		} catch (ArrayIndexOutOfBoundsException e) {
-			throw new SkillCardUnusableException(SkillCardUnusableException.UnusableType.ACTIVATE_CONDITION_NOT_MET);
-		}
 		playActivateAnimation();
+		player.performIceSummon();
+		new Thread (new Runnable() {
+			
+			@Override
+			public void run() {
+				try {
+					player.getIceSummonAnimationThread().join();
+				} catch (InterruptedException e) {}
+				map.freeze((int)spriteFrontTile.getX(), (int)spriteFrontTile.getY());
+			}
+		}).start();
 	}
 
 }
