@@ -24,7 +24,7 @@ public class Resource {
 	public static BufferedImage title, startButton, loadButton, exitButton;
 
 	public static InputStream emptyMap, testMap, bigMap, tutorialMap;
-	public static InputStream map5to8;
+	public static InputStream map5to8 ,map9to12;
 
 	private static ClassLoader loader = Resource.class.getClassLoader();
 
@@ -252,7 +252,7 @@ public class Resource {
 		bigMap = loader.getResourceAsStream("res/map/bigMap.map");
 		tutorialMap = loader.getResourceAsStream("res/map/tutorialMap.map");
 		map5to8 = loader.getResourceAsStream("res/map/map5to8.map");
-
+		map9to12 = loader.getResourceAsStream("res/map/map9to12.map");
 	}
 
 }
