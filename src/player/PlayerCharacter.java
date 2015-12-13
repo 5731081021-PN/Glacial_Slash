@@ -95,6 +95,14 @@ public class PlayerCharacter implements Renderable {
 
 	// Motion
 	
+	protected void stopAllMotion() {
+		xSpeed = 0;
+		xTargetSpeed = 0;
+		ySpeed = 0;
+		yTargetSpeed = 0;
+		freezePlayerControlCount = 0;
+	}
+	
 	protected void walk(int direction) {
 		xTargetSpeed = direction*WALK_SPEED;
 		if (this.isOnGround() && direction != IDLE) {

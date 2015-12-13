@@ -68,7 +68,9 @@ public abstract class SkillCard implements Renderable, Comparable<SkillCard>, Se
 					synchronized (PlayerStatus.getPlayer().getPlayerCharacter()) {
 						try {
 							PlayerStatus.getPlayer().getPlayerCharacter().wait();
-						} catch (InterruptedException e) {}
+						} catch (InterruptedException e) {
+							return;
+						}
 					}
 					currentFrame++;
 				}

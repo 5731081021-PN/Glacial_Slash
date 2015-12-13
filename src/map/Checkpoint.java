@@ -6,6 +6,7 @@ package map;
 
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -22,6 +23,7 @@ public class Checkpoint implements Renderable, Serializable {
 	private int x, y;
 	private List<SkillCard> skillCards;
 	private boolean used;
+	private Rectangle boundaries;
 	private transient Image sprite;
 	
 	public Checkpoint(int x, int y, List<SkillCard> skillCards) {
@@ -30,16 +32,23 @@ public class Checkpoint implements Renderable, Serializable {
 		this.skillCards = skillCards;
 		used = false;
 		sprite = Resource.checkpoint;
+		boundaries = new Rectangle(x, y, ((BufferedImage)sprite).getWidth(), ((BufferedImage)sprite).getHeight());
 	}
 	
 	public List<SkillCard> drawCard() {
-		used = true;
-		sprite = Resource.usedCheckpoint;
+		if (!used) {
+			used = true;
+			sprite = Resource.usedCheckpoint;
+		}
 		return skillCards;
 	}
 	
 	public boolean isUsed() {
 		return used;
+	}
+	
+	public Rectangle getBoundaries() {
+		return boundaries;
 	}
 	
 	@Override

@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 import exception.SkillCardUnusableException;
 import input.InputUtility;
 import input.InputUtility.CommandKey;
+import res.Resource;
 import ui.GameScreen;
 
 public class GameLoop implements Runnable {
@@ -48,6 +49,13 @@ public class GameLoop implements Runnable {
 					synchronized (this) {
 						this.notifyAll();
 					}
+				}
+			}
+			
+			if (InputUtility.getKeyTriggered(CommandKey.RETURN)) {
+				InputUtility.clearKeyPressed();
+				if (JOptionPane.showConfirmDialog(null, "Return to last checkpoint?", "Got stuck?", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+					playerStatus.returnToLastCheckpoint();
 				}
 			}
 		

@@ -34,11 +34,13 @@ public class PlayerStatus implements Renderable, Serializable {
 	
 	private static PlayerStatus player;
 	private int currentMana, maxMana;
-	private List<SkillCard> hand;
+	private List<SkillCard> hand, originalHand;
 	private GameMap currentMap;
 	private transient PlayerCharacter playerCharacter;
 	private Point currentPosition;
 	private String saveLocation;
+	private transient SkillCard using;
+	private transient Thread removeCardFromHandThread;
 	
 	public static synchronized PlayerStatus newPlayer(String saveLocation) {
 		player = new PlayerStatus();
@@ -91,7 +93,8 @@ public class PlayerStatus implements Renderable, Serializable {
 		// Mana debug
 		maxMana = 10;
 		currentMana = 10;
-		hand = new ArrayList<SkillCard>();
+		originalHand = new ArrayList<>();
+		hand = new ArrayList<>();
 //		currentMap = new TutorialMap();
 		currentMap = GameMap.getGameMap("map9to12");
 		currentPosition = currentMap.getInitialPosition();
@@ -99,13 +102,16 @@ public class PlayerStatus implements Renderable, Serializable {
 		playerCharacter.setPosition(currentPosition);
 		
 		// Debug
-		addCard(SkillCard.createSkillCard("Sky Uppercut"));
-		addCard(SkillCard.createSkillCard("Double Jump"));
-		addCard(SkillCard.createSkillCard("Glacial Drift"));
-		addCard(SkillCard.createSkillCard("Ice Summon"));
-		addCard(SkillCard.createSkillCard("Ice Summon"));
-		addCard(SkillCard.createSkillCard("Ice Summon"));
-		addCard(SkillCard.createSkillCard("Concentration 2 S D"));
+
+		originalHand.add(SkillCard.createSkillCard("Sky Uppercut"));
+		originalHand.add(SkillCard.createSkillCard("Double Jump"));
+		originalHand.add(SkillCard.createSkillCard("Glacial Drift"));
+		originalHand.add(SkillCard.createSkillCard("Ice Summon"));
+		originalHand.add(SkillCard.createSkillCard("Ice Summon"));
+		originalHand.add(SkillCard.createSkillCard("Ice Summon"));
+		originalHand.add(SkillCard.createSkillCard("Concentration 2 S D"));
+		Collections.sort(originalHand);
+		hand.addAll(originalHand);
 
 	}
 	
@@ -127,11 +133,9 @@ public class PlayerStatus implements Renderable, Serializable {
 		return maxMana;
 	}
 	
-	public void chargeMana(SkillCard charged) {
-		if (hand.remove(charged)) {
-			maxMana++;
-			currentMana++;
-		}
+	public void chargeMana() {
+		maxMana++;
+		currentMana++;
 	}
 	
 	public List<SkillCard> getHand() {
@@ -145,22 +149,27 @@ public class PlayerStatus implements Renderable, Serializable {
 	
 	public void useCard(SkillCard used) throws SkillCardUnusableException {
 		try {
-			SkillCard using = hand.get(hand.indexOf(used));
+			using = hand.get(hand.indexOf(used));
 			if (currentMana >= using.cost) {
 				using.activate();
 //				currentMana -= using.cost;
-				new Thread(new Runnable() {
+				removeCardFromHandThread = new Thread(new Runnable() {
 					
 					@Override
 					public void run() {
 						synchronized (using.getActivateAnimationThread()) {
 							try {
 								using.getActivateAnimationThread().wait();
-							} catch (InterruptedException e) {}
-//							hand.remove(using);
+							} catch (InterruptedException e) {
+								return;
+							}
+							synchronized (hand) {
+								hand.remove(using);
+							}
 						}
 					}
-				}).start();
+				});
+				removeCardFromHandThread.start();
 			}
 			else throw new SkillCardUnusableException(SkillCardUnusableException.UnusableType.NOT_ENOUGH_MANA);
 		} catch (ArrayIndexOutOfBoundsException e) {
@@ -170,6 +179,22 @@ public class PlayerStatus implements Renderable, Serializable {
 	
 	public GameMap getCurrentMap() {
 		return currentMap;
+	}
+
+	public void returnToLastCheckpoint() {
+		removeCardFromHandThread.interrupt();
+		if (using instanceof IceSummon) {
+			((IceSummon) using).getIceSummonThread().interrupt();
+		}
+		else if (using instanceof Concentration) {
+			((Concentration) using).getConcentrationThread().interrupt();
+		}
+		currentMap.clearIceTiles();
+		hand.clear();
+		hand.addAll(originalHand);
+		playerCharacter.setSprite(Resource.standSprite[(playerCharacter.getFacingDirection()+1)/2]);
+		playerCharacter.stopAllMotion();
+		playerCharacter.setPosition(currentPosition);
 	}
 
 	@Override

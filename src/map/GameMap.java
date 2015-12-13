@@ -24,7 +24,7 @@ public class GameMap implements Renderable, Serializable {
 	private Tile[][] tileMap;
 	private Checkpoint[] checkpoints;
 	private static int tileWidth = 70, tileHeight = 70;
-	private Point initialPosition;
+	private Point initialPosition, transitionPoint;
 	private String nextMapName;
 	
 	public static GameMap getGameMap(String mapName) {
@@ -56,6 +56,7 @@ public class GameMap implements Renderable, Serializable {
 				case '+': tileMap[tileX][tileY] = Tile.LEFT; break;
 				case '-': tileMap[tileX][tileY] = Tile.MID; break;
 				case '*': tileMap[tileX][tileY] = Tile.RIGHT; break;
+				case 'X': transitionPoint = new Point(tileX*tileWidth, tileY*tileHeight);
 				case 'P': initialPosition = new Point(tileX*tileWidth, (tileY+1)*tileHeight);
 				default : tileMap[tileX][tileY] = Tile.AIR;
 				}
@@ -85,8 +86,23 @@ public class GameMap implements Renderable, Serializable {
 		
 	}
 	
+	public void clearIceTiles() {
+		for (int tileX = 0; tileX < width; tileX++)
+			for (int tileY = 0; tileY < height; tileY++)
+				if (tileMap[tileX][tileY] == Tile.ICE)
+					tileMap[tileX][tileY] = Tile.AIR;
+	}
+	
 	public Point getInitialPosition() {
 		return initialPosition;
+	}
+	
+	public Point getTransitionPoint() {
+		return transitionPoint;
+	}
+	
+	public String getNextMapName() {
+		return nextMapName;
 	}
 	
 	public int getWidth() {
