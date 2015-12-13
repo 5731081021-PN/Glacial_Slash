@@ -1,21 +1,21 @@
-package screen;
+package ui;
 
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
-public class MainFrame extends JFrame {
+public class TitleWindow extends JFrame {
 
 	private static final long serialVersionUID = 6167186886002864573L;
 	
-	public static MainFrame frame;
+	public static TitleWindow window;
 	
-	public static MainFrame getFrame() {
-		if (frame == null)
-			frame = new MainFrame();
-		return frame;
+	public static TitleWindow getWindow() {
+		if (window == null)
+			window = new TitleWindow();
+		return window;
 	}
 
-	private MainFrame() {
+	private TitleWindow() {
 		super("Glacial Slash");
 		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		this.add(TitleScreen.getScreen());

@@ -5,21 +5,28 @@
 package map;
 
 import java.awt.Graphics2D;
+import java.io.Serializable;
+import java.util.List;
 
 import player.SkillCard;
 import render.Renderable;
+import res.Resource;
+import ui.GameScreen;
 
-public class Checkpoint implements Renderable {
+public class Checkpoint implements Renderable, Serializable {
 	
-	private SkillCard[] skillCards;
+	private int x, y;
+	private List<SkillCard> skillCards;
 	private boolean used;
 	
-	public Checkpoint(SkillCard[] skillCards) {
+	public Checkpoint(int x, int y, List<SkillCard> skillCards) {
+		this.x = x;
+		this.y = y;
 		this.skillCards = skillCards;
 		used = false;
 	}
 	
-	public SkillCard[] drawCard() {
+	public List<SkillCard> drawCard() {
 		used = true;
 		return skillCards;
 	}
@@ -30,8 +37,7 @@ public class Checkpoint implements Renderable {
 	
 	@Override
 	public void render(Graphics2D g) {
-		// TODO Auto-generated method stub
-		
+		g.drawImage(Resource.checkpoint, null, x - GameScreen.getScreen().getCameraX(), y - GameScreen.getScreen().getCameraY());
 	}
 
 }

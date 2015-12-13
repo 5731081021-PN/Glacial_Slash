@@ -2,7 +2,7 @@ package render;
 
 import player.PlayerCharacter;
 import player.PlayerStatus;
-import screen.GameScreen;
+import ui.GameScreen;
 
 public class RenderLoop implements Runnable {
 

@@ -1,4 +1,4 @@
-package screen;
+package ui;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -11,8 +11,6 @@ import javax.swing.ActionMap;
 import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.KeyStroke;
-import javax.swing.SwingUtilities;
-
 import input.InputUtility.CommandKey;
 import input.InputUtility.KeyPressedAction;
 import input.InputUtility.KeyReleasedAction;

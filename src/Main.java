@@ -4,8 +4,8 @@ import javax.swing.SwingUtilities;
 
 import player.GameLoop;
 import render.RenderLoop;
-import screen.GameWindow;
-import screen.MainFrame;
+import ui.GameWindow;
+import ui.TitleWindow;
 
 public class Main {
 	
@@ -13,29 +13,38 @@ public class Main {
 
 	public static void main(String[] args) {
 			
-		MainFrame mainFrame = MainFrame.getFrame();
+		TitleWindow titleWindow = TitleWindow.getWindow();
 		try {
 			SwingUtilities.invokeAndWait(new Runnable() {
 
 				@Override
 				public void run() {
-					MainFrame.getFrame().setVisible(true);
-					MainFrame.getFrame().requestFocus();
+					titleWindow.setVisible(true);
+					titleWindow.requestFocus();
 				}
 			});
 		} catch (InterruptedException e) {
 		} catch (InvocationTargetException e) {}
 		
-		synchronized (mainFrame) {
+		synchronized (titleWindow) {
 			try {
-				mainFrame.wait();
+				titleWindow.wait();
 			} catch (InterruptedException e) {}
 		}
-		
-		GameWindow gameWindow = GameWindow.getWindow();
-		mainFrame.setVisible(false);
-		gameWindow.setVisible(true);
-		gameWindow.requestFocus();
+
+		try {
+			SwingUtilities.invokeAndWait(new Runnable() {
+
+				@Override
+				public void run() {
+					GameWindow gameWindow = GameWindow.getWindow();
+					titleWindow.dispose();
+					gameWindow.setVisible(true);
+					gameWindow.requestFocus();
+				}
+			});
+		} catch (InterruptedException e) {
+		} catch (InvocationTargetException e) {}
 		
 		gameLoop = new GameLoop();
 		renderLoop = new RenderLoop();

@@ -1,4 +1,4 @@
-package screen;
+package ui;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -11,12 +11,11 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import exception.UnableToLoadGameException;
-import player.GameLoop;
 import player.PlayerStatus;
-import render.RenderLoop;
 import res.Resource;
 
 public class TitleScreen extends JComponent {
@@ -32,7 +31,6 @@ public class TitleScreen extends JComponent {
 	}
 	
 	private TitleScreen() {
-		// Placeholder
 		JButton newGameButton = new JButton(new ImageIcon(Resource.startButton));
 		JButton loadGameButton = new JButton(new ImageIcon(Resource.loadButton));
 		JButton exitButton = new JButton(new ImageIcon(Resource.exitButton));
@@ -41,17 +39,16 @@ public class TitleScreen extends JComponent {
 		makeTransparent(exitButton);
 		
 		this.setPreferredSize(new Dimension(GameScreen.SCREEN_WIDTH, GameScreen.SCREEN_HEIGHT));
-		// TODO Add ActionListener to buttons
-		// Decided to put JFileChoosers here
 		newGameButton.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, "Choose save file location", "New game", JOptionPane.PLAIN_MESSAGE);
 				JFileChooser fileChooser = new JFileChooser();
 				if (fileChooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
 					PlayerStatus.newPlayer(fileChooser.getSelectedFile().getPath());
-					synchronized (MainFrame.getFrame()) {
-						MainFrame.getFrame().notifyAll();
+					synchronized (TitleWindow.getWindow()) {
+						TitleWindow.getWindow().notifyAll();
 					}
 				}
 			}
@@ -67,8 +64,8 @@ public class TitleScreen extends JComponent {
 					} catch (UnableToLoadGameException e1) {
 						return;
 					}
-					synchronized (MainFrame.getFrame()) {
-						MainFrame.getFrame().notifyAll();
+					synchronized (TitleWindow.getWindow()) {
+						TitleWindow.getWindow().notifyAll();
 					}
 				}
 			}
@@ -109,30 +106,6 @@ public class TitleScreen extends JComponent {
 		button.setContentAreaFilled(false);
 		button.setBorderPainted(false);
 		button.setFocusPainted(false);
-	}
-	
-	private void startGame() {
-		MainFrame mainFrame = MainFrame.getFrame();
-		GameWindow gameWindow = GameWindow.getWindow();
-		GameLoop gameLoop = new GameLoop();
-		RenderLoop renderLoop = new RenderLoop();
-
-		mainFrame.setVisible(false);
-		gameWindow.setVisible(true);
-		gameWindow.requestFocus();
-
-		new Thread(gameLoop).start();
-		new Thread(renderLoop).start();
-		synchronized (gameLoop) {
-			try {
-				gameLoop.wait();
-			} catch (InterruptedException e) {}
-		}
-
-		mainFrame.setVisible(true);
-		gameWindow.setVisible(false);
-		mainFrame.requestFocus();
-
 	}
 
 }

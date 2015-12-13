@@ -10,22 +10,27 @@ import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.io.InputStream;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import render.Renderable;
-import screen.GameScreen;
+import res.Resource;
+import ui.GameScreen;
 
-public class GameMap implements Renderable {
+public class GameMap implements Renderable, Serializable {
 	
 	private int width, height;
 	private Tile[][] tileMap;
+	private ArrayList<Checkpoint> checkPoints;
 	private static int tileWidth = 70, tileHeight = 70;
 	private Point initialPosition;
-	private Image background;
 
 	public GameMap(InputStream mapFile) {
 		Scanner fileScanner;
 		fileScanner = new Scanner(mapFile);
+		
+		checkPoints = new ArrayList<>();
 		
 		// TODO add some kind of file encoding
 		
@@ -173,10 +178,7 @@ public class GameMap implements Renderable {
 		int lastTileX = firstTileX + GameScreen.SCREEN_WIDTH/tileWidth + 1;
 		int lastTileY = firstTileY + GameScreen.SCREEN_HEIGHT/tileHeight + 1;
 		
-		g.drawImage(background, 0, 0, null);
-		// Placeholder
-		g.setBackground(Color.WHITE);
-		g.clearRect(0, 0, GameScreen.SCREEN_WIDTH, GameScreen.SCREEN_HEIGHT);
+		g.drawImage(Resource.background, 0, 0, null);
 		
 		try {
 			for (int tileX = firstTileX; tileX <= lastTileX; tileX++) {

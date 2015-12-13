@@ -9,7 +9,7 @@ import javax.swing.JOptionPane;
 import exception.SkillCardUnusableException;
 import input.InputUtility;
 import input.InputUtility.CommandKey;
-import screen.GameScreen;
+import ui.GameScreen;
 
 public class GameLoop implements Runnable {
 

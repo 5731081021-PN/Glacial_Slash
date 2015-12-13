@@ -1,5 +1,8 @@
 package player;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+
 import exception.SkillCardUnusableException;
 import res.Resource;
 
@@ -13,7 +16,16 @@ public class DoubleJump extends SkillCard {
 	public void activate() throws SkillCardUnusableException {
 		if (PlayerStatus.getPlayer().getPlayerCharacter().getAirJumpCount() <= 0) throw new SkillCardUnusableException(SkillCardUnusableException.UnusableType.ACTIVATE_CONDITION_NOT_MET);
 		playActivateAnimation();
+		synchronized (activateAnimationThread) {
+			activateAnimationThread.notifyAll();
+		}
 		PlayerStatus.getPlayer().getPlayerCharacter().jump();
+	}
+	
+	private void readObject(ObjectInputStream in) throws ClassNotFoundException, IOException {
+		in.defaultReadObject();
+		originalCardImage = SkillCard.DOUBLE_JUMP.cardImage;
+		cardImage = originalCardImage;
 	}
 
 }
