@@ -12,6 +12,8 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
+
+import exception.UnableToLoadGameException;
 import player.GameLoop;
 import player.PlayerStatus;
 import render.RenderLoop;
@@ -58,7 +60,17 @@ public class TitleScreen extends JComponent {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				JFileChooser fileChooser = new JFileChooser();
+				if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+					try {
+						PlayerStatus.loadPlayer(fileChooser.getSelectedFile().getPath());
+					} catch (UnableToLoadGameException e1) {
+						return;
+					}
+					synchronized (MainFrame.getFrame()) {
+						MainFrame.getFrame().notifyAll();
+					}
+				}
 			}
 		});
 		exitButton.addActionListener(new ActionListener() {
