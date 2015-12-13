@@ -19,6 +19,7 @@ public class Resource {
 	public static BufferedImage[][] cutSprite = new BufferedImage[2][27];
 	public static BufferedImage[][] dashSprite = new BufferedImage[2][16];
 	public static BufferedImage[][] iceSummonSprite = new BufferedImage[2][54];
+	public static BufferedImage[] cardAnimation = new BufferedImage[12];
 
 	public static InputStream emptyMap, testMap, bigMap, tutorialMap;
 
@@ -202,6 +203,15 @@ public class Resource {
 					// TODO Auto-generated catch block
 					iceSummonSprite[i][j] = null;
 				}
+			}
+		}
+
+		for (int i = 0; i <= 11; i++) {
+			try {
+				cardAnimation[i] = ImageIO.read(loader.getResource("res/sprite/card/animation/card_" + i + ".png"));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				cardAnimation = null;
 			}
 		}
 
