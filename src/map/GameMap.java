@@ -58,10 +58,11 @@ public class GameMap implements Renderable, Serializable {
 				case '+': tileMap[tileX][tileY] = Tile.LEFT; break;
 				case '-': tileMap[tileX][tileY] = Tile.MID; break;
 				case '*': tileMap[tileX][tileY] = Tile.RIGHT; break;
-				case 'X': transitionPoint = new Point(tileX*tileWidth, tileY*tileHeight);
+				case 'X': transitionPoint = new Point(tileX*tileWidth, tileY*tileHeight); break;
 				case 'P': initialPosition = new Point(tileX*tileWidth, (tileY+1)*tileHeight);
-				default : tileMap[tileX][tileY] = Tile.AIR;
 				}
+				if (tileMap[tileX][tileY] == null)
+					tileMap[tileX][tileY] = Tile.AIR;
 			}
 		}
 		

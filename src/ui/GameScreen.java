@@ -24,7 +24,6 @@ public class GameScreen extends JComponent {
 	
 	public static final int SCREEN_WIDTH = 1280, SCREEN_HEIGHT = 720;
 	private static GameScreen screen;
-	private GameMap currentMap;
 	private PlayerStatus playerStatus;
 	private PlayerCharacter playerCharacter;
 	private Point camera;
@@ -42,7 +41,6 @@ public class GameScreen extends JComponent {
 		this.setDoubleBuffered(false);
 		
 		playerStatus = PlayerStatus.getPlayer();
-		currentMap = playerStatus.getCurrentMap();
 		playerCharacter = playerStatus.getPlayerCharacter();
 		camera = new Point(0, 0);
 		this.setKeyBinding();
@@ -71,7 +69,7 @@ public class GameScreen extends JComponent {
 		g2d.clearRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 	
 		// draw map
-		currentMap.render(g2d);
+		playerStatus.getCurrentMap().render(g2d);
 
 		// draw player
 		playerCharacter.render(g2d);
@@ -92,6 +90,7 @@ public class GameScreen extends JComponent {
 	}
 	
 	public void centerCameraAt(int x, int y) {
+		GameMap currentMap = playerStatus.getCurrentMap();
 		camera.x = x - SCREEN_WIDTH/2;
 		if (camera.x < 0) camera.x = 0;
 		if (camera.x + SCREEN_WIDTH > currentMap.getScreenWidth()) camera.x = currentMap.getScreenWidth() - SCREEN_WIDTH;
