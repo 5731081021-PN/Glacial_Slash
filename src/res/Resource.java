@@ -20,8 +20,8 @@ public class Resource {
 	public static BufferedImage doubleJump, glacialDrift, iceSummon, skyUppercut, concentration;
 	public static BufferedImage[] standSprite = new BufferedImage[2];
 	public static BufferedImage[][] jumpSprite = new BufferedImage[2][12];
-	public static BufferedImage[][] walkSprite = new BufferedImage[2][72];
-	public static BufferedImage[][] cutSprite = new BufferedImage[2][27];
+	public static BufferedImage[][] walkSprite = new BufferedImage[2][36];
+	public static BufferedImage[][] cutSprite = new BufferedImage[2][54];
 	public static BufferedImage[][] dashSprite = new BufferedImage[2][6];
 	public static BufferedImage[][] iceSummonSprite = new BufferedImage[2][24];
 	public static BufferedImage[] cardAnimation = new BufferedImage[12];
@@ -192,7 +192,7 @@ public class Resource {
 			}
 		}
 		for (int i = 0; i <= 1; i++) {
-			for (int j = 0; j <= 26; j++) {
+			for (int j = 0; j <= 53; j++) {
 				try {
 					cutSprite[i][j] = ImageIO.read(loader.getResource("res/sprite/cut/c" + i + "_" + j + ".png"));
 				} catch (IOException e) {
