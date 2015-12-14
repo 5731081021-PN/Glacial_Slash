@@ -21,7 +21,7 @@ import ui.GameScreen;
 public class PlayerCharacter implements Renderable {
 
 	public static final int LEFT = -1, RIGHT = 1, IDLE = 0;
-	public static final float WALK_SPEED = 16f, JUMP_INITIAL_SPEED = -60f, TERMINAL_SPEED = 32f, GRAVITY = 0.08f;
+	public static final float WALK_SPEED = 8f, JUMP_INITIAL_SPEED = -30f, TERMINAL_SPEED = 16f, GRAVITY = 0.04f;
 	private int x, y, facingDirection, prevX, prevY;
 	private float xRemainder, yRemainder, xSpeed, ySpeed;
 	private float xTargetSpeed, yTargetSpeed, xAcceleration, yAcceleration;
@@ -258,15 +258,15 @@ public class PlayerCharacter implements Renderable {
 	
 	protected void performSkyUpperCut() {
 		SoundUtility.playSoundEffect(Resource.skyUppercutSound, Resource.skyUppercutAudioFormat);
-		freezePlayerControlCount = 15;
+		freezePlayerControlCount = 30;
 		yAcceleration = 0f;
 		new Thread(new Runnable() {
 			
 			@Override
 			public void run() {
 				while (getFreezePlayerControlCount() > 0) {
-					xTargetSpeed = facingDirection*30f;
-					ySpeed = -30f;
+					xTargetSpeed = facingDirection*15f;
+					ySpeed = -15f;
 					Thread.yield();
 					try {
 						Thread.sleep(1);
@@ -280,14 +280,14 @@ public class PlayerCharacter implements Renderable {
 	
 	protected void performGlacialDrift() {
 		SoundUtility.playSoundEffect(Resource.dashSound, Resource.dashAudioFormat);
-		freezePlayerControlCount = 4;
+		freezePlayerControlCount = 8;
 		yAcceleration = 0f;
 		new Thread(new Runnable() {
 			
 			@Override
 			public void run() {
 				while (getFreezePlayerControlCount() > 0) {
-					xTargetSpeed = facingDirection*200f;
+					xTargetSpeed = facingDirection*100f;
 					ySpeed = 0;
 					Thread.yield();
 					try {
@@ -309,7 +309,7 @@ public class PlayerCharacter implements Renderable {
 	protected void performIceSummon() {
 		SoundUtility.playSoundEffect(Resource.iceSummonSound, Resource.iceSummonAudioFormat);
 		stopAllMotion();
-		freezePlayerControlCount = 24;
+		freezePlayerControlCount = 48;
 		iceSummonAnimationThread = new Thread(new PlayerAnimation(Resource.iceSummonSprite, this, false));
 		iceSummonAnimationThread.start();
 		try {
@@ -322,7 +322,7 @@ public class PlayerCharacter implements Renderable {
 	
 	protected void performConcentration() {
 		stopAllMotion();
-		freezePlayerControlCount = 15;
+		freezePlayerControlCount = 30;
 		try {
 			walkAnimationThread.interrupt();
 		} catch (NullPointerException e) {

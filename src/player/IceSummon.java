@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 
 import exception.SkillCardUnusableException;
-import map.GameMap;
 import res.Resource;
 
 public class IceSummon extends SkillCard {
