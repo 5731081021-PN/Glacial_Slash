@@ -27,8 +27,8 @@ public class Resource {
 			iceSummonContent, skyUppercutContent, exitContent, returnContent, theEndContent, concentrationContent,
 			checkpointContent, yourManaContent;
 
-	public static InputStream tutorialMap, map5to8, map9to12, map13to14, map15;
-	public static InputStream titleSound , mapSound;
+	public static InputStream tutorialMap, easyMap, normalMap, hardMap, finalMap;
+	public static InputStream titleBGM, stageBGM;
 
 	private static ClassLoader loader = Resource.class.getClassLoader();
 
@@ -409,15 +409,16 @@ public class Resource {
 		
 		
 
-		tutorialMap = loader.getResourceAsStream("res/map/tutorialMap.map");
-		map5to8 = loader.getResourceAsStream("res/map/easy.map");
-		map9to12 = loader.getResourceAsStream("res/map/normal.map");
-		map13to14 = loader.getResourceAsStream("res/map/hard.map");
+		tutorialMap = loader.getResourceAsStream("res/map/tutorial.map");
+		easyMap = loader.getResourceAsStream("res/map/easy.map");
+		normalMap = loader.getResourceAsStream("res/map/normal.map");
+		hardMap = loader.getResourceAsStream("res/map/hard.map");
+		finalMap = loader.getResourceAsStream("res/map/final.map");
 		
 		//load sound
 		
-		titleSound = loader.getResourceAsStream("res/sound/titlesound.wav");
-		mapSound = loader.getResourceAsStream("res/sound/mapsound.map");
+		titleBGM = loader.getResourceAsStream("res/sound/titleBGM.wav");
+		stageBGM = loader.getResourceAsStream("res/sound/stageBGM.wav");
 	}
 
 }

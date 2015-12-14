@@ -1,6 +1,5 @@
 package render;
 
-import player.PlayerCharacter;
 import player.PlayerStatus;
 import ui.GameScreen;
 
@@ -13,7 +12,6 @@ public class RenderLoop implements Runnable {
 		final long RENDER_DELAY = 1000000000 / FRAME_RATE;
 
 		long lastRenderTime = System.nanoTime();
-		PlayerCharacter player = PlayerStatus.getPlayer().getPlayerCharacter();
 
 		while (true) {
 			
@@ -21,11 +19,11 @@ public class RenderLoop implements Runnable {
 		
 			if (now - lastRenderTime >= RENDER_DELAY) {
 				lastRenderTime = now;
-				GameScreen.getScreen().centerCameraAt(player.getCenterX(), player.getCenterY());
+				GameScreen.getScreen().centerCameraAt(PlayerStatus.getPlayer().getPlayerCharacter().getCenterX(), PlayerStatus.getPlayer().getPlayerCharacter().getCenterY());
 				GameScreen.getScreen().repaint();
 
-				synchronized (player) {
-					player.notifyAll();
+				synchronized (PlayerStatus.getPlayer().getPlayerCharacter()) {
+					PlayerStatus.getPlayer().getPlayerCharacter().notifyAll();
 				}
 
 				synchronized (GameScreen.getScreen()) {
