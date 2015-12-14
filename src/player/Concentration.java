@@ -30,9 +30,7 @@ public class Concentration extends SkillCard {
 					return;
 				}
 				for (SkillCard s : drawnCards) {
-					synchronized (PlayerStatus.getPlayer().getHand()) {
-						PlayerStatus.getPlayer().addCard(s);
-					}
+					PlayerStatus.getPlayer().addCard(s);
 				}
 			}
 		});
