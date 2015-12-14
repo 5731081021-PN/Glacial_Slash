@@ -21,7 +21,7 @@ public class Resource {
 	public static BufferedImage[] cardAnimation = new BufferedImage[12];
 	public static BufferedImage background;
 	public static BufferedImage title, startButton, loadButton, exitButton;
-	public static BufferedImage upButton, leftButton, downButton, rightButton, dButton, escButton, fbutton,
+	public static BufferedImage upButton, leftButton, downButton, rightButton, dButton, escButton, fButton,
 			rButton, sButton, spaceButton;
 
 	public static InputStream tutorialMap, map5to8, map9to12, map13to14, map15;
@@ -287,10 +287,10 @@ public class Resource {
 			escButton = null;
 		}
 		try {
-			fbutton = ImageIO.read(loader.getResource("res/map/tutorial/F.png"));
+			fButton = ImageIO.read(loader.getResource("res/map/tutorial/F.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			fbutton = null;
+			fButton = null;
 		}
 		try {
 			rButton = ImageIO.read(loader.getResource("res/map/tutorial/R.png"));
