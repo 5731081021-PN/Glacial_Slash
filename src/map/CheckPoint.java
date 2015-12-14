@@ -20,11 +20,11 @@ import ui.GameScreen;
 
 public class CheckPoint implements Renderable, Serializable {
 	
-	protected int x, y;
-	protected List<SkillCard> skillCards;
-	protected boolean used;
-	protected Rectangle boundaries;
-	protected transient Image sprite;
+	private int x, y;
+	private List<SkillCard> skillCards;
+	private boolean used;
+	private Rectangle boundaries;
+	private transient Image sprite;
 	
 	public CheckPoint(int x, int y, List<SkillCard> skillCards) {
 		this.x = x;
