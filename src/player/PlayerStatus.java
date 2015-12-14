@@ -90,12 +90,12 @@ public class PlayerStatus implements Renderable, Serializable {
 	}
 
 	private PlayerStatus() {
-		maxMana = 8;
+		maxMana = 7;
 		currentMana = 0;
 		originalHand = new ArrayList<>();
 		hand = new ArrayList<>();
 //		currentMap = new TutorialMap();
-		currentMap = GameMap.getGameMap("map9to12");
+		currentMap = GameMap.getGameMap("map5to8");
 		currentPosition = currentMap.getInitialPosition();
 		playerCharacter = new PlayerCharacter();
 		playerCharacter.setPosition(currentPosition);
@@ -130,8 +130,10 @@ public class PlayerStatus implements Renderable, Serializable {
 	}
 	
 	public void addCard(SkillCard skillCard) {
-		hand.add(skillCard);
-		Collections.sort(hand);
+		synchronized (hand) {
+			hand.add(skillCard);
+			Collections.sort(hand);
+		}
 	}
 	
 	public void useCard(SkillCard used) throws SkillCardUnusableException {
