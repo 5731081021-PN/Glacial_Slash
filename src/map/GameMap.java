@@ -26,6 +26,7 @@ public class GameMap implements Renderable, Serializable {
 	private ManaSource[] manaSources;
 	private static int tileWidth = 70, tileHeight = 70;
 	private Point initialPosition, transitionPoint;
+	private boolean isManaSourceSaving;
 	private String nextMapName;
 	
 	public static GameMap getGameMap(String mapName) {
@@ -37,7 +38,7 @@ public class GameMap implements Renderable, Serializable {
 		else return null;
 	}
 
-	protected GameMap(InputStream mapFile) {
+	public GameMap(InputStream mapFile) {
 		Scanner fileScanner;
 		fileScanner = new Scanner(mapFile);
 		
@@ -64,6 +65,12 @@ public class GameMap implements Renderable, Serializable {
 			}
 		}
 		
+		String saving = fileScanner.nextLine();
+		if ("save".equalsIgnoreCase(saving))
+			isManaSourceSaving = true;
+		else
+			isManaSourceSaving = false;
+		
 		int checkpointCount = Integer.parseInt(fileScanner.nextLine());
 		manaSources = new ManaSource[checkpointCount];
 		for (int i = 0; i < checkpointCount; i++) {
@@ -78,13 +85,25 @@ public class GameMap implements Renderable, Serializable {
 				hand.add(SkillCard.createSkillCard(fileScanner.nextLine().trim()));
 			}
 			
-			manaSources[i] = new CheckPoint(screenX, screenY, hand);
+			manaSources[i] = new ManaSource(screenX, screenY, hand);
 		}
 		
 		nextMapName = fileScanner.nextLine().trim();
 
 		fileScanner.close();
 		
+	}
+	
+	public GameMap getNextMap() {
+		return getGameMap(nextMapName);
+	}
+	
+	public boolean collideWithTransitionPoint(Rectangle collisionBox) {
+		try {
+			return collisionBox.contains(transitionPoint);
+		} catch (NullPointerException e) {
+			return false;
+		}
 	}
 	
 	public void clearIceTiles() {
@@ -216,7 +235,7 @@ public class GameMap implements Renderable, Serializable {
 			if (s.getBoundaries().intersects(collisionBox)) {
 				if (!s.isUsed()) {
 					PlayerStatus.getPlayer().drawNewHand(s.drawCard());
-					if (s instanceof CheckPoint)
+					if (isManaSourceSaving)
 						PlayerStatus.getPlayer().savePlayer();
 				}
 			}

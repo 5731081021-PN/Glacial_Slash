@@ -144,7 +144,9 @@ public class GameLoop implements Runnable {
 	
 	private void mapEnvironmentUpdate() {
 		playerCharacter.collideManaSource();
-		// TODO map transition
+		if (playerCharacter.collideTransitionPoint()) {
+			playerStatus.goToNextMap();
+		}
 	}
 
 }

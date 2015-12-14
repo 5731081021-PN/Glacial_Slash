@@ -33,7 +33,7 @@ public class Main {
 			} catch (InterruptedException e) {}
 		}
 		*/
-		PlayerStatus.newPlayer("test.sav");
+		PlayerStatus.newPlayer("test.gls");
 		try {
 			SwingUtilities.invokeAndWait(new Runnable() {
 
