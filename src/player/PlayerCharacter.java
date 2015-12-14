@@ -15,6 +15,7 @@ import input.InputUtility.CommandKey;
 import render.PlayerAnimation;
 import render.Renderable;
 import res.Resource;
+import sound.SoundUtility;
 import ui.GameScreen;
 
 public class PlayerCharacter implements Renderable {
@@ -54,6 +55,10 @@ public class PlayerCharacter implements Renderable {
 		boundaryX = x + ((BufferedImage)sprite).getWidth()/2 - boundaryWidth/2;
 		boundaryY = y;
 		boundaries = new Rectangle(boundaryX, boundaryY, boundaryWidth, boundaryHeight);
+	}
+	
+	protected void setFacingDirection(int facingDirection) {
+		this.facingDirection = facingDirection;
 	}
 	
 	public void setSprite(Image sprite) {
@@ -132,8 +137,13 @@ public class PlayerCharacter implements Renderable {
 
 	protected void jump() {
 		ySpeed = JUMP_INITIAL_SPEED;
-		if (!this.isOnGround())
+		if (!this.isOnGround()) {
 			airJumpCount--;
+			SoundUtility.playSoundEffect(Resource.doubleJumpSound, Resource.doubleJumpAudioFormat);
+		}
+		else {
+			SoundUtility.playSoundEffect(Resource.jumpSound, Resource.jumpAudioFormat);
+		}
 		Thread jumpAnimation = new Thread(new PlayerAnimation(Resource.jumpSprite, this, false));
 		jumpAnimation.start();
 
@@ -247,6 +257,7 @@ public class PlayerCharacter implements Renderable {
 	}
 	
 	protected void performSkyUpperCut() {
+		SoundUtility.playSoundEffect(Resource.skyUppercutSound, Resource.skyUppercutAudioFormat);
 		freezePlayerControlCount = 15;
 		yAcceleration = 0f;
 		new Thread(new Runnable() {
@@ -268,6 +279,7 @@ public class PlayerCharacter implements Renderable {
 	}
 	
 	protected void performGlacialDrift() {
+		SoundUtility.playSoundEffect(Resource.dashSound, Resource.dashAudioFormat);
 		freezePlayerControlCount = 4;
 		yAcceleration = 0f;
 		new Thread(new Runnable() {
@@ -295,6 +307,7 @@ public class PlayerCharacter implements Renderable {
 	}
 	
 	protected void performIceSummon() {
+		SoundUtility.playSoundEffect(Resource.iceSummonSound, Resource.iceSummonAudioFormat);
 		stopAllMotion();
 		freezePlayerControlCount = 24;
 		iceSummonAnimationThread = new Thread(new PlayerAnimation(Resource.iceSummonSprite, this, false));

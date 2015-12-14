@@ -13,6 +13,7 @@ import exception.SkillCardUnusableException;
 import render.Animation;
 import render.Renderable;
 import res.Resource;
+import sound.SoundUtility;
 import ui.GameScreen;
 
 public abstract class SkillCard implements Renderable, Comparable<SkillCard>, Serializable {
@@ -55,6 +56,7 @@ public abstract class SkillCard implements Renderable, Comparable<SkillCard>, Se
 	}
 	
 	public void playActivateAnimation() {
+		SoundUtility.playSoundEffect(Resource.cardSound, Resource.cardAudioFormat);
 		activateAnimationThread = new Thread(new Animation(Resource.cardAnimation) {
 			
 			@Override
