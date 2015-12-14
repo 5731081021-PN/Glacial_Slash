@@ -17,6 +17,8 @@ import ui.GameScreen;
 
 public abstract class SkillCard implements Renderable, Comparable<SkillCard>, Serializable {
 
+	private static final long serialVersionUID = 2144325510872245603L;
+
 	public static final SkillCard SKY_UPPERCUT = new SkyUppercut(), DOUBLE_JUMP = new DoubleJump(), GLACIAL_DRIFT = new GlacialDrift(), ICE_SUMMON = new IceSummon(), CONCENTRATION = new Concentration(null);
 	public static final int CARD_IMAGE_WIDTH = 120, CARD_IMAGE_HEIGHT = 180;
 	protected int cost;

@@ -8,6 +8,8 @@ import res.Resource;
 
 public class Concentration extends SkillCard {
 	
+	private static final long serialVersionUID = 3351882579142512755L;
+
 	private SkillCard[] drawnCards;
 	private transient Thread concentrationThread;
 

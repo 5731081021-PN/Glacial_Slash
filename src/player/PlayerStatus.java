@@ -31,6 +31,8 @@ import res.Resource;
 
 public class PlayerStatus implements Renderable, Serializable {
 	
+	private static final long serialVersionUID = -9047898387025697426L;
+
 	private static PlayerStatus player;
 	private int originalMana, currentMana, maxMana;
 	private List<SkillCard> originalHand, hand;

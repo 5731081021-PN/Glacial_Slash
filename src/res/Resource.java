@@ -8,7 +8,7 @@ import javax.imageio.ImageIO;
 public class Resource {
 
 	public static BufferedImage tileGround, tileLeft, tileRight, tileMid, tileTop, tileTopLeft, tileTopRight, tileIce;
-	public static BufferedImage manaSource, usedManaSource;
+	public static BufferedImage checkPoint, usedCheckPoint;
 	public static BufferedImage[] mana = new BufferedImage[21], maxMana = new BufferedImage[21];
 	public static BufferedImage slash;
 	public static BufferedImage doubleJump, glacialDrift, iceSummon, skyUppercut, concentration;
@@ -72,16 +72,16 @@ public class Resource {
 		}
 
 		try {
-			manaSource = ImageIO.read(loader.getResource("res/tile/manaSource.png"));
+			checkPoint = ImageIO.read(loader.getResource("res/tile/checkpoint.png"));
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
-			manaSource = null;
+			checkPoint = null;
 		}
 		try {
-			usedManaSource = ImageIO.read(loader.getResource("res/tile/usedManaSource.png"));
+			usedCheckPoint = ImageIO.read(loader.getResource("res/tile/usedcheckpoint.png"));
 		} catch (IOException e2) {
 			// TODO Auto-generated catch block
-			usedManaSource = null;
+			usedCheckPoint = null;
 		}
 		try {
 			tileTopLeft = ImageIO.read(loader.getResource("res/tile/tile_topleft.png"));

@@ -322,8 +322,8 @@ public class PlayerCharacter implements Renderable {
 		return iceSummonAnimationThread;
 	}
 	
-	protected void collideManaSource() {
-		PlayerStatus.getPlayer().getCurrentMap().collideManaSource(boundaries);
+	protected void collideCheckPoint() {
+		PlayerStatus.getPlayer().getCurrentMap().collideCheckPoints(boundaries);
 	}
 	
 	protected boolean collideTransitionPoint() {
