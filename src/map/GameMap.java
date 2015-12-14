@@ -78,7 +78,7 @@ public class GameMap implements Renderable, Serializable {
 				hand.add(SkillCard.createSkillCard(fileScanner.nextLine().trim()));
 			}
 			
-			manaSources[i] = new ManaSource(screenX, screenY, hand);
+			manaSources[i] = new CheckPoint(screenX, screenY, hand);
 		}
 		
 		nextMapName = fileScanner.nextLine().trim();
@@ -216,6 +216,8 @@ public class GameMap implements Renderable, Serializable {
 			if (s.getBoundaries().intersects(collisionBox)) {
 				if (!s.isUsed()) {
 					PlayerStatus.getPlayer().drawNewHand(s.drawCard());
+					if (s instanceof CheckPoint)
+						PlayerStatus.getPlayer().savePlayer();
 				}
 			}
 		}
