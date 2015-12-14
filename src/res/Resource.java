@@ -413,6 +413,7 @@ public class Resource {
 		easyMap = loader.getResourceAsStream("res/map/easy.map");
 		normalMap = loader.getResourceAsStream("res/map/normal.map");
 		hardMap = loader.getResourceAsStream("res/map/hard.map");
+		finalMap = loader.getResourceAsStream("res/map/final.map");
 		
 		//load sound
 		
