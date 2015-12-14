@@ -217,6 +217,12 @@ public class PlayerStatus implements Renderable, Serializable {
 		g.drawImage(Resource.slash, null, 80, 20);
 		g.drawImage(Resource.maxMana[maxMana], null, 130, 50);
 		
+		// render informations
+		g.drawImage(Resource.escButton, null, 1160, -20);
+		g.drawImage(Resource.exitContent, null, 1160, 20);
+		g.drawImage(Resource.returnContent, null, 1000, 70);
+		g.drawImage(Resource.rButton, null, 1160, 30);
+		
 		// render cards in hand
 		synchronized (hand) {
 			int n = hand.size();
@@ -224,6 +230,7 @@ public class PlayerStatus implements Renderable, Serializable {
 				hand.get(i).render(g, i);
 			}
 		}
+	
 	}
 
 }
