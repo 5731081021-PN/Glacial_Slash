@@ -55,7 +55,6 @@ public abstract class SkillCard implements Renderable, Comparable<SkillCard>, Se
 	}
 	
 	public void playActivateAnimation() {
-		// TODO play activate animation
 		activateAnimationThread = new Thread(new Animation(Resource.cardAnimation) {
 			
 			@Override

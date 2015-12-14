@@ -34,13 +34,12 @@ public class PlayerStatus implements Renderable, Serializable {
 	private static final long serialVersionUID = -9047898387025697426L;
 
 	private static PlayerStatus player;
-	private int originalMana, currentMana, maxMana;
-	private List<SkillCard> originalHand, hand;
+	private int currentMana, maxMana;
+	private List<SkillCard> hand;
 	private GameMap currentMap;
 	private transient PlayerCharacter playerCharacter;
 	private Point currentPosition;
 	private String saveLocation;
-	private transient SkillCard using;
 	private transient Thread removeCardFromHandThread;
 	
 	public static synchronized PlayerStatus newPlayer(String saveLocation) {
@@ -73,7 +72,6 @@ public class PlayerStatus implements Renderable, Serializable {
 	
 	public synchronized void savePlayer() {
 		currentPosition.setLocation(playerCharacter.getX(), playerCharacter.getY() + Resource.standSprite[0].getHeight());
-		originalMana = currentMana;
 		try (FileOutputStream fileOut = new FileOutputStream(saveLocation)){
 			try (ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
 				out.writeObject(player);
@@ -92,10 +90,8 @@ public class PlayerStatus implements Renderable, Serializable {
 	}
 
 	private PlayerStatus() {
-		originalMana = 0;
 		maxMana = 0;
 		currentMana = 0;
-		originalHand = new ArrayList<>();
 		hand = new ArrayList<>();
 		currentMap = new TutorialMap();
 //		currentMap = GameMap.getGameMap("map5to8");
@@ -140,6 +136,7 @@ public class PlayerStatus implements Renderable, Serializable {
 	}
 	
 	public void useCard(SkillCard used) throws SkillCardUnusableException {
+		SkillCard using;
 		try {
 			using = hand.get(hand.indexOf(used));
 			if (currentMana >= using.cost) {
@@ -177,37 +174,21 @@ public class PlayerStatus implements Renderable, Serializable {
 			removeCardFromHandThread.interrupt();
 		} catch (NullPointerException e) {}
 		synchronized (hand) {
-			originalHand = newHand;
-			Collections.sort(originalHand);
-			hand.clear();
-			hand.addAll(originalHand);
+			hand = newHand;
 		}
 	}
 
-	public void returnToLastCheckpoint() {
+	public void returnToLastCheckPoint() {
 		try {
-			removeCardFromHandThread.interrupt();
-		} catch (NullPointerException e) {}
-		if (using instanceof IceSummon) {
-			((IceSummon) using).getIceSummonThread().interrupt();
+			loadPlayer(saveLocation);
+		} catch (UnableToLoadGameException e) {
+			System.exit(0);
 		}
-		else if (using instanceof Concentration) {
-			((Concentration) using).getConcentrationThread().interrupt();
-		}
-		currentMap.clearIceTiles();
-		hand.clear();
-		hand.addAll(originalHand);
-		playerCharacter.setSprite(Resource.standSprite[(playerCharacter.getFacingDirection()+1)/2]);
-		playerCharacter.stopAllMotion();
-		playerCharacter.setPosition(currentPosition);
-		currentMana = originalMana;
 	}
 	
 	public void goToNextMap() {
 		currentMap = currentMap.getNextMap();
 		currentPosition = currentMap.getInitialPosition();
-		originalMana = currentMana;
-		originalHand = new ArrayList<>(hand);
 		playerCharacter.setPosition(currentPosition);
 		savePlayer();
 	}

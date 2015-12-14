@@ -21,26 +21,24 @@ public class IceSummon extends SkillCard {
 
 	@Override
 	public void activate() throws SkillCardUnusableException {
-		PlayerCharacter player = PlayerStatus.getPlayer().getPlayerCharacter();
-		GameMap map = PlayerStatus.getPlayer().getCurrentMap();
-		if (!player.isOnGround()) throw new SkillCardUnusableException(SkillCardUnusableException.UnusableType.ACTIVATE_CONDITION_NOT_MET);
-		Point frontTile = player.getFrontTile();
-		if (!map.getTileType((int)frontTile.getX(), (int)frontTile.getY()).isPassable()) throw new SkillCardUnusableException(SkillCardUnusableException.UnusableType.ACTIVATE_CONDITION_NOT_MET);
-		Point spriteFrontTile = player.getSpriteFrontTile();
-		if (!map.isOnGround(new Rectangle((int)spriteFrontTile.getX()*map.getTileWidth(), (int)spriteFrontTile.getY()*map.getTileHeight(), map.getTileWidth(), map.getTileHeight()))) throw new SkillCardUnusableException(SkillCardUnusableException.UnusableType.ACTIVATE_CONDITION_NOT_MET);
-		if (!map.getTileType((int)spriteFrontTile.getX(), (int)spriteFrontTile.getY()).isPassable()) throw new SkillCardUnusableException(SkillCardUnusableException.UnusableType.ACTIVATE_CONDITION_NOT_MET);
+		if (!PlayerStatus.getPlayer().getPlayerCharacter().isOnGround()) throw new SkillCardUnusableException(SkillCardUnusableException.UnusableType.ACTIVATE_CONDITION_NOT_MET);
+		Point frontTile = PlayerStatus.getPlayer().getPlayerCharacter().getFrontTile();
+		if (!PlayerStatus.getPlayer().getCurrentMap().getTileType((int)frontTile.getX(), (int)frontTile.getY()).isPassable()) throw new SkillCardUnusableException(SkillCardUnusableException.UnusableType.ACTIVATE_CONDITION_NOT_MET);
+		Point spriteFrontTile = PlayerStatus.getPlayer().getPlayerCharacter().getSpriteFrontTile();
+		if (!PlayerStatus.getPlayer().getCurrentMap().isOnGround(new Rectangle((int)spriteFrontTile.getX()*PlayerStatus.getPlayer().getCurrentMap().getTileWidth(), (int)spriteFrontTile.getY()*PlayerStatus.getPlayer().getCurrentMap().getTileHeight(), PlayerStatus.getPlayer().getCurrentMap().getTileWidth(), PlayerStatus.getPlayer().getCurrentMap().getTileHeight()))) throw new SkillCardUnusableException(SkillCardUnusableException.UnusableType.ACTIVATE_CONDITION_NOT_MET);
+		if (!PlayerStatus.getPlayer().getCurrentMap().getTileType((int)spriteFrontTile.getX(), (int)spriteFrontTile.getY()).isPassable()) throw new SkillCardUnusableException(SkillCardUnusableException.UnusableType.ACTIVATE_CONDITION_NOT_MET);
 		playActivateAnimation();
-		player.performIceSummon();
+		PlayerStatus.getPlayer().getPlayerCharacter().performIceSummon();
 		iceSummonThread = new Thread (new Runnable() {
 			
 			@Override
 			public void run() {
 				try {
-					player.getIceSummonAnimationThread().join();
+					PlayerStatus.getPlayer().getPlayerCharacter().getIceSummonAnimationThread().join();
 				} catch (InterruptedException e) {
 					return;
 				}
-				map.freeze((int)spriteFrontTile.getX(), (int)spriteFrontTile.getY());
+				PlayerStatus.getPlayer().getCurrentMap().freeze((int)spriteFrontTile.getX(), (int)spriteFrontTile.getY());
 			}
 		});
 		iceSummonThread.start();

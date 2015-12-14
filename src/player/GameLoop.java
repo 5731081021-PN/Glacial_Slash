@@ -13,14 +13,6 @@ import ui.GameScreen;
 
 public class GameLoop implements Runnable {
 
-	private PlayerStatus playerStatus;
-	private PlayerCharacter playerCharacter;
-	
-	public GameLoop() {
-		this.playerStatus = PlayerStatus.getPlayer();
-		this.playerCharacter = playerStatus.getPlayerCharacter();
-	}
-
 	public void run() {
 		
 		final long FRAME_RATE = 30;
@@ -54,7 +46,7 @@ public class GameLoop implements Runnable {
 			if (InputUtility.getKeyTriggered(CommandKey.RETURN)) {
 				InputUtility.clearKeyPressed();
 				if (JOptionPane.showConfirmDialog(null, "Return to last checkpoint?", "Got stuck?", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-					playerStatus.returnToLastCheckpoint();
+					PlayerStatus.getPlayer().returnToLastCheckPoint();
 				}
 			}
 		
@@ -74,44 +66,44 @@ public class GameLoop implements Runnable {
 	
 	private void playerInputUpdate() {
 	
-		playerCharacter.updateBoundaries();
-		playerCharacter.fall();
+		PlayerStatus.getPlayer().getPlayerCharacter().updateBoundaries();
+		PlayerStatus.getPlayer().getPlayerCharacter().fall();
 		
-		if (playerCharacter.getFreezePlayerControlCount() <= 0) {
+		if (PlayerStatus.getPlayer().getPlayerCharacter().getFreezePlayerControlCount() <= 0) {
 
-			synchronized (playerStatus.getHand()) {
+			synchronized (PlayerStatus.getPlayer().getHand()) {
 				if (InputUtility.getKeyPressed(CommandKey.LEFT))
-					playerCharacter.walk(PlayerCharacter.LEFT);
+					PlayerStatus.getPlayer().getPlayerCharacter().walk(PlayerCharacter.LEFT);
 				else if (InputUtility.getKeyPressed(CommandKey.RIGHT))
-					playerCharacter.walk(PlayerCharacter.RIGHT);
+					PlayerStatus.getPlayer().getPlayerCharacter().walk(PlayerCharacter.RIGHT);
 				else
-					playerCharacter.walk(PlayerCharacter.IDLE);
+					PlayerStatus.getPlayer().getPlayerCharacter().walk(PlayerCharacter.IDLE);
 
 				if (InputUtility.getKeyTriggered(CommandKey.JUMP)) {
-					if (playerCharacter.isOnGround())
-						playerCharacter.jump();
+					if (PlayerStatus.getPlayer().getPlayerCharacter().isOnGround())
+						PlayerStatus.getPlayer().getPlayerCharacter().jump();
 					else
 						try {
-							playerStatus.useCard(SkillCard.DOUBLE_JUMP);
+							PlayerStatus.getPlayer().useCard(SkillCard.DOUBLE_JUMP);
 						} catch (SkillCardUnusableException e) {}
 				}
 
 				if (InputUtility.getKeyTriggered(CommandKey.SLASH)) {
 					if (InputUtility.getKeyPressed(CommandKey.UP)) {
 						try {
-							playerStatus.useCard(SkillCard.SKY_UPPERCUT);
+							PlayerStatus.getPlayer().useCard(SkillCard.SKY_UPPERCUT);
 						} catch (SkillCardUnusableException e) {
-							playerCharacter.slash();
+							PlayerStatus.getPlayer().getPlayerCharacter().slash();
 						}
 					}
 					else
-						playerCharacter.slash();
+						PlayerStatus.getPlayer().getPlayerCharacter().slash();
 				}
 
 				if (InputUtility.getKeyTriggered(CommandKey.DASH)) {
 					if (InputUtility.getKeyPressed(CommandKey.LEFT) || InputUtility.getKeyPressed(CommandKey.RIGHT)) {
 						try {
-							playerStatus.useCard(SkillCard.GLACIAL_DRIFT);
+							PlayerStatus.getPlayer().useCard(SkillCard.GLACIAL_DRIFT);
 						} catch (SkillCardUnusableException e) {}
 					}
 				}
@@ -119,13 +111,13 @@ public class GameLoop implements Runnable {
 				if (InputUtility.getKeyTriggered(CommandKey.HAND)) {
 					if (InputUtility.getKeyPressed(CommandKey.DOWN))
 						try {
-							playerStatus.useCard(SkillCard.ICE_SUMMON);
+							PlayerStatus.getPlayer().useCard(SkillCard.ICE_SUMMON);
 						} catch (SkillCardUnusableException e) {}
 				}
 				
 				if (InputUtility.getKeyTriggered(CommandKey.DRAW)) {
 					try {
-						playerStatus.useCard(SkillCard.CONCENTRATION);
+						PlayerStatus.getPlayer().useCard(SkillCard.CONCENTRATION);
 					} catch (SkillCardUnusableException e) {}
 				}
 
@@ -133,19 +125,19 @@ public class GameLoop implements Runnable {
 
 		}
 		else {
-			playerCharacter.decreseFreezePlayerControlCount();
+			PlayerStatus.getPlayer().getPlayerCharacter().decreseFreezePlayerControlCount();
 		}
 
-		playerCharacter.moveX();
-		playerCharacter.moveY();
+		PlayerStatus.getPlayer().getPlayerCharacter().moveX();
+		PlayerStatus.getPlayer().getPlayerCharacter().moveY();
 
 		InputUtility.clearKeyTriggered();
 	}
 	
 	private void mapComponentUpdate() {
-		playerCharacter.collideCheckPoint();
-		if (playerCharacter.collideTransitionPoint()) {
-			playerStatus.goToNextMap();
+		PlayerStatus.getPlayer().getPlayerCharacter().collideCheckPoint();
+		if (PlayerStatus.getPlayer().getPlayerCharacter().collideTransitionPoint()) {
+			PlayerStatus.getPlayer().goToNextMap();
 		}
 	}
 

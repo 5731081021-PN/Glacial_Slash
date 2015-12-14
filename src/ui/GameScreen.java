@@ -15,7 +15,6 @@ import input.InputUtility.CommandKey;
 import input.InputUtility.KeyPressedAction;
 import input.InputUtility.KeyReleasedAction;
 import map.GameMap;
-import player.PlayerCharacter;
 import player.PlayerStatus;
 
 public class GameScreen extends JComponent {
@@ -24,8 +23,6 @@ public class GameScreen extends JComponent {
 	
 	public static final int SCREEN_WIDTH = 1280, SCREEN_HEIGHT = 720;
 	private static GameScreen screen;
-	private PlayerStatus playerStatus;
-	private PlayerCharacter playerCharacter;
 	private Point camera;
 	private Image buffer;
 	
@@ -40,8 +37,6 @@ public class GameScreen extends JComponent {
 		
 		this.setDoubleBuffered(false);
 		
-		playerStatus = PlayerStatus.getPlayer();
-		playerCharacter = playerStatus.getPlayerCharacter();
 		camera = new Point(0, 0);
 		this.setKeyBinding();
 		
@@ -69,12 +64,12 @@ public class GameScreen extends JComponent {
 		g2d.clearRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 	
 		// draw map
-		playerStatus.getCurrentMap().render(g2d);
+		PlayerStatus.getPlayer().getCurrentMap().render(g2d);
 
 		// draw player
-		playerCharacter.render(g2d);
+		PlayerStatus.getPlayer().getPlayerCharacter().render(g2d);
 		
-		// draw playerStatus
+		// draw PlayerStatus.getPlayer()
 		PlayerStatus.getPlayer().render(g2d);
 	
 		// draw things on actual screen
@@ -90,7 +85,7 @@ public class GameScreen extends JComponent {
 	}
 	
 	public void centerCameraAt(int x, int y) {
-		GameMap currentMap = playerStatus.getCurrentMap();
+		GameMap currentMap = PlayerStatus.getPlayer().getCurrentMap();
 		camera.x = x - SCREEN_WIDTH/2;
 		if (camera.x < 0) camera.x = 0;
 		if (camera.x + SCREEN_WIDTH > currentMap.getScreenWidth()) camera.x = currentMap.getScreenWidth() - SCREEN_WIDTH;
