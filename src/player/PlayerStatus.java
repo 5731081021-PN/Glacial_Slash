@@ -36,6 +36,7 @@ public class PlayerStatus implements Renderable, Serializable {
 
 	private static PlayerStatus player;
 	private int currentMana, maxMana;
+	private int originalFacingDirection;
 	private List<SkillCard> hand;
 	private GameMap currentMap;
 	private transient PlayerCharacter playerCharacter;
@@ -69,10 +70,12 @@ public class PlayerStatus implements Renderable, Serializable {
 			throw new UnableToLoadGameException();
 		}
 		player.saveLocation = saveLocation;
+		player.getPlayerCharacter().setFacingDirection(player.originalFacingDirection);
 	}
 	
 	public synchronized void savePlayer() {
 		currentPosition.setLocation(playerCharacter.getX(), playerCharacter.getY() + Resource.standSprite[0].getHeight());
+		originalFacingDirection = playerCharacter.getFacingDirection();
 		try (FileOutputStream fileOut = new FileOutputStream(saveLocation)){
 			try (ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
 				out.writeObject(player);
@@ -91,13 +94,15 @@ public class PlayerStatus implements Renderable, Serializable {
 	}
 
 	private PlayerStatus() {
-		maxMana = 14;
+		maxMana = 0;
 		currentMana = 0;
 		hand = new ArrayList<>();
+		originalFacingDirection = PlayerCharacter.RIGHT;
 		currentMap = new TutorialMap();
 		currentPosition = currentMap.getInitialPosition();
 		playerCharacter = new PlayerCharacter();
 		playerCharacter.setPosition(currentPosition);
+		playerCharacter.setFacingDirection(originalFacingDirection);
 	}
 	
 	public PlayerCharacter getPlayerCharacter() {

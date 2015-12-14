@@ -17,6 +17,7 @@ import player.PlayerStatus;
 import player.SkillCard;
 import render.Renderable;
 import res.Resource;
+import sound.SoundUtility;
 import ui.GameScreen;
 
 public class GameMap implements Renderable, Serializable {
@@ -235,6 +236,7 @@ public class GameMap implements Renderable, Serializable {
 		for (CheckPoint c : checkPoints) {
 			if (c.getBoundaries().intersects(collisionBox)) {
 				if (!c.isUsed()) {
+					SoundUtility.playSoundEffect(Resource.checkPointSound, Resource.checkPointAudioFormat);
 					PlayerStatus.getPlayer().drawNewHand(c.drawCard());
 					if (isManaSourceSaving)
 						PlayerStatus.getPlayer().savePlayer();
@@ -253,7 +255,11 @@ public class GameMap implements Renderable, Serializable {
 		int lastTileY = firstTileY + GameScreen.SCREEN_HEIGHT/tileHeight + 1;
 		
 		g.drawImage(Resource.background, 0, 0, null);
-		
+			
+		for (CheckPoint c : checkPoints) {
+			c.render(g);
+		}
+	
 		try {
 			for (int tileX = firstTileX; tileX <= lastTileX; tileX++) {
 				try {
@@ -263,10 +269,7 @@ public class GameMap implements Renderable, Serializable {
 				} catch (ArrayIndexOutOfBoundsException e) {}
 			}
 		} catch (ArrayIndexOutOfBoundsException e) {}
-		
-		for (CheckPoint c : checkPoints) {
-			c.render(g);
-		}
+
 	}
 
 }

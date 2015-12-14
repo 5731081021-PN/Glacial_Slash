@@ -1,9 +1,11 @@
 import java.lang.reflect.InvocationTargetException;
 
+import javax.sound.sampled.Clip;
 import javax.swing.SwingUtilities;
 
 import player.GameLoop;
 import render.RenderLoop;
+import res.Resource;
 import ui.GameWindow;
 import ui.TitleWindow;
 
@@ -21,7 +23,7 @@ public class Main {
 				public void run() {
 					titleWindow.setVisible(true);
 					titleWindow.requestFocus();
-					titleWindow.startBGM();
+					Resource.titleBGM.loop(Clip.LOOP_CONTINUOUSLY);
 				}
 			});
 		} catch (InterruptedException e) {
@@ -40,10 +42,10 @@ public class Main {
 				public void run() {
 					GameWindow gameWindow = GameWindow.getWindow();
 					titleWindow.dispose();
-					titleWindow.stopBGM();
+					Resource.titleBGM.stop();
 					gameWindow.setVisible(true);
 					gameWindow.requestFocus();
-					gameWindow.startBGM();
+					Resource.stageBGM.loop(Clip.LOOP_CONTINUOUSLY);
 				}
 			});
 		} catch (InterruptedException e) {
