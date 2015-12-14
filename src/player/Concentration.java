@@ -47,4 +47,21 @@ public class Concentration extends SkillCard {
 		cardImage = originalCardImage;
 	}
 	
+	@Override
+	public int compareTo(SkillCard other) {
+		if (other instanceof Concentration) {
+			Concentration otherConcentration = (Concentration)other;
+			int drawnCardNumber = Integer.min(this.drawnCards.length, otherConcentration.drawnCards.length);
+			for (int i = 0; i < drawnCardNumber; i++) {
+				int drawnCardCompare = this.drawnCards[i].compareTo(otherConcentration.drawnCards[i]);
+				if (drawnCardCompare != 0)
+					return drawnCardCompare;
+			}
+			return Integer.compare(this.drawnCards.length, otherConcentration.drawnCards.length);
+		}
+		else {
+			return super.compareTo(other);
+		}
+	}
+	
 }
