@@ -16,9 +16,6 @@ public class SkyUppercut extends SkillCard {
 	public void activate() throws SkillCardUnusableException {
 		if (!PlayerStatus.getPlayer().getPlayerCharacter().isOnGround()) throw new SkillCardUnusableException(SkillCardUnusableException.UnusableType.ACTIVATE_CONDITION_NOT_MET);
 		playActivateAnimation();
-		synchronized (activateAnimationThread) {
-			activateAnimationThread.notifyAll();
-		}
 		PlayerStatus.getPlayer().getPlayerCharacter().performSkyUpperCut();
 	}
 	

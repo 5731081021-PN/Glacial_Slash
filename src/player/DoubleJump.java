@@ -16,9 +16,6 @@ public class DoubleJump extends SkillCard {
 	public void activate() throws SkillCardUnusableException {
 		if (PlayerStatus.getPlayer().getPlayerCharacter().getAirJumpCount() <= 0) throw new SkillCardUnusableException(SkillCardUnusableException.UnusableType.ACTIVATE_CONDITION_NOT_MET);
 		playActivateAnimation();
-		synchronized (activateAnimationThread) {
-			activateAnimationThread.notifyAll();
-		}
 		PlayerStatus.getPlayer().getPlayerCharacter().jump();
 	}
 	

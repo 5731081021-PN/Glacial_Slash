@@ -28,9 +28,6 @@ public class IceSummon extends SkillCard {
 		if (!map.isOnGround(new Rectangle((int)spriteFrontTile.getX()*map.getTileWidth(), (int)spriteFrontTile.getY()*map.getTileHeight(), map.getTileWidth(), map.getTileHeight()))) throw new SkillCardUnusableException(SkillCardUnusableException.UnusableType.ACTIVATE_CONDITION_NOT_MET);
 		if (!map.getTileType((int)spriteFrontTile.getX(), (int)spriteFrontTile.getY()).isPassable()) throw new SkillCardUnusableException(SkillCardUnusableException.UnusableType.ACTIVATE_CONDITION_NOT_MET);
 		playActivateAnimation();
-		synchronized (activateAnimationThread) {
-			activateAnimationThread.notifyAll();
-		}
 		player.performIceSummon();
 		iceSummonThread = new Thread (new Runnable() {
 			

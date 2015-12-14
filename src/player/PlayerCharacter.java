@@ -295,6 +295,7 @@ public class PlayerCharacter implements Renderable {
 	}
 	
 	protected void performIceSummon() {
+		stopAllMotion();
 		freezePlayerControlCount = 24;
 		iceSummonAnimationThread = new Thread(new PlayerAnimation(Resource.iceSummonSprite, this, false));
 		iceSummonAnimationThread.start();
@@ -312,6 +313,10 @@ public class PlayerCharacter implements Renderable {
 
 	protected Thread getIceSummonAnimationThread() {
 		return iceSummonAnimationThread;
+	}
+	
+	protected void collideManaSource() {
+		PlayerStatus.getPlayer().getCurrentMap().collideManaSource(boundaries);
 	}
 
 	@Override

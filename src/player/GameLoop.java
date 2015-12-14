@@ -59,6 +59,7 @@ public class GameLoop implements Runnable {
 			}
 		
 			playerInputUpdate();
+			mapEnvironmentUpdate();
 
 			synchronized (GameScreen.getScreen()) {
 				GameScreen.getScreen().notifyAll();
@@ -139,6 +140,11 @@ public class GameLoop implements Runnable {
 		playerCharacter.moveY();
 
 		InputUtility.clearKeyTriggered();
+	}
+	
+	private void mapEnvironmentUpdate() {
+		playerCharacter.collideManaSource();
+		// TODO map transition
 	}
 
 }

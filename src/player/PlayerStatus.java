@@ -90,28 +90,15 @@ public class PlayerStatus implements Renderable, Serializable {
 	}
 
 	private PlayerStatus() {
-		// Mana debug
-		maxMana = 10;
-		currentMana = 10;
+		maxMana = 8;
+		currentMana = 0;
 		originalHand = new ArrayList<>();
 		hand = new ArrayList<>();
-		currentMap = new TutorialMap();
-//		currentMap = GameMap.getGameMap("map9to12");
+//		currentMap = new TutorialMap();
+		currentMap = GameMap.getGameMap("map9to12");
 		currentPosition = currentMap.getInitialPosition();
 		playerCharacter = new PlayerCharacter();
 		playerCharacter.setPosition(currentPosition);
-		
-		// Debug
-
-		originalHand.add(SkillCard.createSkillCard("Sky Uppercut"));
-		originalHand.add(SkillCard.createSkillCard("Double Jump"));
-		originalHand.add(SkillCard.createSkillCard("Glacial Drift"));
-		originalHand.add(SkillCard.createSkillCard("Ice Summon"));
-		originalHand.add(SkillCard.createSkillCard("Ice Summon"));
-		originalHand.add(SkillCard.createSkillCard("Ice Summon"));
-		originalHand.add(SkillCard.createSkillCard("Concentration 2 S D"));
-		Collections.sort(originalHand);
-		hand.addAll(originalHand);
 
 	}
 	
@@ -135,7 +122,7 @@ public class PlayerStatus implements Renderable, Serializable {
 	
 	public void chargeMana() {
 		maxMana++;
-		currentMana++;
+		currentMana = maxMana;
 	}
 	
 	public List<SkillCard> getHand() {
@@ -152,20 +139,18 @@ public class PlayerStatus implements Renderable, Serializable {
 			using = hand.get(hand.indexOf(used));
 			if (currentMana >= using.cost) {
 				using.activate();
-//				currentMana -= using.cost;
+				currentMana -= using.cost;
 				removeCardFromHandThread = new Thread(new Runnable() {
 					
 					@Override
 					public void run() {
-						synchronized (using.getActivateAnimationThread()) {
-							try {
-								using.getActivateAnimationThread().wait();
-							} catch (InterruptedException e) {
-								return;
-							}
-							synchronized (hand) {
-								hand.remove(using);
-							}
+						try {
+							using.getActivateAnimationThread().join();
+						} catch (InterruptedException e) {
+							return;
+						}
+						synchronized (hand) {
+							hand.remove(using);
 						}
 					}
 				});
@@ -180,9 +165,23 @@ public class PlayerStatus implements Renderable, Serializable {
 	public GameMap getCurrentMap() {
 		return currentMap;
 	}
+	
+	public void drawNewHand(List<SkillCard> newHand) {
+		chargeMana();
+		try {
+			removeCardFromHandThread.interrupt();
+		} catch (NullPointerException e) {}
+		synchronized (hand) {
+			originalHand = newHand;
+			hand.clear();
+			hand.addAll(originalHand);
+		}
+	}
 
 	public void returnToLastCheckpoint() {
-		removeCardFromHandThread.interrupt();
+		try {
+			removeCardFromHandThread.interrupt();
+		} catch (NullPointerException e) {}
 		if (using instanceof IceSummon) {
 			((IceSummon) using).getIceSummonThread().interrupt();
 		}
@@ -195,6 +194,7 @@ public class PlayerStatus implements Renderable, Serializable {
 		playerCharacter.setSprite(Resource.standSprite[(playerCharacter.getFacingDirection()+1)/2]);
 		playerCharacter.stopAllMotion();
 		playerCharacter.setPosition(currentPosition);
+		currentMana = maxMana;
 	}
 
 	@Override
