@@ -23,7 +23,7 @@ public class GameMap implements Renderable, Serializable {
 	
 	private int width, height;
 	private Tile[][] tileMap;
-	private ManaSource[] manaSources;
+	private CheckPoint[] checkPoints;
 	private static int tileWidth = 70, tileHeight = 70;
 	private Point initialPosition, transitionPoint;
 	private boolean isManaSourceSaving;
@@ -73,12 +73,12 @@ public class GameMap implements Renderable, Serializable {
 			isManaSourceSaving = false;
 		
 		int checkpointCount = Integer.parseInt(fileScanner.nextLine());
-		manaSources = new ManaSource[checkpointCount];
+		checkPoints = new CheckPoint[checkpointCount];
 		for (int i = 0; i < checkpointCount; i++) {
 			int tileX = Integer.parseInt(fileScanner.nextLine());
 			int tileY = Integer.parseInt(fileScanner.nextLine());
-			int screenX = tileX*tileWidth + (tileWidth-Resource.manaSource.getWidth())/2;
-			int screenY = (tileY-1)*tileHeight + (tileHeight-Resource.manaSource.getHeight());
+			int screenX = tileX*tileWidth + (tileWidth-Resource.checkPoint.getWidth())/2;
+			int screenY = (tileY-1)*tileHeight + (tileHeight-Resource.checkPoint.getHeight());
 	
 			int cardCount = Integer.parseInt(fileScanner.nextLine());
 			List<SkillCard> hand = new ArrayList<>();
@@ -86,7 +86,7 @@ public class GameMap implements Renderable, Serializable {
 				hand.add(SkillCard.createSkillCard(fileScanner.nextLine().trim()));
 			}
 			
-			manaSources[i] = new ManaSource(screenX, screenY, hand);
+			checkPoints[i] = new CheckPoint(screenX, screenY, hand);
 		}
 		
 		nextMapName = fileScanner.nextLine().trim();
@@ -231,11 +231,11 @@ public class GameMap implements Renderable, Serializable {
 		return maxMovableHeight;
 	}
 	
-	public void collideManaSource(Rectangle collisionBox) {
-		for (ManaSource s : manaSources) {
-			if (s.getBoundaries().intersects(collisionBox)) {
-				if (!s.isUsed()) {
-					PlayerStatus.getPlayer().drawNewHand(s.drawCard());
+	public void collideCheckPoints(Rectangle collisionBox) {
+		for (CheckPoint c : checkPoints) {
+			if (c.getBoundaries().intersects(collisionBox)) {
+				if (!c.isUsed()) {
+					PlayerStatus.getPlayer().drawNewHand(c.drawCard());
 					if (isManaSourceSaving)
 						PlayerStatus.getPlayer().savePlayer();
 				}
@@ -264,7 +264,7 @@ public class GameMap implements Renderable, Serializable {
 			}
 		} catch (ArrayIndexOutOfBoundsException e) {}
 		
-		for (ManaSource c : manaSources) {
+		for (CheckPoint c : checkPoints) {
 			c.render(g);
 		}
 	}

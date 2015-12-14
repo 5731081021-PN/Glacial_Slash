@@ -18,7 +18,7 @@ import render.Renderable;
 import res.Resource;
 import ui.GameScreen;
 
-public class ManaSource implements Renderable, Serializable {
+public class CheckPoint implements Renderable, Serializable {
 	
 	protected int x, y;
 	protected List<SkillCard> skillCards;
@@ -26,19 +26,19 @@ public class ManaSource implements Renderable, Serializable {
 	protected Rectangle boundaries;
 	protected transient Image sprite;
 	
-	public ManaSource(int x, int y, List<SkillCard> skillCards) {
+	public CheckPoint(int x, int y, List<SkillCard> skillCards) {
 		this.x = x;
 		this.y = y;
 		this.skillCards = skillCards;
 		used = false;
-		sprite = Resource.manaSource;
+		sprite = Resource.checkPoint;
 		boundaries = new Rectangle(x, y, ((BufferedImage)sprite).getWidth(), ((BufferedImage)sprite).getHeight());
 	}
 	
 	public List<SkillCard> drawCard() {
 		if (!used) {
 			used = true;
-			sprite = Resource.usedManaSource;
+			sprite = Resource.usedCheckPoint;
 		}
 		return skillCards;
 	}
@@ -59,9 +59,9 @@ public class ManaSource implements Renderable, Serializable {
 	private void readObject(ObjectInputStream in) throws ClassNotFoundException, IOException {
 		in.defaultReadObject();
 		if (used)
-			sprite = Resource.usedManaSource;
+			sprite = Resource.usedCheckPoint;
 		else
-			sprite = Resource.manaSource;
+			sprite = Resource.checkPoint;
 	}
 
 }
