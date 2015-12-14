@@ -29,6 +29,7 @@ public class Resource {
 
 	public static InputStream tutorialMap, easyMap, normalMap, hardMap, finalMap;
 	public static InputStream titleBGM, stageBGM;
+	public static InputStream cardSound,checkpointSound,dashSound,doubleJumpSound,iceSummonSound,jumpSound,skyUppercutSound;
 
 	private static ClassLoader loader = Resource.class.getClassLoader();
 
@@ -419,6 +420,13 @@ public class Resource {
 		
 		titleBGM = loader.getResourceAsStream("res/sound/titleBGM.wav");
 		stageBGM = loader.getResourceAsStream("res/sound/stageBGM.wav");
+		cardSound = loader.getResourceAsStream("res/sound/soundeffect/card.wav");
+		checkpointSound = loader.getResourceAsStream("res/sound/soundeffect/checkpoint.wav");
+		dashSound = loader.getResourceAsStream("res/sound/soundeffect/dash.wav");
+		doubleJumpSound = loader.getResourceAsStream("res/sound/soundeffect/doublejump.wav");
+		iceSummonSound = loader.getResourceAsStream("res/sound/soundeffect/icesummon.wav");
+		jumpSound = loader.getResourceAsStream("res/sound/soundeffect/jump.wav");
+		skyUppercutSound = loader.getResourceAsStream("res/sound/soundeffect/skyuppercut.wav");
 	}
 
 }
