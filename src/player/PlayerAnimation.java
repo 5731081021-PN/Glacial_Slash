@@ -1,8 +1,8 @@
-package render;
+package player;
 
 import java.awt.image.BufferedImage;
 
-import player.PlayerCharacter;
+import render.Animation;
 
 public class PlayerAnimation extends Animation {
 	
