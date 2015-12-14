@@ -21,8 +21,10 @@ public class Resource {
 	public static BufferedImage[] cardAnimation = new BufferedImage[12];
 	public static BufferedImage background;
 	public static BufferedImage title, startButton, loadButton, exitButton;
-	public static BufferedImage upButton, leftButton, downButton, rightButton, dButton, escButton, fButton,
-			rButton, sButton, spaceButton ,eButton , plusButton;
+	public static BufferedImage upButton, leftButton, downButton, rightButton, dButton, escButton, fButton, rButton,
+			sButton, spaceButton, eButton, plusButton;
+	public static BufferedImage walkContent, jumpContent, yourHandContent, doublejumpContent, glacialDriftContent,
+			iceSummonContent, skyUppercutContent, exitContent, returnContent, theEndContent;
 
 	public static InputStream tutorialMap, map5to8, map9to12, map13to14, map15;
 
@@ -310,19 +312,81 @@ public class Resource {
 			// TODO Auto-generated catch block
 			spaceButton = null;
 		}
-			try {
-				eButton= ImageIO.read(loader.getResource("res/map/tutorial/E.png"));
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				eButton = null;
-			}
-			try {
-				plusButton = ImageIO.read(loader.getResource("res/map/tutorial/plus.png"));
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				plusButton = null;
-			}
-		
+		try {
+			eButton = ImageIO.read(loader.getResource("res/map/tutorial/E.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			eButton = null;
+		}
+		try {
+			plusButton = ImageIO.read(loader.getResource("res/map/tutorial/plus.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			plusButton = null;
+		}
+
+		// load Content
+		try {
+			walkContent = ImageIO.read(loader.getResource("res/map/content/walk.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			walkContent = null;
+		}
+		try {
+			jumpContent = ImageIO.read(loader.getResource("res/map/content/jump.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			jumpContent = null;
+		}
+		try {
+			yourHandContent = ImageIO.read(loader.getResource("res/map/content/yourhand.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			yourHandContent = null;
+		}
+		try {
+			exitContent = ImageIO.read(loader.getResource("res/map/content/exit.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			exitContent = null;
+		}
+		try {
+			returnContent = ImageIO.read(loader.getResource("res/map/content/return.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			returnContent = null;
+		}
+		try {
+			doublejumpContent = ImageIO.read(loader.getResource("res/map/content/doublejump.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			doublejumpContent = null;
+		}
+		try {
+			glacialDriftContent = ImageIO.read(loader.getResource("res/map/content/glacialdrift.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			glacialDriftContent = null;
+		}
+		try {
+			iceSummonContent = ImageIO.read(loader.getResource("res/map/content/icesummon.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			iceSummonContent = null;
+		}
+		try {
+			skyUppercutContent = ImageIO.read(loader.getResource("res/map/content/skyuppercut.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			skyUppercutContent = null;
+		}
+		try {
+			theEndContent = ImageIO.read(loader.getResource("res/map/content/the_end.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			theEndContent = null;
+		}
+
 		tutorialMap = loader.getResourceAsStream("res/map/tutorialMap.map");
 		map5to8 = loader.getResourceAsStream("res/map/map5to8.map");
 		map9to12 = loader.getResourceAsStream("res/map/map9to12.map");
