@@ -22,7 +22,7 @@ public class Resource {
 	public static BufferedImage background;
 	public static BufferedImage title, startButton, loadButton, exitButton;
 	public static BufferedImage upButton, leftButton, downButton, rightButton, dButton, escButton, fButton,
-			rButton, sButton, spaceButton;
+			rButton, sButton, spaceButton ,eButton , plusButton;
 
 	public static InputStream tutorialMap, map5to8, map9to12, map13to14, map15;
 
@@ -310,7 +310,19 @@ public class Resource {
 			// TODO Auto-generated catch block
 			spaceButton = null;
 		}
-
+			try {
+				eButton= ImageIO.read(loader.getResource("res/map/tutorial/E.png"));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				eButton = null;
+			}
+			try {
+				plusButton = ImageIO.read(loader.getResource("res/map/tutorial/plus.png"));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				plusButton = null;
+			}
+		
 		tutorialMap = loader.getResourceAsStream("res/map/tutorialMap.map");
 		map5to8 = loader.getResourceAsStream("res/map/map5to8.map");
 		map9to12 = loader.getResourceAsStream("res/map/map9to12.map");
