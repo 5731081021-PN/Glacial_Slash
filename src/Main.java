@@ -21,6 +21,7 @@ public class Main {
 				public void run() {
 					titleWindow.setVisible(true);
 					titleWindow.requestFocus();
+					titleWindow.startBGM();
 				}
 			});
 		} catch (InterruptedException e) {
@@ -39,8 +40,10 @@ public class Main {
 				public void run() {
 					GameWindow gameWindow = GameWindow.getWindow();
 					titleWindow.dispose();
+					titleWindow.stopBGM();
 					gameWindow.setVisible(true);
 					gameWindow.requestFocus();
+					gameWindow.startBGM();
 				}
 			});
 		} catch (InterruptedException e) {
