@@ -410,9 +410,9 @@ public class Resource {
 		
 
 		tutorialMap = loader.getResourceAsStream("res/map/tutorialMap.map");
-		map5to8 = loader.getResourceAsStream("res/map/map5to8.map");
-		map9to12 = loader.getResourceAsStream("res/map/map9to12.map");
-		map13to14 = loader.getResourceAsStream("res/map/map13to14.map");
+		map5to8 = loader.getResourceAsStream("res/map/easy.map");
+		map9to12 = loader.getResourceAsStream("res/map/normal.map");
+		map13to14 = loader.getResourceAsStream("res/map/hard.map");
 		
 		//load sound
 		
