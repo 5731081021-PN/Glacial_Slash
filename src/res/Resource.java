@@ -28,6 +28,7 @@ public class Resource {
 			checkpointContent, yourManaContent;
 
 	public static InputStream tutorialMap, map5to8, map9to12, map13to14, map15;
+	public static InputStream titleSound , mapSound;
 
 	private static ClassLoader loader = Resource.class.getClassLoader();
 
@@ -405,11 +406,18 @@ public class Resource {
 			// TODO Auto-generated catch block
 			yourManaContent = null;
 		}
+		
+		
 
 		tutorialMap = loader.getResourceAsStream("res/map/tutorialMap.map");
 		map5to8 = loader.getResourceAsStream("res/map/map5to8.map");
 		map9to12 = loader.getResourceAsStream("res/map/map9to12.map");
 		map13to14 = loader.getResourceAsStream("res/map/map13to14.map");
+		
+		//load sound
+		
+		titleSound = loader.getResourceAsStream("res/sound/titlesound.wav");
+		mapSound = loader.getResourceAsStream("res/sound/mapsound.map");
 	}
 
 }
