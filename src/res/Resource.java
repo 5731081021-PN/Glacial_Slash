@@ -24,7 +24,7 @@ public class Resource {
 	public static BufferedImage upButton, leftButton, downButton, rightButton, dButton, escButton, fButton, rButton,
 			sButton, spaceButton, eButton, plusButton;
 	public static BufferedImage walkContent, jumpContent, yourHandContent, doublejumpContent, glacialDriftContent,
-			iceSummonContent, skyUppercutContent, exitContent, returnContent, theEndContent;
+			iceSummonContent, skyUppercutContent, exitContent, returnContent, theEndContent, concentrationContent;
 
 	public static InputStream tutorialMap, map5to8, map9to12, map13to14, map15;
 
@@ -385,6 +385,12 @@ public class Resource {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			theEndContent = null;
+		}
+		try {
+			concentrationContent = ImageIO.read(loader.getResource("res/map/content/concentration.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			concentrationContent = null;
 		}
 
 		tutorialMap = loader.getResourceAsStream("res/map/tutorialMap.map");
