@@ -16,7 +16,6 @@ import map.TutorialMap;
 
 import java.awt.Graphics2D;
 import java.awt.Point;
-import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -33,8 +32,8 @@ import res.Resource;
 public class PlayerStatus implements Renderable, Serializable {
 	
 	private static PlayerStatus player;
-	private int currentMana, maxMana;
-	private List<SkillCard> hand, originalHand;
+	private int originalMana, currentMana, maxMana;
+	private List<SkillCard> originalHand, hand;
 	private GameMap currentMap;
 	private transient PlayerCharacter playerCharacter;
 	private Point currentPosition;
@@ -72,6 +71,7 @@ public class PlayerStatus implements Renderable, Serializable {
 	
 	public synchronized void savePlayer() {
 		currentPosition.setLocation(playerCharacter.getX(), playerCharacter.getY() + Resource.standSprite[0].getHeight());
+		originalMana = currentMana;
 		try (FileOutputStream fileOut = new FileOutputStream(saveLocation)){
 			try (ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
 				out.writeObject(player);
@@ -90,12 +90,13 @@ public class PlayerStatus implements Renderable, Serializable {
 	}
 
 	private PlayerStatus() {
-		maxMana = 7;
+		originalMana = 0;
+		maxMana = 0;
 		currentMana = 0;
 		originalHand = new ArrayList<>();
 		hand = new ArrayList<>();
-//		currentMap = new TutorialMap();
-		currentMap = GameMap.getGameMap("map5to8");
+		currentMap = new TutorialMap();
+//		currentMap = GameMap.getGameMap("map5to8");
 		currentPosition = currentMap.getInitialPosition();
 		playerCharacter = new PlayerCharacter();
 		playerCharacter.setPosition(currentPosition);
@@ -175,6 +176,7 @@ public class PlayerStatus implements Renderable, Serializable {
 		} catch (NullPointerException e) {}
 		synchronized (hand) {
 			originalHand = newHand;
+			Collections.sort(originalHand);
 			hand.clear();
 			hand.addAll(originalHand);
 		}
@@ -196,13 +198,16 @@ public class PlayerStatus implements Renderable, Serializable {
 		playerCharacter.setSprite(Resource.standSprite[(playerCharacter.getFacingDirection()+1)/2]);
 		playerCharacter.stopAllMotion();
 		playerCharacter.setPosition(currentPosition);
-		currentMana = maxMana;
+		currentMana = originalMana;
 	}
 	
 	public void goToNextMap() {
 		currentMap = currentMap.getNextMap();
 		currentPosition = currentMap.getInitialPosition();
+		originalMana = currentMana;
+		originalHand = new ArrayList<>(hand);
 		playerCharacter.setPosition(currentPosition);
+		savePlayer();
 	}
 
 	@Override
