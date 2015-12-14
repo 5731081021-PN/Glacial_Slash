@@ -8,6 +8,8 @@ import res.Resource;
 
 public class GlacialDrift extends SkillCard {
 	
+	private static final long serialVersionUID = -951186494996787158L;
+
 	public GlacialDrift() {
 		super (2, Resource.glacialDrift);
 	}

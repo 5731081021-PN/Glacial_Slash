@@ -8,6 +8,8 @@ import res.Resource;
 
 public class SkyUppercut extends SkillCard {
 
+	private static final long serialVersionUID = 8033869263693885942L;
+
 	public SkyUppercut() {
 		super(3, Resource.skyUppercut);
 	}

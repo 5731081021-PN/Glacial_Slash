@@ -8,6 +8,8 @@ import res.Resource;
 
 public class DoubleJump extends SkillCard {
 
+	private static final long serialVersionUID = 1452497183754471197L;
+
 	public DoubleJump() {
 		super(2, Resource.doubleJump);
 	}

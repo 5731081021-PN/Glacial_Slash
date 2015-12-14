@@ -11,6 +11,8 @@ import res.Resource;
 
 public class IceSummon extends SkillCard {
 	
+	private static final long serialVersionUID = -9142814818198840454L;
+
 	private transient Thread iceSummonThread;
 
 	public IceSummon() {
