@@ -59,17 +59,23 @@ public class GameScreen extends JComponent {
 	@Override
 	protected void paintComponent(Graphics g) {
 		
-		Graphics2D g2d = ((VolatileImage)buffer).createGraphics();
+		Graphics2D g2d;
+		try {
+			g2d = ((VolatileImage)buffer).createGraphics();
+		} catch (NullPointerException e) {
+			buffer = createVolatileImage(SCREEN_WIDTH, SCREEN_HEIGHT);
+			g2d = ((VolatileImage)buffer).createGraphics();
+		}
 		
 		g2d.clearRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-	
+
 		// draw map
 		PlayerStatus.getPlayer().getCurrentMap().render(g2d);
-
+			
 		// draw player
 		PlayerStatus.getPlayer().getPlayerCharacter().render(g2d);
-		
-		// draw PlayerStatus.getPlayer()
+
+		// draw hud
 		PlayerStatus.getPlayer().render(g2d);
 	
 		// draw things on actual screen

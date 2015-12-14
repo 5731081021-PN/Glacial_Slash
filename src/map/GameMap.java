@@ -21,13 +21,13 @@ import ui.GameScreen;
 
 public class GameMap implements Renderable, Serializable {
 	
-	private int width, height;
-	private Tile[][] tileMap;
-	private CheckPoint[] checkPoints;
-	private static int tileWidth = 70, tileHeight = 70;
-	private Point initialPosition, transitionPoint;
-	private boolean isManaSourceSaving;
-	private String nextMapName;
+	protected int width, height;
+	protected Tile[][] tileMap;
+	protected CheckPoint[] checkPoints;
+	protected static int tileWidth = 70, tileHeight = 70;
+	protected Point initialPosition, transitionPoint;
+	protected boolean isManaSourceSaving;
+	protected String nextMapName;
 	
 	public static GameMap getGameMap(String mapName) {
 		if ("tutorial".equalsIgnoreCase(mapName)) return new TutorialMap();

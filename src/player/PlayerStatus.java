@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 
 import exception.SkillCardUnusableException;
 import exception.UnableToLoadGameException;
+import map.FinalMap;
 import map.GameMap;
 import map.TutorialMap;
 
@@ -90,15 +91,13 @@ public class PlayerStatus implements Renderable, Serializable {
 	}
 
 	private PlayerStatus() {
-		maxMana = 0;
+		maxMana = 14;
 		currentMana = 0;
 		hand = new ArrayList<>();
 		currentMap = new TutorialMap();
-//		currentMap = GameMap.getGameMap("map5to8");
 		currentPosition = currentMap.getInitialPosition();
 		playerCharacter = new PlayerCharacter();
 		playerCharacter.setPosition(currentPosition);
-
 	}
 	
 	public PlayerCharacter getPlayerCharacter() {
@@ -214,6 +213,10 @@ public class PlayerStatus implements Renderable, Serializable {
 			}
 		}
 	
+		// render end game text
+		if (currentMap instanceof FinalMap) {
+			((FinalMap)currentMap).renderTheEndContent(g);
+		}
 	}
 
 }
