@@ -23,7 +23,7 @@ public class GameLoop implements Runnable {
 
 	public void run() {
 		
-		final long FRAME_RATE = 60;
+		final long FRAME_RATE = 30;
 		final long UPDATE_TIME = 1000000000 / FRAME_RATE;
 		
 		long lastUpdateTime = System.nanoTime();
@@ -44,7 +44,7 @@ public class GameLoop implements Runnable {
 		
 			if (InputUtility.getKeyTriggered(CommandKey.EXIT)) {
 				InputUtility.clearKeyPressed();
-				if (JOptionPane.showConfirmDialog(null, "Are you sure want to exit?", "Exit", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+				if (JOptionPane.showConfirmDialog(null, "Are you sure you want to exit?", "Exit", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 					synchronized (this) {
 						this.notifyAll();
 					}
