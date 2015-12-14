@@ -7,6 +7,8 @@ import res.Resource;
 
 public class FinalMap extends GameMap {
 	
+	private static final long serialVersionUID = 5109262143404618750L;
+
 	private CheckPoint finalCheckPoint;
 	private boolean isWin;
 

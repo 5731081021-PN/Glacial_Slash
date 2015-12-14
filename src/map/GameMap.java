@@ -22,10 +22,12 @@ import ui.GameScreen;
 
 public class GameMap implements Renderable, Serializable {
 	
+	private static final long serialVersionUID = 6666274260861170041L;
+
+	public static final int TILE_WIDTH = 70, TILE_HEIGHT = 70;
 	protected int width, height;
 	protected Tile[][] tileMap;
 	protected CheckPoint[] checkPoints;
-	protected static int tileWidth = 70, tileHeight = 70;
 	protected Point initialPosition, transitionPoint;
 	protected boolean isManaSourceSaving;
 	protected String nextMapName;
@@ -39,7 +41,7 @@ public class GameMap implements Renderable, Serializable {
 		else return null;
 	}
 
-	public GameMap(InputStream mapFile) {
+	protected GameMap(InputStream mapFile) {
 		Scanner fileScanner;
 		fileScanner = new Scanner(mapFile);
 		
@@ -59,8 +61,8 @@ public class GameMap implements Renderable, Serializable {
 				case '+': tileMap[tileX][tileY] = Tile.LEFT; break;
 				case '-': tileMap[tileX][tileY] = Tile.MID; break;
 				case '*': tileMap[tileX][tileY] = Tile.RIGHT; break;
-				case 'X': transitionPoint = new Point(tileX*tileWidth + 35, tileY*tileHeight); break;
-				case 'P': initialPosition = new Point(tileX*tileWidth, (tileY+1)*tileHeight);
+				case 'X': transitionPoint = new Point(tileX*TILE_WIDTH + 35, tileY*TILE_HEIGHT); break;
+				case 'P': initialPosition = new Point(tileX*TILE_WIDTH, (tileY+1)*TILE_HEIGHT);
 				}
 				if (tileMap[tileX][tileY] == null)
 					tileMap[tileX][tileY] = Tile.AIR;
@@ -78,8 +80,8 @@ public class GameMap implements Renderable, Serializable {
 		for (int i = 0; i < checkpointCount; i++) {
 			int tileX = Integer.parseInt(fileScanner.nextLine());
 			int tileY = Integer.parseInt(fileScanner.nextLine());
-			int screenX = tileX*tileWidth + (tileWidth-Resource.checkPoint.getWidth())/2;
-			int screenY = (tileY-1)*tileHeight + (tileHeight-Resource.checkPoint.getHeight());
+			int screenX = tileX*TILE_WIDTH + (TILE_WIDTH-Resource.checkPoint.getWidth())/2;
+			int screenY = (tileY-1)*TILE_HEIGHT + (TILE_HEIGHT-Resource.checkPoint.getHeight());
 	
 			int cardCount = Integer.parseInt(fileScanner.nextLine());
 			List<SkillCard> hand = new ArrayList<>();
@@ -100,29 +102,10 @@ public class GameMap implements Renderable, Serializable {
 		return getGameMap(nextMapName);
 	}
 	
-	public boolean collideWithTransitionPoint(Rectangle collisionBox) {
-		try {
-			return collisionBox.contains(transitionPoint);
-		} catch (NullPointerException e) {
-			return false;
-		}
-	}
-	
-	public void clearIceTiles() {
-		for (int tileX = 0; tileX < width; tileX++)
-			for (int tileY = 0; tileY < height; tileY++)
-				if (tileMap[tileX][tileY] == Tile.ICE)
-					tileMap[tileX][tileY] = Tile.AIR;
-	}
-	
 	public Point getInitialPosition() {
 		return initialPosition;
 	}
-	
-	public Point getTransitionPoint() {
-		return transitionPoint;
-	}
-	
+
 	public String getNextMapName() {
 		return nextMapName;
 	}
@@ -134,21 +117,13 @@ public class GameMap implements Renderable, Serializable {
 	public int getHeight() {
 		return height;
 	}
-	
-	public int getTileWidth() {
-		return tileWidth;
-	}
-		
-	public int getTileHeight() {
-		return tileHeight;
-	}
 
 	public int getScreenWidth() {
-		return width*tileWidth;
+		return width*TILE_WIDTH;
 	}
 
 	public int getScreenHeight() {
-		return height*tileHeight;
+		return height*TILE_HEIGHT;
 	}
 	
 	public void freeze(int x, int y) {
@@ -158,13 +133,21 @@ public class GameMap implements Renderable, Serializable {
 	public Tile getTileType(int tileX, int tileY) {
 		return tileMap[tileX][tileY];
 	}
-	
+			
+	public boolean collideWithTransitionPoint(Rectangle collisionBox) {
+		try {
+			return collisionBox.contains(transitionPoint);
+		} catch (NullPointerException e) {
+			return false;
+		}
+	}
+
 	public Point getFrontTile(Rectangle collisionBox, int direction) {
 		direction = Integer.signum(direction);
 		int frontBoundary = (int)(collisionBox.getX() + (direction < 0 ? 0 : 1)*collisionBox.getWidth()) - direction;
 		int lowerBoundary = (int)(collisionBox.getY() + collisionBox.getHeight()) - 1;
-		int currentTileX = frontBoundary / tileWidth;
-		int currentTileY = lowerBoundary / tileHeight;
+		int currentTileX = frontBoundary / TILE_WIDTH;
+		int currentTileY = lowerBoundary / TILE_HEIGHT;
 		return new Point(currentTileX + direction, currentTileY);
 	}
 	
@@ -179,9 +162,9 @@ public class GameMap implements Renderable, Serializable {
 		
 		int frontBoundary = (int)(collisionBox.getX() + (direction < 0 ? 0 : 1)*collisionBox.getWidth());
 		int upperBoundary = (int)collisionBox.getY() + 1, lowerBoundary = (int)(collisionBox.getY() + collisionBox.getHeight() - 1);
-		int upperBoundaryTile = upperBoundary/tileHeight, lowerBoundaryTile = lowerBoundary/tileHeight;
+		int upperBoundaryTile = upperBoundary/TILE_HEIGHT, lowerBoundaryTile = lowerBoundary/TILE_HEIGHT;
 		
-		int startTile = frontBoundary/tileWidth;
+		int startTile = frontBoundary/TILE_WIDTH;
 		
 		int maxMovableWidth = (direction < 0 ? 0 : 1)*(this.getScreenWidth()) - frontBoundary;
 
@@ -195,8 +178,8 @@ public class GameMap implements Renderable, Serializable {
 				continue;
 			}
 			tileX += (direction < 0)? 1 : 0;
-			if (Math.abs(tileX*tileWidth - frontBoundary) < Math.abs(maxMovableWidth)) {
-				maxMovableWidth = tileX*tileWidth - frontBoundary;
+			if (Math.abs(tileX*TILE_WIDTH - frontBoundary) < Math.abs(maxMovableWidth)) {
+				maxMovableWidth = tileX*TILE_WIDTH - frontBoundary;
 			}
 		}
 		return maxMovableWidth;
@@ -209,9 +192,9 @@ public class GameMap implements Renderable, Serializable {
 		
 		int frontBoundary = (int)(collisionBox.getY() + (direction < 0 ? 0 : 1)*collisionBox.getHeight());
 		int leftBoundary = (int)collisionBox.getX() + 1, rightBoundary = (int)(collisionBox.getX() + collisionBox.getWidth() - 1);
-		int leftBoundaryTile = leftBoundary/tileWidth, rightBoundaryTile = rightBoundary/tileWidth;
+		int leftBoundaryTile = leftBoundary/TILE_WIDTH, rightBoundaryTile = rightBoundary/TILE_WIDTH;
 		
-		int startTile = frontBoundary/tileHeight;
+		int startTile = frontBoundary/TILE_HEIGHT;
 		
 		int maxMovableHeight = (direction < 0 ? 0 : 1)*(this.getScreenHeight()) - frontBoundary;
 
@@ -225,8 +208,8 @@ public class GameMap implements Renderable, Serializable {
 				continue;
 			}
 			tileY += (direction < 0)? 1 : 0;
-			if (Math.abs(tileY*tileHeight - frontBoundary) < Math.abs(maxMovableHeight)) {
-				maxMovableHeight = tileY*tileHeight - frontBoundary;
+			if (Math.abs(tileY*TILE_HEIGHT - frontBoundary) < Math.abs(maxMovableHeight)) {
+				maxMovableHeight = tileY*TILE_HEIGHT - frontBoundary;
 			}
 		}
 		return maxMovableHeight;
@@ -249,10 +232,10 @@ public class GameMap implements Renderable, Serializable {
 	public void render(Graphics2D g) {
 		int cameraX = GameScreen.getScreen().getCameraX();
 		int cameraY = GameScreen.getScreen().getCameraY();
-		int firstTileX = cameraX/tileWidth;
-		int firstTileY = cameraY/tileHeight;
-		int lastTileX = firstTileX + GameScreen.SCREEN_WIDTH/tileWidth + 1;
-		int lastTileY = firstTileY + GameScreen.SCREEN_HEIGHT/tileHeight + 1;
+		int firstTileX = cameraX/TILE_WIDTH;
+		int firstTileY = cameraY/TILE_HEIGHT;
+		int lastTileX = firstTileX + GameScreen.SCREEN_WIDTH/TILE_WIDTH + 1;
+		int lastTileY = firstTileY + GameScreen.SCREEN_HEIGHT/TILE_HEIGHT + 1;
 		
 		g.drawImage(Resource.background, 0, 0, null);
 			
@@ -264,7 +247,7 @@ public class GameMap implements Renderable, Serializable {
 			for (int tileX = firstTileX; tileX <= lastTileX; tileX++) {
 				try {
 					for (int tileY = firstTileY; tileY <= lastTileY; tileY++) {
-						g.drawImage(tileMap[tileX][tileY].getTileSprite(), tileX*tileWidth-cameraX, tileY*tileHeight-cameraY, null);
+						g.drawImage(tileMap[tileX][tileY].getTileSprite(), tileX*TILE_WIDTH-cameraX, tileY*TILE_HEIGHT-cameraY, null);
 					}
 				} catch (ArrayIndexOutOfBoundsException e) {}
 			}

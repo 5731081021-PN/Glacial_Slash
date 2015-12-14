@@ -10,8 +10,8 @@ public class PlayerAnimation extends Animation {
 	private PlayerCharacter player;
 	private boolean isLooping;
 	
-	public PlayerAnimation(BufferedImage[][] animationSet, PlayerCharacter player, boolean isLooping) {
-		super(animationSet[0]);
+	public PlayerAnimation(BufferedImage[][] animationSet, PlayerCharacter player, int frameDelay, boolean isLooping) {
+		super(animationSet[0], frameDelay);
 		this.animationSet = animationSet;
 		this.player = player;
 		this.isLooping = isLooping;
@@ -19,12 +19,18 @@ public class PlayerAnimation extends Animation {
 
 	@Override
 	public void run() {
+		frameDelayCount = frameDelay;
 		while (currentFrame < frameCount) {
+			if (frameDelayCount <= 0) {
+				animation = animationSet[(player.getFacingDirection()+1)/2];
+				player.setSprite(animation[currentFrame]);
+				currentFrame++;
+				if (isLooping && currentFrame >= frameCount)
+					currentFrame = 0;
+				frameDelayCount = frameDelay;
+			}
+			frameDelayCount--;
 
-			animation = animationSet[(player.getFacingDirection()+1)/2];
-			player.setSprite(animation[currentFrame]);
-			currentFrame++;
-	
 			synchronized (player) {
 				try {
 					player.wait();
@@ -32,9 +38,7 @@ public class PlayerAnimation extends Animation {
 					return;
 				}
 			}
-			
-			if (isLooping && currentFrame >= frameCount)
-				currentFrame = 0;
+
 		}
 	}
 

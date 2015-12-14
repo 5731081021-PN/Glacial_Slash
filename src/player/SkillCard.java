@@ -38,7 +38,7 @@ public abstract class SkillCard implements Renderable, Comparable<SkillCard>, Se
 	
 	public static final SkillCard createSkillCard(String name) {
 		// Use when add cards only
-		// Use dummy constants for reference
+		// Use dummy constants when referred, like activation
 		if (name.startsWith("S")) return new SkyUppercut();
 		else if (name.startsWith("D")) return new DoubleJump();
 		else if (name.startsWith("G")) return new GlacialDrift();
@@ -57,17 +57,23 @@ public abstract class SkillCard implements Renderable, Comparable<SkillCard>, Se
 	
 	public void playActivateAnimation() {
 		SoundUtility.playSoundEffect(Resource.cardSound, Resource.cardAudioFormat);
-		activateAnimationThread = new Thread(new Animation(Resource.cardAnimation) {
+		activateAnimationThread = new Thread(new Animation(Resource.cardAnimation, 2) {
 			
 			@Override
 			public void run() {
 				BufferedImage originalCardImage = (BufferedImage)SkillCard.this.originalCardImage;
 				Graphics2D imageGraphics;
+				frameDelayCount = frameDelay;
 				while (currentFrame < frameCount) {
-					cardImage = new BufferedImage(originalCardImage.getWidth(), originalCardImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
-					imageGraphics = ((BufferedImage)cardImage).createGraphics();
-					imageGraphics.drawImage(originalCardImage, null, 0, 0);
-					imageGraphics.drawImage(animation[currentFrame], null, 0, 0);
+					if (frameDelayCount <= 0) {
+						cardImage = new BufferedImage(originalCardImage.getWidth(), originalCardImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
+						imageGraphics = ((BufferedImage)cardImage).createGraphics();
+						imageGraphics.drawImage(originalCardImage, null, 0, 0);
+						imageGraphics.drawImage(animation[currentFrame], null, 0, 0);
+						currentFrame++;
+						frameDelayCount = frameDelay;
+					}
+					frameDelayCount--;
 					synchronized (PlayerStatus.getPlayer().getPlayerCharacter()) {
 						try {
 							PlayerStatus.getPlayer().getPlayerCharacter().wait();
@@ -75,7 +81,6 @@ public abstract class SkillCard implements Renderable, Comparable<SkillCard>, Se
 							return;
 						}
 					}
-					currentFrame++;
 				}
 				cardImage = new BufferedImage(originalCardImage.getWidth(), originalCardImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
 				imageGraphics = ((BufferedImage)cardImage).createGraphics();
@@ -85,8 +90,8 @@ public abstract class SkillCard implements Renderable, Comparable<SkillCard>, Se
 		activateAnimationThread.start();
 	}
 	
-	public Thread getActivateAnimationThread() {
-		return activateAnimationThread;
+	public void joinActivateAnimationThread() throws InterruptedException {
+		activateAnimationThread.join();
 	}
 	
 	@Override

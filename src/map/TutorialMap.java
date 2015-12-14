@@ -7,6 +7,8 @@ import ui.GameScreen;
 
 public class TutorialMap extends GameMap {
 
+	private static final long serialVersionUID = -1627634380172291416L;
+
 	public TutorialMap() {
 		super(Resource.tutorialMap);
 	}
