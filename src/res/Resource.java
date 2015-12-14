@@ -4,6 +4,12 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class Resource {
 
@@ -28,8 +34,10 @@ public class Resource {
 			checkpointContent, yourManaContent;
 
 	public static InputStream tutorialMap, easyMap, normalMap, hardMap, finalMap;
-	public static InputStream titleBGM, stageBGM;
-	public static InputStream cardSound,checkpointSound,dashSound,doubleJumpSound,iceSummonSound,jumpSound,skyUppercutSound;
+	public static Clip titleBGM, stageBGM;
+	public static AudioInputStream cardIn, checkPointIn, dashIn, doubleJumpIn, iceSummonIn, jumpIn, skyUppercutIn;
+	public static AudioFormat cardFormat, checkPointFormat, dashFormat, doubleJumpFormat, iceSummonFormat, jumpFormat, skyUppercutFormat;
+	public static byte[] cardSound, checkPointSound, dashSound, doubleJumpSound, iceSummonSound, jumpSound, skyUppercutSound;
 
 	private static ClassLoader loader = Resource.class.getClassLoader();
 
@@ -407,26 +415,65 @@ public class Resource {
 			// TODO Auto-generated catch block
 			yourManaContent = null;
 		}
-		
-		
+
+
 
 		tutorialMap = loader.getResourceAsStream("res/map/tutorial.map");
 		easyMap = loader.getResourceAsStream("res/map/easy.map");
 		normalMap = loader.getResourceAsStream("res/map/normal.map");
 		hardMap = loader.getResourceAsStream("res/map/hard.map");
 		finalMap = loader.getResourceAsStream("res/map/final.map");
-		
+
 		//load sound
-		
-		titleBGM = loader.getResourceAsStream("res/sound/titleBGM.wav");
-		stageBGM = loader.getResourceAsStream("res/sound/stageBGM.wav");
-		cardSound = loader.getResourceAsStream("res/sound/soundeffect/card.wav");
-		checkpointSound = loader.getResourceAsStream("res/sound/soundeffect/checkpoint.wav");
-		dashSound = loader.getResourceAsStream("res/sound/soundeffect/dash.wav");
-		doubleJumpSound = loader.getResourceAsStream("res/sound/soundeffect/doublejump.wav");
-		iceSummonSound = loader.getResourceAsStream("res/sound/soundeffect/icesummon.wav");
-		jumpSound = loader.getResourceAsStream("res/sound/soundeffect/jump.wav");
-		skyUppercutSound = loader.getResourceAsStream("res/sound/soundeffect/skyuppercut.wav");
+		try {
+			titleBGM = AudioSystem.getClip();
+			titleBGM.open(AudioSystem.getAudioInputStream(loader.getResourceAsStream("res/sound/titleBGM.wav")));
+		} catch (LineUnavailableException e) {
+		} catch (UnsupportedAudioFileException e) {
+		} catch (IOException e) {}
+
+		try {
+			stageBGM = AudioSystem.getClip();
+			stageBGM.open(AudioSystem.getAudioInputStream(loader.getResourceAsStream("res/sound/stageBGM.wav")));
+		} catch (LineUnavailableException e) {
+		} catch (UnsupportedAudioFileException e) {
+		} catch (IOException e) {}
+
+		cardIn = readAudio(loader.getResourceAsStream("res/sound/soundeffect/card.wav"));
+		cardFormat = cardIn.getFormat();
+		cardSound = getByteArray(cardIn, cardFormat);
+
+		checkPointIn = readAudio(loader.getResourceAsStream("res/sound/soundeffect/checkpoint.wav"));
+		checkPointFormat = checkPointIn.getFormat();
+		checkPointSound = getByteArray(checkPointIn, checkPointFormat);
+/*
+		checkPointSound = getByteArray(checkPointFormat, loader.getResourceAsStream("res/sound/soundeffect/checkpoint.wav"));
+		dashSound = getByteArray(dashFormat, loader.getResourceAsStream("res/sound/soundeffect/dash.wav"));
+		doubleJumpSound = getByteArray(doubleJumpFormat, loader.getResourceAsStream("res/sound/soundeffect/doublejump.wav"));
+		iceSummonSound = getByteArray(iceSummonFormat, loader.getResourceAsStream("res/sound/soundeffect/icesummon.wav"));
+		jumpSound = getByteArray(jumpFormat, loader.getResourceAsStream("res/sound/soundeffect/jump.wav"));
+		skyUppercutSound = getByteArray(skyUppercutFormat, loader.getResourceAsStream("res/sound/soundeffect/skyuppercut.wav"));
+*/	
+	}
+	
+	private static AudioInputStream readAudio(InputStream in) {
+		try {
+			return AudioSystem.getAudioInputStream(in);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	
+	private static byte[] getByteArray(InputStream in, AudioFormat format) {
+		try {
+			AudioInputStream audioIn = AudioSystem.getAudioInputStream(in);
+			int size = (int)(format.getFrameSize() * audioIn.getFrameLength());
+			byte[] audioByte = new byte[size];
+			audioIn.read(audioByte, 0, size);
+			return audioByte;
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 }
