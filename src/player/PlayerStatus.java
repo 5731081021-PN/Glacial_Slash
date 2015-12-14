@@ -151,7 +151,7 @@ public class PlayerStatus implements Renderable, Serializable {
 					@Override
 					public void run() {
 						try {
-							using.getActivateAnimationThread().join();
+							using.joinActivateAnimationThread();
 						} catch (InterruptedException e) {
 							return;
 						}

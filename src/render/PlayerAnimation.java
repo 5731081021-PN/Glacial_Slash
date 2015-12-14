@@ -21,9 +21,9 @@ public class PlayerAnimation extends Animation {
 	public void run() {
 		frameDelayCount = frameDelay;
 		while (currentFrame < frameCount) {
+			animation = animationSet[(player.getFacingDirection()+1)/2];
+			player.setSprite(animation[currentFrame]);
 			if (frameDelayCount <= 0) {
-				animation = animationSet[(player.getFacingDirection()+1)/2];
-				player.setSprite(animation[currentFrame]);
 				currentFrame++;
 				if (isLooping && currentFrame >= frameCount)
 					currentFrame = 0;

@@ -112,7 +112,7 @@ public class PlayerCharacter implements Renderable {
 		xTargetSpeed = direction*WALK_SPEED;
 		if (this.isOnGround() && direction != IDLE) {
 			if (walkAnimationThread == null) {
-				walkAnimationThread = new Thread(new PlayerAnimation(Resource.walkSprite, this, true));
+				walkAnimationThread = new Thread(new PlayerAnimation(Resource.walkSprite, this, 10, true));
 				walkAnimationThread.start();
 				new Thread(new Runnable() {
 					@Override
@@ -144,7 +144,7 @@ public class PlayerCharacter implements Renderable {
 		else {
 			SoundUtility.playSoundEffect(Resource.jumpSound, Resource.jumpAudioFormat);
 		}
-		Thread jumpAnimation = new Thread(new PlayerAnimation(Resource.jumpSprite, this, false));
+		Thread jumpAnimation = new Thread(new PlayerAnimation(Resource.jumpSprite, this, 6, false));
 		jumpAnimation.start();
 
 		new Thread(new Runnable() {
@@ -247,14 +247,11 @@ public class PlayerCharacter implements Renderable {
 		}
 
 		if (!this.isOnGround() && Float.compare(ySpeed, 0f) >= 0) {
-			this.setSprite(Resource.jumpSprite[(facingDirection+1)/2][11]);
+			this.setSprite(Resource.jumpSprite[(facingDirection+1)/2][3]);
 		}
 	}
 	
 	// Special moves
-	protected void slash() {
-		// TODO play slash animation
-	}
 	
 	protected void performSkyUpperCut() {
 		SoundUtility.playSoundEffect(Resource.skyUppercutSound, Resource.skyUppercutAudioFormat);
@@ -275,7 +272,7 @@ public class PlayerCharacter implements Renderable {
 				yAcceleration = GRAVITY;
 			}
 		}).start();
-		new Thread(new PlayerAnimation(Resource.cutSprite, this, false)).start();
+		new Thread(new PlayerAnimation(Resource.cutSprite, this, 4, false)).start();
 	}
 	
 	protected void performGlacialDrift() {
@@ -297,7 +294,7 @@ public class PlayerCharacter implements Renderable {
 				yAcceleration = GRAVITY;
 			}
 		}).start();
-		new Thread(new PlayerAnimation(Resource.dashSprite, this, false)).start();
+		new Thread(new PlayerAnimation(Resource.dashSprite, this, 16, false)).start();
 		try {
 			walkAnimationThread.interrupt();
 		} catch (NullPointerException e) {
@@ -309,8 +306,8 @@ public class PlayerCharacter implements Renderable {
 	protected void performIceSummon() {
 		SoundUtility.playSoundEffect(Resource.iceSummonSound, Resource.iceSummonAudioFormat);
 		stopAllMotion();
-		freezePlayerControlCount = 48;
-		iceSummonAnimationThread = new Thread(new PlayerAnimation(Resource.iceSummonSprite, this, false));
+		freezePlayerControlCount = 45;
+		iceSummonAnimationThread = new Thread(new PlayerAnimation(Resource.iceSummonSprite, this, 5, false));
 		iceSummonAnimationThread.start();
 		try {
 			walkAnimationThread.interrupt();

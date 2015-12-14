@@ -19,11 +19,11 @@ public class Resource {
 	public static BufferedImage slash;
 	public static BufferedImage doubleJump, glacialDrift, iceSummon, skyUppercut, concentration;
 	public static BufferedImage[] standSprite = new BufferedImage[2];
-	public static BufferedImage[][] jumpSprite = new BufferedImage[2][12];
-	public static BufferedImage[][] walkSprite = new BufferedImage[2][36];
-	public static BufferedImage[][] cutSprite = new BufferedImage[2][54];
-	public static BufferedImage[][] dashSprite = new BufferedImage[2][6];
-	public static BufferedImage[][] iceSummonSprite = new BufferedImage[2][24];
+	public static BufferedImage[][] jumpSprite = new BufferedImage[2][4];
+	public static BufferedImage[][] walkSprite = new BufferedImage[2][6];
+	public static BufferedImage[][] cutSprite = new BufferedImage[2][9];
+	public static BufferedImage[][] dashSprite = new BufferedImage[2][1];
+	public static BufferedImage[][] iceSummonSprite = new BufferedImage[2][8];
 	public static BufferedImage[] cardAnimation = new BufferedImage[12];
 	public static BufferedImage background;
 	public static BufferedImage title, startButton, loadButton, exitButton;
@@ -171,7 +171,7 @@ public class Resource {
 			standSprite[1] = null;
 		}
 		for (int i = 0; i <= 1; i++) {
-			for (int j = 0; j <= 11; j++) {
+			for (int j = 0; j <= 3; j++) {
 				try {
 					jumpSprite[i][j] = ImageIO.read(loader.getResource("res/sprite/jump/j" + i + "_" + j + ".png"));
 				} catch (IOException e) {
@@ -182,7 +182,7 @@ public class Resource {
 		}
 
 		for (int i = 0; i <= 1; i++) {
-			for (int j = 0; j <= 35; j++) {
+			for (int j = 0; j <= 5; j++) {
 				try {
 					walkSprite[i][j] = ImageIO.read(loader.getResource("res/sprite/walk/w" + i + "_" + j + ".png"));
 				} catch (IOException e) {
@@ -192,7 +192,7 @@ public class Resource {
 			}
 		}
 		for (int i = 0; i <= 1; i++) {
-			for (int j = 0; j <= 53; j++) {
+			for (int j = 0; j <= 8; j++) {
 				try {
 					cutSprite[i][j] = ImageIO.read(loader.getResource("res/sprite/cut/c" + i + "_" + j + ".png"));
 				} catch (IOException e) {
@@ -202,7 +202,7 @@ public class Resource {
 			}
 		}
 		for (int i = 0; i <= 1; i++) {
-			for (int j = 0; j <= 5; j++) {
+			for (int j = 0; j <= 0; j++) {
 				try {
 					dashSprite[i][j] = ImageIO.read(loader.getResource("res/sprite/dash/d" + i + "_" + j + ".png"));
 				} catch (IOException e) {
@@ -213,7 +213,7 @@ public class Resource {
 		}
 
 		for (int i = 0; i <= 1; i++) {
-			for (int j = 0; j <= 23; j++) {
+			for (int j = 0; j <= 7; j++) {
 				try {
 					iceSummonSprite[i][j] = ImageIO
 							.read(loader.getResource("res/sprite/icesummon/i" + i + "_" + j + ".png"));

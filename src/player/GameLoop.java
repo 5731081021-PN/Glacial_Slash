@@ -92,12 +92,8 @@ public class GameLoop implements Runnable {
 					if (InputUtility.getKeyPressed(CommandKey.UP)) {
 						try {
 							PlayerStatus.getPlayer().useCard(SkillCard.SKY_UPPERCUT);
-						} catch (SkillCardUnusableException e) {
-							PlayerStatus.getPlayer().getPlayerCharacter().slash();
-						}
+						} catch (SkillCardUnusableException e) {}
 					}
-					else
-						PlayerStatus.getPlayer().getPlayerCharacter().slash();
 				}
 
 				if (InputUtility.getKeyTriggered(CommandKey.DASH)) {
