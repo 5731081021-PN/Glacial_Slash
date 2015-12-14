@@ -15,7 +15,7 @@ public class GameLoop implements Runnable {
 
 	public void run() {
 		
-		final long FRAME_RATE = 30;
+		final long FRAME_RATE = 60;
 		final long UPDATE_TIME = 1000000000 / FRAME_RATE;
 		
 		long lastUpdateTime = System.nanoTime();
