@@ -196,6 +196,12 @@ public class PlayerStatus implements Renderable, Serializable {
 		playerCharacter.setPosition(currentPosition);
 		currentMana = maxMana;
 	}
+	
+	public void goToNextMap() {
+		currentMap = currentMap.getNextMap();
+		currentPosition = currentMap.getInitialPosition();
+		playerCharacter.setPosition(currentPosition);
+	}
 
 	@Override
 	public void render(Graphics2D g) {

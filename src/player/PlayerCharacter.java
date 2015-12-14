@@ -318,6 +318,10 @@ public class PlayerCharacter implements Renderable {
 	protected void collideManaSource() {
 		PlayerStatus.getPlayer().getCurrentMap().collideManaSource(boundaries);
 	}
+	
+	protected boolean collideTransitionPoint() {
+		return PlayerStatus.getPlayer().getCurrentMap().collideWithTransitionPoint(boundaries);
+	}
 
 	@Override
 	public void render(Graphics2D g) {
