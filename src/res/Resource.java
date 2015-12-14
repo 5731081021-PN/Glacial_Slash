@@ -8,7 +8,7 @@ import javax.imageio.ImageIO;
 public class Resource {
 
 	public static BufferedImage tileGround, tileLeft, tileRight, tileMid, tileTop, tileTopLeft, tileTopRight, tileIce;
-	public static BufferedImage checkpoint, usedCheckpoint;
+	public static BufferedImage manaSource, usedManaSource;
 	public static BufferedImage[] mana = new BufferedImage[21], maxMana = new BufferedImage[21];
 	public static BufferedImage slash;
 	public static BufferedImage doubleJump, glacialDrift, iceSummon, skyUppercut, concentration;
@@ -21,7 +21,7 @@ public class Resource {
 	public static BufferedImage[] cardAnimation = new BufferedImage[12];
 	public static BufferedImage background;
 	public static BufferedImage title, startButton, loadButton, exitButton;
-	public static BufferedImage upButton, leftButton, downButton, rightButton, dButton, escButton, fbutton, qButton,
+	public static BufferedImage upButton, leftButton, downButton, rightButton, dButton, escButton, fButton,
 			rButton, sButton, spaceButton;
 
 	public static InputStream tutorialMap, map5to8, map9to12, map13to14, map15;
@@ -68,16 +68,16 @@ public class Resource {
 		}
 
 		try {
-			checkpoint = ImageIO.read(loader.getResource("res/tile/checkpoint.png"));
+			manaSource = ImageIO.read(loader.getResource("res/tile/manaSource.png"));
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
-			checkpoint = null;
+			manaSource = null;
 		}
 		try {
-			usedCheckpoint = ImageIO.read(loader.getResource("res/tile/usedcheckpoint.png"));
+			usedManaSource = ImageIO.read(loader.getResource("res/tile/usedManaSource.png"));
 		} catch (IOException e2) {
 			// TODO Auto-generated catch block
-			usedCheckpoint = null;
+			usedManaSource = null;
 		}
 		try {
 			tileTopLeft = ImageIO.read(loader.getResource("res/tile/tile_topleft.png"));
@@ -251,25 +251,25 @@ public class Resource {
 
 		// load tutorial button
 		try {
-			upButton = ImageIO.read(loader.getResource("res/map/tutorial/1_up.png"));
+			upButton = ImageIO.read(loader.getResource("res/map/tutorial/up.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			upButton = null;
 		}
 		try {
-			leftButton = ImageIO.read(loader.getResource("res/map/tutorial/2_left.png"));
+			leftButton = ImageIO.read(loader.getResource("res/map/tutorial/left.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			leftButton = null;
 		}
 		try {
-			downButton = ImageIO.read(loader.getResource("res/map/tutorial/3_down.png"));
+			downButton = ImageIO.read(loader.getResource("res/map/tutorial/down.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			downButton = null;
 		}
 		try {
-			rightButton = ImageIO.read(loader.getResource("res/map/tutorial/4_right.png"));
+			rightButton = ImageIO.read(loader.getResource("res/map/tutorial/right.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			rightButton = null;
@@ -287,16 +287,10 @@ public class Resource {
 			escButton = null;
 		}
 		try {
-			fbutton = ImageIO.read(loader.getResource("res/map/tutorial/F.png"));
+			fButton = ImageIO.read(loader.getResource("res/map/tutorial/F.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			fbutton = null;
-		}
-		try {
-			qButton = ImageIO.read(loader.getResource("res/map/tutorial/Q.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			qButton = null;
+			fButton = null;
 		}
 		try {
 			rButton = ImageIO.read(loader.getResource("res/map/tutorial/R.png"));

@@ -46,7 +46,7 @@ public class TitleScreen extends JComponent {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null, "Choose save file location\nFile name will be appended with \".gls\"", "New game", JOptionPane.PLAIN_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Choose save file location\nFile name will automatically be appended with \".gls\"", "New game", JOptionPane.PLAIN_MESSAGE);
 				JFileChooser fileChooser = new JFileChooser();
 				if (fileChooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
 					File saveFile = fileChooser.getSelectedFile();

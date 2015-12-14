@@ -95,6 +95,14 @@ public class PlayerCharacter implements Renderable {
 
 	// Motion
 	
+	protected void stopAllMotion() {
+		xSpeed = 0;
+		xTargetSpeed = 0;
+		ySpeed = 0;
+		yTargetSpeed = 0;
+		freezePlayerControlCount = 0;
+	}
+	
 	protected void walk(int direction) {
 		xTargetSpeed = direction*WALK_SPEED;
 		if (this.isOnGround() && direction != IDLE) {
@@ -287,6 +295,7 @@ public class PlayerCharacter implements Renderable {
 	}
 	
 	protected void performIceSummon() {
+		stopAllMotion();
 		freezePlayerControlCount = 24;
 		iceSummonAnimationThread = new Thread(new PlayerAnimation(Resource.iceSummonSprite, this, false));
 		iceSummonAnimationThread.start();
@@ -304,6 +313,14 @@ public class PlayerCharacter implements Renderable {
 
 	protected Thread getIceSummonAnimationThread() {
 		return iceSummonAnimationThread;
+	}
+	
+	protected void collideManaSource() {
+		PlayerStatus.getPlayer().getCurrentMap().collideManaSource(boundaries);
+	}
+	
+	protected boolean collideTransitionPoint() {
+		return PlayerStatus.getPlayer().getCurrentMap().collideWithTransitionPoint(boundaries);
 	}
 
 	@Override

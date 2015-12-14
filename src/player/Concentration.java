@@ -9,6 +9,7 @@ import res.Resource;
 public class Concentration extends SkillCard {
 	
 	private SkillCard[] drawnCards;
+	private transient Thread concentrationThread;
 
 	public Concentration(SkillCard[] drawnCards) {
 		super(2, Resource.concentration);
@@ -18,21 +19,28 @@ public class Concentration extends SkillCard {
 	@Override
 	public void activate() throws SkillCardUnusableException {
 		playActivateAnimation();
-		new Thread(new Runnable() {
+		concentrationThread = new Thread(new Runnable() {
 
 			@Override
 			public void run() {
 				PlayerStatus.getPlayer().getPlayerCharacter().performConcentration();
 				try {
 					activateAnimationThread.join();
-				} catch (InterruptedException e) {}
-				for (SkillCard s : drawnCards)
-					PlayerStatus.getPlayer().addCard(s);
-				synchronized (activateAnimationThread) {
-					activateAnimationThread.notifyAll();
+				} catch (InterruptedException e) {
+					return;
+				}
+				for (SkillCard s : drawnCards) {
+					synchronized (PlayerStatus.getPlayer().getHand()) {
+						PlayerStatus.getPlayer().addCard(s);
+					}
 				}
 			}
-		}).start();
+		});
+		concentrationThread.start();
+	}
+	
+	protected Thread getConcentrationThread() {
+		return concentrationThread;
 	}
 	
 	private void readObject(ObjectInputStream in) throws ClassNotFoundException, IOException {

@@ -3,6 +3,7 @@ import java.lang.reflect.InvocationTargetException;
 import javax.swing.SwingUtilities;
 
 import player.GameLoop;
+import player.PlayerStatus;
 import render.RenderLoop;
 import ui.GameWindow;
 import ui.TitleWindow;
@@ -12,7 +13,7 @@ public class Main {
 	private static Runnable gameLoop, renderLoop;
 
 	public static void main(String[] args) {
-			
+		/*	
 		TitleWindow titleWindow = TitleWindow.getWindow();
 		try {
 			SwingUtilities.invokeAndWait(new Runnable() {
@@ -31,14 +32,15 @@ public class Main {
 				titleWindow.wait();
 			} catch (InterruptedException e) {}
 		}
-
+		*/
+		PlayerStatus.newPlayer("test.gls");
 		try {
 			SwingUtilities.invokeAndWait(new Runnable() {
 
 				@Override
 				public void run() {
 					GameWindow gameWindow = GameWindow.getWindow();
-					titleWindow.dispose();
+//					titleWindow.dispose();
 					gameWindow.setVisible(true);
 					gameWindow.requestFocus();
 				}

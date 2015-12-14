@@ -6,6 +6,7 @@ package map;
 
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -17,29 +18,37 @@ import render.Renderable;
 import res.Resource;
 import ui.GameScreen;
 
-public class Checkpoint implements Renderable, Serializable {
+public class ManaSource implements Renderable, Serializable {
 	
-	private int x, y;
-	private List<SkillCard> skillCards;
-	private boolean used;
-	private transient Image sprite;
+	protected int x, y;
+	protected List<SkillCard> skillCards;
+	protected boolean used;
+	protected Rectangle boundaries;
+	protected transient Image sprite;
 	
-	public Checkpoint(int x, int y, List<SkillCard> skillCards) {
+	public ManaSource(int x, int y, List<SkillCard> skillCards) {
 		this.x = x;
 		this.y = y;
 		this.skillCards = skillCards;
 		used = false;
-		sprite = Resource.checkpoint;
+		sprite = Resource.manaSource;
+		boundaries = new Rectangle(x, y, ((BufferedImage)sprite).getWidth(), ((BufferedImage)sprite).getHeight());
 	}
 	
 	public List<SkillCard> drawCard() {
-		used = true;
-		sprite = Resource.usedCheckpoint;
+		if (!used) {
+			used = true;
+			sprite = Resource.usedManaSource;
+		}
 		return skillCards;
 	}
 	
 	public boolean isUsed() {
 		return used;
+	}
+	
+	public Rectangle getBoundaries() {
+		return boundaries;
 	}
 	
 	@Override
@@ -50,9 +59,9 @@ public class Checkpoint implements Renderable, Serializable {
 	private void readObject(ObjectInputStream in) throws ClassNotFoundException, IOException {
 		in.defaultReadObject();
 		if (used)
-			sprite = Resource.usedCheckpoint;
+			sprite = Resource.usedManaSource;
 		else
-			sprite = Resource.checkpoint;
+			sprite = Resource.manaSource;
 	}
 
 }

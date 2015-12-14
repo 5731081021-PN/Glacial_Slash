@@ -50,8 +50,16 @@ public class GameLoop implements Runnable {
 					}
 				}
 			}
+			
+			if (InputUtility.getKeyTriggered(CommandKey.RETURN)) {
+				InputUtility.clearKeyPressed();
+				if (JOptionPane.showConfirmDialog(null, "Return to last checkpoint?", "Got stuck?", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+					playerStatus.returnToLastCheckpoint();
+				}
+			}
 		
 			playerInputUpdate();
+			mapEnvironmentUpdate();
 
 			synchronized (GameScreen.getScreen()) {
 				GameScreen.getScreen().notifyAll();
@@ -132,6 +140,13 @@ public class GameLoop implements Runnable {
 		playerCharacter.moveY();
 
 		InputUtility.clearKeyTriggered();
+	}
+	
+	private void mapEnvironmentUpdate() {
+		playerCharacter.collideManaSource();
+		if (playerCharacter.collideTransitionPoint()) {
+			playerStatus.goToNextMap();
+		}
 	}
 
 }

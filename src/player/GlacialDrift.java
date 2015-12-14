@@ -15,9 +15,6 @@ public class GlacialDrift extends SkillCard {
 	@Override
 	public void activate() throws SkillCardUnusableException {
 		playActivateAnimation();
-		synchronized (activateAnimationThread) {
-			activateAnimationThread.notifyAll();
-		}
 		PlayerStatus.getPlayer().getPlayerCharacter().performGlacialDrift();
 	}
 	

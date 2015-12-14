@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import player.PlayerStatus;
 import player.SkillCard;
 import render.Renderable;
 import res.Resource;
@@ -22,9 +23,10 @@ public class GameMap implements Renderable, Serializable {
 	
 	private int width, height;
 	private Tile[][] tileMap;
-	private Checkpoint[] checkpoints;
+	private ManaSource[] manaSources;
 	private static int tileWidth = 70, tileHeight = 70;
-	private Point initialPosition;
+	private Point initialPosition, transitionPoint;
+	private boolean isManaSourceSaving;
 	private String nextMapName;
 	
 	public static GameMap getGameMap(String mapName) {
@@ -36,7 +38,7 @@ public class GameMap implements Renderable, Serializable {
 		else return null;
 	}
 
-	protected GameMap(InputStream mapFile) {
+	public GameMap(InputStream mapFile) {
 		Scanner fileScanner;
 		fileScanner = new Scanner(mapFile);
 		
@@ -56,19 +58,26 @@ public class GameMap implements Renderable, Serializable {
 				case '+': tileMap[tileX][tileY] = Tile.LEFT; break;
 				case '-': tileMap[tileX][tileY] = Tile.MID; break;
 				case '*': tileMap[tileX][tileY] = Tile.RIGHT; break;
+				case 'X': transitionPoint = new Point(tileX*tileWidth, tileY*tileHeight);
 				case 'P': initialPosition = new Point(tileX*tileWidth, (tileY+1)*tileHeight);
 				default : tileMap[tileX][tileY] = Tile.AIR;
 				}
 			}
 		}
 		
+		String saving = fileScanner.nextLine();
+		if ("save".equalsIgnoreCase(saving))
+			isManaSourceSaving = true;
+		else
+			isManaSourceSaving = false;
+		
 		int checkpointCount = Integer.parseInt(fileScanner.nextLine());
-		checkpoints = new Checkpoint[checkpointCount];
+		manaSources = new ManaSource[checkpointCount];
 		for (int i = 0; i < checkpointCount; i++) {
 			int tileX = Integer.parseInt(fileScanner.nextLine());
 			int tileY = Integer.parseInt(fileScanner.nextLine());
-			int screenX = tileX*tileWidth + (tileWidth-Resource.checkpoint.getWidth())/2;
-			int screenY = (tileY-1)*tileHeight + (tileHeight-Resource.checkpoint.getHeight());
+			int screenX = tileX*tileWidth + (tileWidth-Resource.manaSource.getWidth())/2;
+			int screenY = (tileY-1)*tileHeight + (tileHeight-Resource.manaSource.getHeight());
 	
 			int cardCount = Integer.parseInt(fileScanner.nextLine());
 			List<SkillCard> hand = new ArrayList<>();
@@ -76,7 +85,7 @@ public class GameMap implements Renderable, Serializable {
 				hand.add(SkillCard.createSkillCard(fileScanner.nextLine().trim()));
 			}
 			
-			checkpoints[i] = new Checkpoint(screenX, screenY, hand);
+			manaSources[i] = new ManaSource(screenX, screenY, hand);
 		}
 		
 		nextMapName = fileScanner.nextLine().trim();
@@ -85,8 +94,35 @@ public class GameMap implements Renderable, Serializable {
 		
 	}
 	
+	public GameMap getNextMap() {
+		return getGameMap(nextMapName);
+	}
+	
+	public boolean collideWithTransitionPoint(Rectangle collisionBox) {
+		try {
+			return collisionBox.contains(transitionPoint);
+		} catch (NullPointerException e) {
+			return false;
+		}
+	}
+	
+	public void clearIceTiles() {
+		for (int tileX = 0; tileX < width; tileX++)
+			for (int tileY = 0; tileY < height; tileY++)
+				if (tileMap[tileX][tileY] == Tile.ICE)
+					tileMap[tileX][tileY] = Tile.AIR;
+	}
+	
 	public Point getInitialPosition() {
 		return initialPosition;
+	}
+	
+	public Point getTransitionPoint() {
+		return transitionPoint;
+	}
+	
+	public String getNextMapName() {
+		return nextMapName;
 	}
 	
 	public int getWidth() {
@@ -193,6 +229,18 @@ public class GameMap implements Renderable, Serializable {
 		}
 		return maxMovableHeight;
 	}
+	
+	public void collideManaSource(Rectangle collisionBox) {
+		for (ManaSource s : manaSources) {
+			if (s.getBoundaries().intersects(collisionBox)) {
+				if (!s.isUsed()) {
+					PlayerStatus.getPlayer().drawNewHand(s.drawCard());
+					if (isManaSourceSaving)
+						PlayerStatus.getPlayer().savePlayer();
+				}
+			}
+		}
+	}
 
 	@Override
 	public void render(Graphics2D g) {
@@ -215,7 +263,7 @@ public class GameMap implements Renderable, Serializable {
 			}
 		} catch (ArrayIndexOutOfBoundsException e) {}
 		
-		for (Checkpoint c : checkpoints) {
+		for (ManaSource c : manaSources) {
 			c.render(g);
 		}
 	}
