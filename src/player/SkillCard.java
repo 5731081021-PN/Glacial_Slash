@@ -11,12 +11,10 @@ import java.io.Serializable;
 
 import exception.SkillCardUnusableException;
 import render.Animation;
-import render.Renderable;
 import res.Resource;
 import sound.SoundUtility;
-import ui.GameScreen;
 
-public abstract class SkillCard implements Renderable, Comparable<SkillCard>, Serializable {
+public abstract class SkillCard implements Comparable<SkillCard>, Serializable {
 
 	private static final long serialVersionUID = 2144325510872245603L;
 
@@ -25,7 +23,6 @@ public abstract class SkillCard implements Renderable, Comparable<SkillCard>, Se
 	protected int cost;
 	protected transient Image cardImage;
 	protected transient Image originalCardImage;
-	private int x, y = GameScreen.SCREEN_HEIGHT - (CARD_IMAGE_HEIGHT + 20);
 	protected transient Thread activateAnimationThread;
 	
 	public abstract void activate() throws SkillCardUnusableException;
@@ -101,16 +98,6 @@ public abstract class SkillCard implements Renderable, Comparable<SkillCard>, Se
 			return this.getClass().getSimpleName().compareToIgnoreCase(other.getClass().getSimpleName());
 		else
 			return costCompare;
-	}
-	
-	public void render(Graphics2D g, int index) {
-		x = 10 + CARD_IMAGE_WIDTH*index;
-		render(g);
-	}
-	
-	@Override
-	public void render(Graphics2D g) {
-		g.drawImage(cardImage, x, y, null);
 	}
 
 	@Override

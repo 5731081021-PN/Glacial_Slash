@@ -17,6 +17,7 @@ import map.TutorialMap;
 
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -29,6 +30,7 @@ import java.util.Collections;
 
 import render.Renderable;
 import res.Resource;
+import ui.GameScreen;
 
 public class PlayerStatus implements Renderable, Serializable {
 	
@@ -202,7 +204,9 @@ public class PlayerStatus implements Renderable, Serializable {
 		synchronized (hand) {
 			int n = hand.size();
 			for (int i = 0; i < n; i++) {
-				hand.get(i).render(g, i);
+				int x = 10 + SkillCard.CARD_IMAGE_WIDTH*i;
+				int y = GameScreen.SCREEN_HEIGHT - (SkillCard.CARD_IMAGE_HEIGHT + 20);
+				g.drawImage((BufferedImage)hand.get(i).cardImage, null, x, y);
 			}
 		}
 	
