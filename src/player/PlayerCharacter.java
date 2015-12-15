@@ -311,24 +311,13 @@ public class PlayerCharacter implements Renderable {
 			walkAnimationThread = null;
 		}
 	}
-	
-	protected void performConcentration() {
-		stopAllMotion();
-		freezePlayerControlCount = 30;
-		try {
-			walkAnimationThread.interrupt();
-		} catch (NullPointerException e) {
-		} finally {
-			walkAnimationThread = null;
-		}
-	}
 
 	protected void joinIceSummonAnimationThread() throws InterruptedException {
 		iceSummonAnimationThread.join();
 	}
 	
-	protected void collideCheckPoint() {
-		PlayerStatus.getPlayer().getCurrentMap().collideCheckPoints(boundaries);
+	protected void collideManaSources() {
+		PlayerStatus.getPlayer().getCurrentMap().collideManaSources(boundaries);
 	}
 	
 	protected boolean collideTransitionPoint() {

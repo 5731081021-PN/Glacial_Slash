@@ -40,7 +40,7 @@ public class TutorialMap extends GameMap {
 		g.drawImage(Resource.dButton, null, 10060 - gameScreen.getCameraX(), 400 - gameScreen.getCameraY());
 		g.drawImage(Resource.glacialDriftContent, null, 10010 - gameScreen.getCameraX(), 390 - gameScreen.getCameraY());
 		
-		if (checkPoints[0].isUsed()) {
+		if (manaSources[0].isUsed()) {
 			g.drawImage(Resource.yourHandContent, null, 20, 480);
 			g.drawImage(Resource.yourManaContent, null, 20, 120);
 		}

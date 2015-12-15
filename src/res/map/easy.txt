@@ -95,7 +95,7 @@ GlacialDrift
 IceSummon
 SkyUppercut
 Concentration 1 DoubleJump
-42
+40
 8
 5
 SkyUppercut

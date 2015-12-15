@@ -27,14 +27,14 @@ public class InputUtility {
 		return keyTriggered.contains(key);
 	}
 
-	public static void setKeyPressed(CommandKey key, boolean pressed) {
+	private static void setKeyPressed(CommandKey key, boolean pressed) {
 		if (pressed)
 			keyPressed.add(key);
 		else
 			keyPressed.remove(key);
 	}
 	
-	public static void setKeyTriggered(CommandKey key, boolean triggered) {
+	private static void setKeyTriggered(CommandKey key, boolean triggered) {
 		if (triggered)
 			keyTriggered.add(key);
 		else

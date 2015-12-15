@@ -24,7 +24,6 @@ public class Concentration extends SkillCard {
 
 			@Override
 			public void run() {
-				PlayerStatus.getPlayer().getPlayerCharacter().performConcentration();
 				try {
 					activateAnimationThread.join();
 				} catch (InterruptedException e) {

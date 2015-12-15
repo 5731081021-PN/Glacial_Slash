@@ -50,8 +50,8 @@ public class Resource {
 		tileTopLeft = readImage(loader.getResource("res/tile/tile_topleft.png"));
 		tileTopRight = readImage(loader.getResource("res/tile/tile_topright.png"));
 		tileIce = readImage(loader.getResource("res/tile/tile_ice.png"));
-		checkPoint = readImage(loader.getResource("res/tile/checkpoint.png"));
-		usedCheckPoint = readImage(loader.getResource("res/tile/usedcheckpoint.png"));
+		checkPoint = readImage(loader.getResource("res/tile/manasource.png"));
+		usedCheckPoint = readImage(loader.getResource("res/tile/usedmanasource.png"));
 
 		// Load mana display
 		for (int i = 0; i <= 20; i++)
@@ -134,7 +134,7 @@ public class Resource {
 		skyUppercutContent = readImage(loader.getResource("res/map/content/skyuppercut.png"));
 		theEndContent = readImage(loader.getResource("res/map/content/the_end.png"));
 		concentrationContent = readImage(loader.getResource("res/map/content/concentration.png"));
-		checkpointContent = readImage(loader.getResource("res/map/content/checkpoint.png"));
+		checkpointContent = readImage(loader.getResource("res/map/content/manasource.png"));
 		yourManaContent = readImage(loader.getResource("res/map/content/yourmana.png"));
 
 		// load map

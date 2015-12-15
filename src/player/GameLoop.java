@@ -36,6 +36,7 @@ public class GameLoop implements Runnable {
 		
 			if (InputUtility.getKeyTriggered(CommandKey.EXIT)) {
 				InputUtility.clearKeyPressed();
+				InputUtility.clearKeyTriggered();
 				if (JOptionPane.showConfirmDialog(null, "Are you sure you want to exit?", "Exit", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 					synchronized (this) {
 						this.notifyAll();
@@ -45,6 +46,7 @@ public class GameLoop implements Runnable {
 			
 			if (InputUtility.getKeyTriggered(CommandKey.RETURN)) {
 				InputUtility.clearKeyPressed();
+				InputUtility.clearKeyTriggered();
 				if (JOptionPane.showConfirmDialog(null, "Return to last checkpoint?", "Got stuck?", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 					PlayerStatus.getPlayer().returnToLastCheckPoint();
 				}
@@ -68,7 +70,13 @@ public class GameLoop implements Runnable {
 	
 		PlayerStatus.getPlayer().getPlayerCharacter().updateBoundaries();
 		PlayerStatus.getPlayer().getPlayerCharacter().fall();
-		
+
+		if (InputUtility.getKeyTriggered(CommandKey.DRAW)) {
+			try {
+				PlayerStatus.getPlayer().useCard(SkillCard.CONCENTRATION);
+			} catch (SkillCardUnusableException e) {}
+		}
+	
 		if (PlayerStatus.getPlayer().getPlayerCharacter().getFreezePlayerControlCount() <= 0) {
 
 			if (InputUtility.getKeyPressed(CommandKey.LEFT))
@@ -110,12 +118,6 @@ public class GameLoop implements Runnable {
 					} catch (SkillCardUnusableException e) {}
 			}
 
-			if (InputUtility.getKeyTriggered(CommandKey.DRAW)) {
-				try {
-					PlayerStatus.getPlayer().useCard(SkillCard.CONCENTRATION);
-				} catch (SkillCardUnusableException e) {}
-			}
-
 		}
 		else {
 			PlayerStatus.getPlayer().getPlayerCharacter().decrementFreezePlayerControlCount();
@@ -128,7 +130,7 @@ public class GameLoop implements Runnable {
 	}
 	
 	private void mapComponentUpdate() {
-		PlayerStatus.getPlayer().getPlayerCharacter().collideCheckPoint();
+		PlayerStatus.getPlayer().getPlayerCharacter().collideManaSources();
 		if (PlayerStatus.getPlayer().getPlayerCharacter().collideTransitionPoint()) {
 			PlayerStatus.getPlayer().goToNextMap();
 		}
