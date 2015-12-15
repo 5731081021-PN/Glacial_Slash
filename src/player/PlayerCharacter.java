@@ -12,7 +12,6 @@ import java.awt.image.BufferedImage;
 
 import input.InputUtility;
 import input.InputUtility.CommandKey;
-import render.PlayerAnimation;
 import render.Renderable;
 import res.Resource;
 import sound.SoundUtility;
@@ -61,19 +60,15 @@ public class PlayerCharacter implements Renderable {
 		this.facingDirection = facingDirection;
 	}
 	
-	public void setSprite(Image sprite) {
+	protected void setSprite(Image sprite) {
 		this.sprite = sprite;
 	}
-		
-	public Image getSprite() {
-		return sprite;
-	}
-
-	public int getX() {
+	
+	protected int getX() {
 		return x;
 	}
 
-	public int getY() {
+	protected int getY() {
 		return y;
 	}
 	
@@ -85,15 +80,15 @@ public class PlayerCharacter implements Renderable {
 		return y + (int)(boundaries.getHeight()/2);
 	}
 	
-	public int getFacingDirection() {
+	protected int getFacingDirection() {
 		return facingDirection;
 	}
 		
-	public Point getFrontTile() {
+	protected Point getFrontTile() {
 		return PlayerStatus.getPlayer().getCurrentMap().getFrontTile(boundaries, facingDirection);
 	}
 
-	public Point getSpriteFrontTile() {
+	protected Point getSpriteFrontTile() {
 		Rectangle spriteBoundary = new Rectangle(x, y, ((BufferedImage)sprite).getWidth(), ((BufferedImage)sprite).getHeight());
 		return PlayerStatus.getPlayer().getCurrentMap().getFrontTile(spriteBoundary, facingDirection);
 	}
@@ -162,19 +157,19 @@ public class PlayerCharacter implements Renderable {
 
 	}
 		
-	public int getFreezePlayerControlCount() {
+	protected int getFreezePlayerControlCount() {
 		return freezePlayerControlCount;
 	}	
 
-	public void decreseFreezePlayerControlCount() {
+	protected void decrementFreezePlayerControlCount() {
 		freezePlayerControlCount--;
 	}
 
-	public int getAirJumpCount() {
+	protected int getAirJumpCount() {
 		return airJumpCount;
 	}
 	
-	public boolean isOnGround() {
+	protected boolean isOnGround() {
 		return PlayerStatus.getPlayer().getCurrentMap().isOnGround(boundaries);
 	}
 	
@@ -328,8 +323,8 @@ public class PlayerCharacter implements Renderable {
 		}
 	}
 
-	protected Thread getIceSummonAnimationThread() {
-		return iceSummonAnimationThread;
+	protected void joinIceSummonAnimationThread() throws InterruptedException {
+		iceSummonAnimationThread.join();
 	}
 	
 	protected void collideCheckPoint() {

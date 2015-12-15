@@ -32,7 +32,7 @@ public class IceSummon extends SkillCard {
 			@Override
 			public void run() {
 				try {
-					PlayerStatus.getPlayer().getPlayerCharacter().getIceSummonAnimationThread().join();
+					PlayerStatus.getPlayer().getPlayerCharacter().joinIceSummonAnimationThread();
 				} catch (InterruptedException e) {
 					return;
 				}

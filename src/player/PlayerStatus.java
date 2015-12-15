@@ -115,31 +115,19 @@ public class PlayerStatus implements Renderable, Serializable {
 		playerCharacter.setPosition(currentPosition);
 	}
 	
-	public int getCurrentMana() {
-		return currentMana;
-	}
-	
-	public int getMaxMana() {
-		return maxMana;
-	}
-	
-	public void chargeMana() {
+	protected void chargeMana() {
 		maxMana++;
 		currentMana = maxMana;
 	}
 	
-	public List<SkillCard> getHand() {
-		return hand;
-	}
-	
-	public void addCard(SkillCard skillCard) {
+	protected void addCard(SkillCard skillCard) {
 		synchronized (hand) {
 			hand.add(skillCard);
 			Collections.sort(hand);
 		}
 	}
 	
-	public void useCard(SkillCard used) throws SkillCardUnusableException {
+	protected void useCard(SkillCard used) throws SkillCardUnusableException {
 		SkillCard using;
 		try {
 			using = hand.get(hand.indexOf(used));
@@ -168,11 +156,11 @@ public class PlayerStatus implements Renderable, Serializable {
 		}
 	}
 	
-	public GameMap getCurrentMap() {
+	protected GameMap getCurrentMap() {
 		return currentMap;
 	}
 	
-	public void drawNewHand(List<SkillCard> newHand) {
+	protected void drawNewHand(List<SkillCard> newHand) {
 		chargeMana();
 		try {
 			removeCardFromHandThread.interrupt();
@@ -182,7 +170,7 @@ public class PlayerStatus implements Renderable, Serializable {
 		}
 	}
 
-	public void returnToLastCheckPoint() {
+	protected void returnToLastCheckPoint() {
 		try {
 			loadPlayer(saveLocation);
 		} catch (UnableToLoadGameException e) {
@@ -190,7 +178,7 @@ public class PlayerStatus implements Renderable, Serializable {
 		}
 	}
 	
-	public void goToNextMap() {
+	protected void goToNextMap() {
 		currentMap = currentMap.getNextMap();
 		currentPosition = currentMap.getInitialPosition();
 		playerCharacter.setPosition(currentPosition);
