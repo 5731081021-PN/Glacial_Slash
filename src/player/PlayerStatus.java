@@ -42,7 +42,7 @@ public class PlayerStatus implements Renderable, Serializable {
 	private List<SkillCard> hand;
 	private GameMap currentMap;
 	private transient PlayerCharacter playerCharacter;
-	private Point currentPosition;
+	private Point lastCheckPointPosition;
 	private String saveLocation;
 	private transient Thread removeCardFromHandThread;
 	
@@ -76,7 +76,7 @@ public class PlayerStatus implements Renderable, Serializable {
 	}
 	
 	public synchronized void savePlayer() {
-		currentPosition.setLocation(playerCharacter.getX(), playerCharacter.getY() + Resource.standSprite[0].getHeight());
+		lastCheckPointPosition.setLocation(playerCharacter.getX(), playerCharacter.getY() + Resource.standSprite[0].getHeight());
 		originalFacingDirection = playerCharacter.getFacingDirection();
 		try (FileOutputStream fileOut = new FileOutputStream(saveLocation)){
 			try (ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
@@ -101,9 +101,9 @@ public class PlayerStatus implements Renderable, Serializable {
 		hand = new ArrayList<>();
 		originalFacingDirection = PlayerCharacter.RIGHT;
 		currentMap = new TutorialMap();
-		currentPosition = currentMap.getInitialPosition();
+		lastCheckPointPosition = currentMap.getInitialPosition();
 		playerCharacter = new PlayerCharacter();
-		playerCharacter.setPosition(currentPosition);
+		playerCharacter.setPosition(lastCheckPointPosition);
 		playerCharacter.setFacingDirection(originalFacingDirection);
 	}
 	
@@ -114,7 +114,7 @@ public class PlayerStatus implements Renderable, Serializable {
 	private void readObject(ObjectInputStream in) throws ClassNotFoundException, IOException {
 		in.defaultReadObject();
 		playerCharacter = new PlayerCharacter();
-		playerCharacter.setPosition(currentPosition);
+		playerCharacter.setPosition(lastCheckPointPosition);
 	}
 	
 	protected void chargeMana() {
@@ -182,8 +182,8 @@ public class PlayerStatus implements Renderable, Serializable {
 	
 	protected void goToNextMap() {
 		currentMap = currentMap.getNextMap();
-		currentPosition = currentMap.getInitialPosition();
-		playerCharacter.setPosition(currentPosition);
+		lastCheckPointPosition = currentMap.getInitialPosition();
+		playerCharacter.setPosition(lastCheckPointPosition);
 		savePlayer();
 	}
 

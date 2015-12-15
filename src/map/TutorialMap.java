@@ -22,7 +22,7 @@ public class TutorialMap extends GameMap {
 		g.drawImage(Resource.walkContent, null, 200 - gameScreen.getCameraX(), 980 - gameScreen.getCameraY());
 		g.drawImage(Resource.spaceButton, null, 1540 - gameScreen.getCameraX(), 1000 - gameScreen.getCameraY());
 		g.drawImage(Resource.jumpContent, null, 1570 - gameScreen.getCameraX(), 1080 - gameScreen.getCameraY());
-		g.drawImage(Resource.checkpointContent, null, 2880 - gameScreen.getCameraX(), 960 - gameScreen.getCameraY());
+		g.drawImage(Resource.manaSourceContent, null, 2870 - gameScreen.getCameraX(), 960 - gameScreen.getCameraY());
 		g.drawImage(Resource.downButton, null, 3640 - gameScreen.getCameraX(), 800 - gameScreen.getCameraY());
 		g.drawImage(Resource.plusButton, null, 3740 - gameScreen.getCameraX(), 840 - gameScreen.getCameraY());
 		g.drawImage(Resource.sButton, null, 3720 - gameScreen.getCameraX(), 800 - gameScreen.getCameraY());
