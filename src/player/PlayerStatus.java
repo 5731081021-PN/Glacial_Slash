@@ -156,11 +156,11 @@ public class PlayerStatus implements Renderable, Serializable {
 		}
 	}
 	
-	protected GameMap getCurrentMap() {
+	public GameMap getCurrentMap() {
 		return currentMap;
 	}
 	
-	protected void drawNewHand(List<SkillCard> newHand) {
+	public void drawNewHand(List<SkillCard> newHand) {
 		chargeMana();
 		try {
 			removeCardFromHandThread.interrupt();
