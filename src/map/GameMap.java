@@ -219,7 +219,7 @@ public class GameMap implements Renderable, Serializable {
 		for (CheckPoint c : checkPoints) {
 			if (c.getBoundaries().intersects(collisionBox)) {
 				if (!c.isUsed()) {
-					SoundEffectUtility.playSoundEffect(Resource.checkPointSound, Resource.checkPointAudioFormat);
+					SoundEffectUtility.playSoundEffect(Resource.checkPointSound);
 					PlayerStatus.getPlayer().drawNewHand(c.drawCard());
 					if (isManaSourceSaving)
 						PlayerStatus.getPlayer().savePlayer();

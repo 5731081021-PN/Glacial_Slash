@@ -53,7 +53,7 @@ public abstract class SkillCard implements Comparable<SkillCard>, Serializable {
 	}
 	
 	public void playActivateAnimation() {
-		SoundEffectUtility.playSoundEffect(Resource.cardSound, Resource.cardAudioFormat);
+		SoundEffectUtility.playSoundEffect(Resource.cardSound);
 		activateAnimationThread = new Thread(new Animation(Resource.cardAnimation, 2) {
 			
 			@Override

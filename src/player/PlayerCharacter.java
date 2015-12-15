@@ -134,10 +134,10 @@ public class PlayerCharacter implements Renderable {
 		ySpeed = JUMP_INITIAL_SPEED;
 		if (!this.isOnGround()) {
 			airJumpCount--;
-			SoundEffectUtility.playSoundEffect(Resource.doubleJumpSound, Resource.doubleJumpAudioFormat);
+			SoundEffectUtility.playSoundEffect(Resource.doubleJumpSound);
 		}
 		else {
-			SoundEffectUtility.playSoundEffect(Resource.jumpSound, Resource.jumpAudioFormat);
+			SoundEffectUtility.playSoundEffect(Resource.jumpSound);
 		}
 		Thread jumpAnimation = new Thread(new PlayerAnimation(Resource.jumpSprite, this, 6, false));
 		jumpAnimation.start();
@@ -249,7 +249,7 @@ public class PlayerCharacter implements Renderable {
 	// Special moves
 	
 	protected void performSkyUpperCut() {
-		SoundEffectUtility.playSoundEffect(Resource.skyUppercutSound, Resource.skyUppercutAudioFormat);
+		SoundEffectUtility.playSoundEffect(Resource.skyUppercutSound);
 		freezePlayerControlCount = 30;
 		yAcceleration = 0f;
 		new Thread(new Runnable() {
@@ -271,7 +271,7 @@ public class PlayerCharacter implements Renderable {
 	}
 	
 	protected void performGlacialDrift() {
-		SoundEffectUtility.playSoundEffect(Resource.dashSound, Resource.dashAudioFormat);
+		SoundEffectUtility.playSoundEffect(Resource.dashSound);
 		freezePlayerControlCount = 8;
 		yAcceleration = 0f;
 		new Thread(new Runnable() {
@@ -299,7 +299,7 @@ public class PlayerCharacter implements Renderable {
 	}
 	
 	protected void performIceSummon() {
-		SoundEffectUtility.playSoundEffect(Resource.iceSummonSound, Resource.iceSummonAudioFormat);
+		SoundEffectUtility.playSoundEffect(Resource.iceSummonSound);
 		stopAllMotion();
 		freezePlayerControlCount = 45;
 		iceSummonAnimationThread = new Thread(new PlayerAnimation(Resource.iceSummonSprite, this, 5, false));
