@@ -21,6 +21,7 @@ public class Main {
 
 				@Override
 				public void run() {
+					titleWindow.setLocationRelativeTo(null);
 					titleWindow.setVisible(true);
 					titleWindow.requestFocus();
 					Resource.titleBGM.loop(Clip.LOOP_CONTINUOUSLY);
@@ -43,6 +44,7 @@ public class Main {
 					GameWindow gameWindow = GameWindow.getWindow();
 					titleWindow.dispose();
 					Resource.titleBGM.stop();
+					gameWindow.setLocationRelativeTo(null);
 					gameWindow.setVisible(true);
 					gameWindow.requestFocus();
 					Resource.stageBGM.loop(Clip.LOOP_CONTINUOUSLY);
