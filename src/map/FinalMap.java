@@ -12,14 +12,14 @@ public class FinalMap extends GameMap {
 
 	private ManaSource finalManaSource;
 
-	public FinalMap() {
+	protected FinalMap() {
 		super(Resource.finalMap);
 		finalManaSource = manaSources[manaSources.length-1];
 	}
 		
 	public void renderTheEndContent(Graphics2D g) {
 		if (finalManaSource.isUsed())
-			g.drawImage(Resource.theEndContent, null, 0, 0);
+			g.drawImage(Resource.theEndContent, null, 320, 180);
 	}
 
 	@Override

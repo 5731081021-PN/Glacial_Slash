@@ -9,7 +9,7 @@ public class TutorialMap extends GameMap {
 
 	private static final long serialVersionUID = -1627634380172291416L;
 	
-	public TutorialMap() {
+	protected TutorialMap() {
 		super(Resource.tutorialMap);
 	}
 	

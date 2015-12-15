@@ -13,7 +13,6 @@ import exception.SkillCardUnusableException;
 import exception.UnableToLoadGameException;
 import map.FinalMap;
 import map.GameMap;
-import map.TutorialMap;
 
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -100,7 +99,7 @@ public class PlayerStatus implements Renderable, Serializable {
 		currentMana = 0;
 		hand = new ArrayList<>();
 		originalFacingDirection = PlayerCharacter.RIGHT;
-		currentMap = new TutorialMap();
+		currentMap = GameMap.getGameMap("tutorial");
 		lastCheckPointPosition = currentMap.getInitialPosition();
 		playerCharacter = new PlayerCharacter();
 		playerCharacter.setPosition(lastCheckPointPosition);
