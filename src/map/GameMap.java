@@ -7,7 +7,9 @@ package map;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,12 +33,34 @@ public class GameMap implements Renderable, Serializable {
 	protected Point initialPosition, transitionPoint;
 	protected String nextMapName;
 	
+	private static GameMap readGameMap(InputStream in) {
+		try (ObjectInputStream serialIn = new ObjectInputStream(in)) {
+			if (in == Resource.tutorialMap)
+				return (TutorialMap)serialIn.readObject();
+			else if (in == Resource.finalMap)
+				return (FinalMap)serialIn.readObject();
+			else
+				return (GameMap)serialIn.readObject();
+		} catch (IOException e) {
+			return null;
+		} catch (ClassNotFoundException e) {
+			return null;
+		}
+	}
+	
 	public static GameMap getGameMap(String mapName) {
 		if ("tutorial".equalsIgnoreCase(mapName)) return new TutorialMap();
 		else if ("easy".equalsIgnoreCase(mapName)) return new GameMap(Resource.easyMap);
 		else if ("normal".equalsIgnoreCase(mapName)) return new GameMap(Resource.normalMap);
 		else if ("hard".equalsIgnoreCase(mapName)) return new GameMap(Resource.hardMap);
 		else if ("final".equalsIgnoreCase(mapName)) return new FinalMap();
+		/*
+		if ("tutorial".equalsIgnoreCase(mapName)) return readGameMap(Resource.tutorialMap); //return new TutorialMap();
+		else if ("easy".equalsIgnoreCase(mapName)) return readGameMap(Resource.easyMap); //return new GameMap(Resource.easyMap);
+		else if ("normal".equalsIgnoreCase(mapName)) return readGameMap(Resource.normalMap); //return new GameMap(Resource.normalMap);
+		else if ("hard".equalsIgnoreCase(mapName)) return readGameMap(Resource.hardMap); //return new GameMap(Resource.hardMap);
+		else if ("final".equalsIgnoreCase(mapName)) return readGameMap(Resource.finalMap); //return new FinalMap();
+		*/
 		else return null;
 	}
 
