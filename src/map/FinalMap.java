@@ -11,12 +11,10 @@ public class FinalMap extends GameMap {
 	private static final long serialVersionUID = 5109262143404618750L;
 
 	private ManaSource finalManaSource;
-	private boolean isWin;
 
 	public FinalMap() {
 		super(Resource.finalMap);
 		finalManaSource = manaSources[manaSources.length-1];
-		isWin = false;
 	}
 	
 	@Override
@@ -25,17 +23,15 @@ public class FinalMap extends GameMap {
 	}
 		
 	public void renderTheEndContent(Graphics2D g) {
-		if (isWin)
+		if (finalManaSource.isUsed())
 			g.drawImage(Resource.theEndContent, null, 0, 0);
 	}
 
 	@Override
 	public void collideManaSources(Rectangle collisionBox) {
 		super.collideManaSources(collisionBox);
-		if (finalManaSource.getBoundaries().intersects(collisionBox)) {
-			isWin = true;
+		if (finalManaSource.getBoundaries().intersects(collisionBox))
 			PlayerStatus.getPlayer().savePlayer();
-		}
 	}
 
 }
