@@ -17,7 +17,7 @@ import player.PlayerStatus;
 import player.SkillCard;
 import render.Renderable;
 import res.Resource;
-import sound.SoundUtility;
+import sound.SoundEffectUtility;
 import ui.GameScreen;
 
 public class GameMap implements Renderable, Serializable {
@@ -219,7 +219,7 @@ public class GameMap implements Renderable, Serializable {
 		for (CheckPoint c : checkPoints) {
 			if (c.getBoundaries().intersects(collisionBox)) {
 				if (!c.isUsed()) {
-					SoundUtility.playSoundEffect(Resource.checkPointSound, Resource.checkPointAudioFormat);
+					SoundEffectUtility.playSoundEffect(Resource.checkPointSound, Resource.checkPointAudioFormat);
 					PlayerStatus.getPlayer().drawNewHand(c.drawCard());
 					if (isManaSourceSaving)
 						PlayerStatus.getPlayer().savePlayer();
