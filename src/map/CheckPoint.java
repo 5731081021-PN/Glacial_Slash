@@ -20,6 +20,8 @@ import ui.GameScreen;
 
 public class CheckPoint implements Renderable, Serializable {
 	
+	private static final long serialVersionUID = -8552063864490511614L;
+
 	private int x, y;
 	private List<SkillCard> skillCards;
 	private boolean used;

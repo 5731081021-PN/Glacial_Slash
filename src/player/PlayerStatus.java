@@ -17,6 +17,7 @@ import map.TutorialMap;
 
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -29,6 +30,7 @@ import java.util.Collections;
 
 import render.Renderable;
 import res.Resource;
+import ui.GameScreen;
 
 public class PlayerStatus implements Renderable, Serializable {
 	
@@ -115,31 +117,19 @@ public class PlayerStatus implements Renderable, Serializable {
 		playerCharacter.setPosition(currentPosition);
 	}
 	
-	public int getCurrentMana() {
-		return currentMana;
-	}
-	
-	public int getMaxMana() {
-		return maxMana;
-	}
-	
-	public void chargeMana() {
+	protected void chargeMana() {
 		maxMana++;
 		currentMana = maxMana;
 	}
 	
-	public List<SkillCard> getHand() {
-		return hand;
-	}
-	
-	public void addCard(SkillCard skillCard) {
+	protected void addCard(SkillCard skillCard) {
 		synchronized (hand) {
 			hand.add(skillCard);
 			Collections.sort(hand);
 		}
 	}
 	
-	public void useCard(SkillCard used) throws SkillCardUnusableException {
+	protected void useCard(SkillCard used) throws SkillCardUnusableException {
 		SkillCard using;
 		try {
 			using = hand.get(hand.indexOf(used));
@@ -151,7 +141,7 @@ public class PlayerStatus implements Renderable, Serializable {
 					@Override
 					public void run() {
 						try {
-							using.getActivateAnimationThread().join();
+							using.joinActivateAnimationThread();
 						} catch (InterruptedException e) {
 							return;
 						}
@@ -182,7 +172,7 @@ public class PlayerStatus implements Renderable, Serializable {
 		}
 	}
 
-	public void returnToLastCheckPoint() {
+	protected void returnToLastCheckPoint() {
 		try {
 			loadPlayer(saveLocation);
 		} catch (UnableToLoadGameException e) {
@@ -190,7 +180,7 @@ public class PlayerStatus implements Renderable, Serializable {
 		}
 	}
 	
-	public void goToNextMap() {
+	protected void goToNextMap() {
 		currentMap = currentMap.getNextMap();
 		currentPosition = currentMap.getInitialPosition();
 		playerCharacter.setPosition(currentPosition);
@@ -214,7 +204,9 @@ public class PlayerStatus implements Renderable, Serializable {
 		synchronized (hand) {
 			int n = hand.size();
 			for (int i = 0; i < n; i++) {
-				hand.get(i).render(g, i);
+				int x = 10 + SkillCard.CARD_IMAGE_WIDTH*i;
+				int y = GameScreen.SCREEN_HEIGHT - (SkillCard.CARD_IMAGE_HEIGHT + 20);
+				g.drawImage((BufferedImage)hand.get(i).cardImage, null, x, y);
 			}
 		}
 	

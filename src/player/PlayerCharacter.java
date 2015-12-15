@@ -12,7 +12,6 @@ import java.awt.image.BufferedImage;
 
 import input.InputUtility;
 import input.InputUtility.CommandKey;
-import render.PlayerAnimation;
 import render.Renderable;
 import res.Resource;
 import sound.SoundUtility;
@@ -61,19 +60,15 @@ public class PlayerCharacter implements Renderable {
 		this.facingDirection = facingDirection;
 	}
 	
-	public void setSprite(Image sprite) {
+	protected void setSprite(Image sprite) {
 		this.sprite = sprite;
 	}
-		
-	public Image getSprite() {
-		return sprite;
-	}
-
-	public int getX() {
+	
+	protected int getX() {
 		return x;
 	}
 
-	public int getY() {
+	protected int getY() {
 		return y;
 	}
 	
@@ -85,15 +80,15 @@ public class PlayerCharacter implements Renderable {
 		return y + (int)(boundaries.getHeight()/2);
 	}
 	
-	public int getFacingDirection() {
+	protected int getFacingDirection() {
 		return facingDirection;
 	}
 		
-	public Point getFrontTile() {
+	protected Point getFrontTile() {
 		return PlayerStatus.getPlayer().getCurrentMap().getFrontTile(boundaries, facingDirection);
 	}
 
-	public Point getSpriteFrontTile() {
+	protected Point getSpriteFrontTile() {
 		Rectangle spriteBoundary = new Rectangle(x, y, ((BufferedImage)sprite).getWidth(), ((BufferedImage)sprite).getHeight());
 		return PlayerStatus.getPlayer().getCurrentMap().getFrontTile(spriteBoundary, facingDirection);
 	}
@@ -112,7 +107,7 @@ public class PlayerCharacter implements Renderable {
 		xTargetSpeed = direction*WALK_SPEED;
 		if (this.isOnGround() && direction != IDLE) {
 			if (walkAnimationThread == null) {
-				walkAnimationThread = new Thread(new PlayerAnimation(Resource.walkSprite, this, true));
+				walkAnimationThread = new Thread(new PlayerAnimation(Resource.walkSprite, this, 10, true));
 				walkAnimationThread.start();
 				new Thread(new Runnable() {
 					@Override
@@ -144,7 +139,7 @@ public class PlayerCharacter implements Renderable {
 		else {
 			SoundUtility.playSoundEffect(Resource.jumpSound, Resource.jumpAudioFormat);
 		}
-		Thread jumpAnimation = new Thread(new PlayerAnimation(Resource.jumpSprite, this, false));
+		Thread jumpAnimation = new Thread(new PlayerAnimation(Resource.jumpSprite, this, 6, false));
 		jumpAnimation.start();
 
 		new Thread(new Runnable() {
@@ -162,19 +157,19 @@ public class PlayerCharacter implements Renderable {
 
 	}
 		
-	public int getFreezePlayerControlCount() {
+	protected int getFreezePlayerControlCount() {
 		return freezePlayerControlCount;
 	}	
 
-	public void decreseFreezePlayerControlCount() {
+	protected void decrementFreezePlayerControlCount() {
 		freezePlayerControlCount--;
 	}
 
-	public int getAirJumpCount() {
+	protected int getAirJumpCount() {
 		return airJumpCount;
 	}
 	
-	public boolean isOnGround() {
+	protected boolean isOnGround() {
 		return PlayerStatus.getPlayer().getCurrentMap().isOnGround(boundaries);
 	}
 	
@@ -247,14 +242,11 @@ public class PlayerCharacter implements Renderable {
 		}
 
 		if (!this.isOnGround() && Float.compare(ySpeed, 0f) >= 0) {
-			this.setSprite(Resource.jumpSprite[(facingDirection+1)/2][11]);
+			this.setSprite(Resource.jumpSprite[(facingDirection+1)/2][3]);
 		}
 	}
 	
 	// Special moves
-	protected void slash() {
-		// TODO play slash animation
-	}
 	
 	protected void performSkyUpperCut() {
 		SoundUtility.playSoundEffect(Resource.skyUppercutSound, Resource.skyUppercutAudioFormat);
@@ -275,7 +267,7 @@ public class PlayerCharacter implements Renderable {
 				yAcceleration = GRAVITY;
 			}
 		}).start();
-		new Thread(new PlayerAnimation(Resource.cutSprite, this, false)).start();
+		new Thread(new PlayerAnimation(Resource.cutSprite, this, 4, false)).start();
 	}
 	
 	protected void performGlacialDrift() {
@@ -297,7 +289,7 @@ public class PlayerCharacter implements Renderable {
 				yAcceleration = GRAVITY;
 			}
 		}).start();
-		new Thread(new PlayerAnimation(Resource.dashSprite, this, false)).start();
+		new Thread(new PlayerAnimation(Resource.dashSprite, this, 16, false)).start();
 		try {
 			walkAnimationThread.interrupt();
 		} catch (NullPointerException e) {
@@ -309,8 +301,8 @@ public class PlayerCharacter implements Renderable {
 	protected void performIceSummon() {
 		SoundUtility.playSoundEffect(Resource.iceSummonSound, Resource.iceSummonAudioFormat);
 		stopAllMotion();
-		freezePlayerControlCount = 48;
-		iceSummonAnimationThread = new Thread(new PlayerAnimation(Resource.iceSummonSprite, this, false));
+		freezePlayerControlCount = 45;
+		iceSummonAnimationThread = new Thread(new PlayerAnimation(Resource.iceSummonSprite, this, 5, false));
 		iceSummonAnimationThread.start();
 		try {
 			walkAnimationThread.interrupt();
@@ -331,8 +323,8 @@ public class PlayerCharacter implements Renderable {
 		}
 	}
 
-	protected Thread getIceSummonAnimationThread() {
-		return iceSummonAnimationThread;
+	protected void joinIceSummonAnimationThread() throws InterruptedException {
+		iceSummonAnimationThread.join();
 	}
 	
 	protected void collideCheckPoint() {

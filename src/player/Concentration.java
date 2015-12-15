@@ -11,7 +11,6 @@ public class Concentration extends SkillCard {
 	private static final long serialVersionUID = 3351882579142512755L;
 
 	private SkillCard[] drawnCards;
-	private transient Thread concentrationThread;
 
 	public Concentration(SkillCard[] drawnCards) {
 		super(2, Resource.concentration);
@@ -21,7 +20,7 @@ public class Concentration extends SkillCard {
 	@Override
 	public void activate() throws SkillCardUnusableException {
 		playActivateAnimation();
-		concentrationThread = new Thread(new Runnable() {
+		new Thread(new Runnable() {
 
 			@Override
 			public void run() {
@@ -35,12 +34,7 @@ public class Concentration extends SkillCard {
 					PlayerStatus.getPlayer().addCard(s);
 				}
 			}
-		});
-		concentrationThread.start();
-	}
-	
-	protected Thread getConcentrationThread() {
-		return concentrationThread;
+		}).start();
 	}
 	
 	private void readObject(ObjectInputStream in) throws ClassNotFoundException, IOException {
