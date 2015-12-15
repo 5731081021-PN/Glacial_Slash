@@ -39,7 +39,7 @@ public class ManaSource implements Renderable, Serializable {
 		boundaries = new Rectangle(x, y, ((BufferedImage)sprite).getWidth(), ((BufferedImage)sprite).getHeight());
 	}
 	
-	public List<SkillCard> drawCard() {
+	protected List<SkillCard> drawCard() {
 		if (!used) {
 			used = true;
 			sprite = Resource.usedCheckPoint;
@@ -47,11 +47,11 @@ public class ManaSource implements Renderable, Serializable {
 		return skillCards;
 	}
 	
-	public boolean isUsed() {
+	protected boolean isUsed() {
 		return used;
 	}
 	
-	public Rectangle getBoundaries() {
+	protected Rectangle getBoundaries() {
 		return boundaries;
 	}
 	

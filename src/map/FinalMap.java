@@ -16,11 +16,6 @@ public class FinalMap extends GameMap {
 		super(Resource.finalMap);
 		finalManaSource = manaSources[manaSources.length-1];
 	}
-	
-	@Override
-	public void render(Graphics2D g) {
-		super.render(g);
-	}
 		
 	public void renderTheEndContent(Graphics2D g) {
 		if (finalManaSource.isUsed())
