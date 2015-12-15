@@ -248,7 +248,7 @@ public class PlayerCharacter implements Renderable {
 	
 	// Special moves
 	
-	protected void performSkyUpperCut() {
+	protected void performSkyUppercut() {
 		SoundEffectUtility.playSoundEffect(Resource.skyUppercutSound);
 		freezePlayerControlCount = 30;
 		yAcceleration = 0f;
@@ -316,11 +316,11 @@ public class PlayerCharacter implements Renderable {
 		iceSummonAnimationThread.join();
 	}
 	
-	protected void collideManaSources() {
+	protected void collidesWithManaSource() {
 		PlayerStatus.getPlayer().getCurrentMap().collideManaSources(boundaries);
 	}
 	
-	protected boolean collideTransitionPoint() {
+	protected boolean collidesWithTransitionPoint() {
 		return PlayerStatus.getPlayer().getCurrentMap().collideWithTransitionPoint(boundaries);
 	}
 

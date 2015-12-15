@@ -18,7 +18,7 @@ public class SkyUppercut extends SkillCard {
 	public void activate() throws SkillCardUnusableException {
 		if (!PlayerStatus.getPlayer().getPlayerCharacter().isOnGround()) throw new SkillCardUnusableException(SkillCardUnusableException.UnusableType.ACTIVATE_CONDITION_NOT_MET);
 		playActivateAnimation();
-		PlayerStatus.getPlayer().getPlayerCharacter().performSkyUpperCut();
+		PlayerStatus.getPlayer().getPlayerCharacter().performSkyUppercut();
 	}
 	
 	private void readObject(ObjectInputStream in) throws ClassNotFoundException, IOException {

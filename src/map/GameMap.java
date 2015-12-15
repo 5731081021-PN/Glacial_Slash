@@ -29,7 +29,6 @@ public class GameMap implements Renderable, Serializable {
 	protected Tile[][] tileMap;
 	protected ManaSource[] manaSources;
 	protected Point initialPosition, transitionPoint;
-	protected boolean isManaSourceSaving;
 	protected String nextMapName;
 	
 	public static GameMap getGameMap(String mapName) {
@@ -68,13 +67,7 @@ public class GameMap implements Renderable, Serializable {
 					tileMap[tileX][tileY] = Tile.AIR;
 			}
 		}
-		
-		String saving = fileScanner.nextLine();
-		if ("save".equalsIgnoreCase(saving))
-			isManaSourceSaving = true;
-		else
-			isManaSourceSaving = false;
-		
+			
 		int checkpointCount = Integer.parseInt(fileScanner.nextLine());
 		manaSources = new ManaSource[checkpointCount];
 		for (int i = 0; i < checkpointCount; i++) {
@@ -209,7 +202,7 @@ public class GameMap implements Renderable, Serializable {
 				if (!s.isUsed()) {
 					SoundEffectUtility.playSoundEffect(Resource.checkPointSound);
 					PlayerStatus.getPlayer().drawNewHand(s.drawCard());
-					if (isManaSourceSaving)
+					if (!(this instanceof FinalMap))
 						PlayerStatus.getPlayer().savePlayer();
 				}
 			}
