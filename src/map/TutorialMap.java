@@ -8,7 +8,7 @@ import ui.GameScreen;
 public class TutorialMap extends GameMap {
 
 	private static final long serialVersionUID = -1627634380172291416L;
-
+	
 	public TutorialMap() {
 		super(Resource.tutorialMap);
 	}
@@ -17,9 +17,9 @@ public class TutorialMap extends GameMap {
 	public void render(Graphics2D g) {
 		super.render(g);
 		GameScreen gameScreen = GameScreen.getScreen();
-		g.drawImage(Resource.leftButton, null, 40 - gameScreen.getCameraX(), 900 - gameScreen.getCameraY());
-		g.drawImage(Resource.rightButton, null, 120 - gameScreen.getCameraX(), 900 - gameScreen.getCameraY());
-		g.drawImage(Resource.walkContent, null, 100 - gameScreen.getCameraX(), 880 - gameScreen.getCameraY());
+		g.drawImage(Resource.leftButton, null, 140 - gameScreen.getCameraX(), 900 - gameScreen.getCameraY());
+		g.drawImage(Resource.rightButton, null, 220 - gameScreen.getCameraX(), 900 - gameScreen.getCameraY());
+		g.drawImage(Resource.walkContent, null, 200 - gameScreen.getCameraX(), 980 - gameScreen.getCameraY());
 		g.drawImage(Resource.spaceButton, null, 1540 - gameScreen.getCameraX(), 1000 - gameScreen.getCameraY());
 		g.drawImage(Resource.jumpContent, null, 1570 - gameScreen.getCameraX(), 1080 - gameScreen.getCameraY());
 		g.drawImage(Resource.checkpointContent, null, 2880 - gameScreen.getCameraX(), 960 - gameScreen.getCameraY());
@@ -40,8 +40,10 @@ public class TutorialMap extends GameMap {
 		g.drawImage(Resource.dButton, null, 10060 - gameScreen.getCameraX(), 400 - gameScreen.getCameraY());
 		g.drawImage(Resource.glacialDriftContent, null, 10010 - gameScreen.getCameraX(), 390 - gameScreen.getCameraY());
 		
-		g.drawImage(Resource.yourHandContent, null, 20, 480);
-		g.drawImage(Resource.yourManaContent, null, 200, 60);
+		if (checkPoints[0].isUsed()) {
+			g.drawImage(Resource.yourHandContent, null, 20, 480);
+			g.drawImage(Resource.yourManaContent, null, 20, 120);
+		}
 	}
-
+	
 }
