@@ -31,7 +31,7 @@ public class Resource {
 	sButton, spaceButton, eButton, plusButton;
 	public static BufferedImage walkContent, jumpContent, yourHandContent, doublejumpContent, glacialDriftContent,
 	iceSummonContent, skyUppercutContent, exitContent, returnContent, theEndContent, concentrationContent,
-	checkpointContent, yourManaContent;
+	manaSourceContent, yourManaContent;
 
 	public static InputStream tutorialMap, easyMap, normalMap, hardMap, finalMap;
 	public static Clip titleBGM, stageBGM;
@@ -134,7 +134,7 @@ public class Resource {
 		skyUppercutContent = readImage(loader.getResource("res/map/content/skyuppercut.png"));
 		theEndContent = readImage(loader.getResource("res/map/content/the_end.png"));
 		concentrationContent = readImage(loader.getResource("res/map/content/concentration.png"));
-		checkpointContent = readImage(loader.getResource("res/map/content/manasource.png"));
+		manaSourceContent = readImage(loader.getResource("res/map/content/manasource.png"));
 		yourManaContent = readImage(loader.getResource("res/map/content/yourmana.png"));
 
 		// load map
