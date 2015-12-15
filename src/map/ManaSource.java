@@ -19,7 +19,7 @@ import render.Renderable;
 import res.Resource;
 import ui.GameScreen;
 
-public class CheckPoint implements Renderable, Serializable {
+public class ManaSource implements Renderable, Serializable {
 	
 	private static final long serialVersionUID = -8552063864490511614L;
 
@@ -29,7 +29,7 @@ public class CheckPoint implements Renderable, Serializable {
 	private Rectangle boundaries;
 	private transient Image sprite;
 	
-	public CheckPoint(int x, int y, List<SkillCard> skillCards) {
+	public ManaSource(int x, int y, List<SkillCard> skillCards) {
 		this.x = x;
 		this.y = y;
 		this.skillCards = skillCards;

@@ -130,7 +130,7 @@ public class GameLoop implements Runnable {
 	}
 	
 	private void mapComponentUpdate() {
-		PlayerStatus.getPlayer().getPlayerCharacter().collideCheckPoint();
+		PlayerStatus.getPlayer().getPlayerCharacter().collideManaSources();
 		if (PlayerStatus.getPlayer().getPlayerCharacter().collideTransitionPoint()) {
 			PlayerStatus.getPlayer().goToNextMap();
 		}

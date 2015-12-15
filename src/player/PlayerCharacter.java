@@ -316,8 +316,8 @@ public class PlayerCharacter implements Renderable {
 		iceSummonAnimationThread.join();
 	}
 	
-	protected void collideCheckPoint() {
-		PlayerStatus.getPlayer().getCurrentMap().collideCheckPoints(boundaries);
+	protected void collideManaSources() {
+		PlayerStatus.getPlayer().getCurrentMap().collideManaSources(boundaries);
 	}
 	
 	protected boolean collideTransitionPoint() {

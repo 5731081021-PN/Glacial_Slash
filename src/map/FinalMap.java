@@ -10,12 +10,12 @@ public class FinalMap extends GameMap {
 	
 	private static final long serialVersionUID = 5109262143404618750L;
 
-	private CheckPoint finalCheckPoint;
+	private ManaSource finalManaSource;
 	private boolean isWin;
 
 	public FinalMap() {
 		super(Resource.finalMap);
-		finalCheckPoint = checkPoints[checkPoints.length-1];
+		finalManaSource = manaSources[manaSources.length-1];
 		isWin = false;
 	}
 	
@@ -30,9 +30,9 @@ public class FinalMap extends GameMap {
 	}
 
 	@Override
-	public void collideCheckPoints(Rectangle collisionBox) {
-		super.collideCheckPoints(collisionBox);
-		if (finalCheckPoint.getBoundaries().intersects(collisionBox)) {
+	public void collideManaSources(Rectangle collisionBox) {
+		super.collideManaSources(collisionBox);
+		if (finalManaSource.getBoundaries().intersects(collisionBox)) {
 			isWin = true;
 			PlayerStatus.getPlayer().savePlayer();
 		}

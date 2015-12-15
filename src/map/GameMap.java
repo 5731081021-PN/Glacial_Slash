@@ -27,7 +27,7 @@ public class GameMap implements Renderable, Serializable {
 	public static final int TILE_WIDTH = 70, TILE_HEIGHT = 70;
 	protected int width, height;
 	protected Tile[][] tileMap;
-	protected CheckPoint[] checkPoints;
+	protected ManaSource[] manaSources;
 	protected Point initialPosition, transitionPoint;
 	protected boolean isManaSourceSaving;
 	protected String nextMapName;
@@ -76,7 +76,7 @@ public class GameMap implements Renderable, Serializable {
 			isManaSourceSaving = false;
 		
 		int checkpointCount = Integer.parseInt(fileScanner.nextLine());
-		checkPoints = new CheckPoint[checkpointCount];
+		manaSources = new ManaSource[checkpointCount];
 		for (int i = 0; i < checkpointCount; i++) {
 			int tileX = Integer.parseInt(fileScanner.nextLine());
 			int tileY = Integer.parseInt(fileScanner.nextLine());
@@ -89,7 +89,7 @@ public class GameMap implements Renderable, Serializable {
 				hand.add(SkillCard.createSkillCard(fileScanner.nextLine().trim()));
 			}
 			
-			checkPoints[i] = new CheckPoint(screenX, screenY, hand);
+			manaSources[i] = new ManaSource(screenX, screenY, hand);
 		}
 		
 		nextMapName = fileScanner.nextLine().trim();
@@ -215,12 +215,12 @@ public class GameMap implements Renderable, Serializable {
 		return maxMovableHeight;
 	}
 	
-	public void collideCheckPoints(Rectangle collisionBox) {
-		for (CheckPoint c : checkPoints) {
-			if (c.getBoundaries().intersects(collisionBox)) {
-				if (!c.isUsed()) {
+	public void collideManaSources(Rectangle collisionBox) {
+		for (ManaSource s : manaSources) {
+			if (s.getBoundaries().intersects(collisionBox)) {
+				if (!s.isUsed()) {
 					SoundEffectUtility.playSoundEffect(Resource.checkPointSound);
-					PlayerStatus.getPlayer().drawNewHand(c.drawCard());
+					PlayerStatus.getPlayer().drawNewHand(s.drawCard());
 					if (isManaSourceSaving)
 						PlayerStatus.getPlayer().savePlayer();
 				}
@@ -239,8 +239,8 @@ public class GameMap implements Renderable, Serializable {
 		
 		g.drawImage(Resource.background, 0, 0, null);
 			
-		for (CheckPoint c : checkPoints) {
-			c.render(g);
+		for (ManaSource s : manaSources) {
+			s.render(g);
 		}
 	
 		try {
