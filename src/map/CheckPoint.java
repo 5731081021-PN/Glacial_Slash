@@ -11,6 +11,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.List;
 
 import player.SkillCard;
@@ -32,6 +33,7 @@ public class CheckPoint implements Renderable, Serializable {
 		this.x = x;
 		this.y = y;
 		this.skillCards = skillCards;
+		Collections.sort(skillCards);
 		used = false;
 		sprite = Resource.checkPoint;
 		boundaries = new Rectangle(x, y, ((BufferedImage)sprite).getWidth(), ((BufferedImage)sprite).getHeight());

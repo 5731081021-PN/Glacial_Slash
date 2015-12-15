@@ -311,17 +311,6 @@ public class PlayerCharacter implements Renderable {
 			walkAnimationThread = null;
 		}
 	}
-	
-	protected void performConcentration() {
-		stopAllMotion();
-		freezePlayerControlCount = 30;
-		try {
-			walkAnimationThread.interrupt();
-		} catch (NullPointerException e) {
-		} finally {
-			walkAnimationThread = null;
-		}
-	}
 
 	protected void joinIceSummonAnimationThread() throws InterruptedException {
 		iceSummonAnimationThread.join();

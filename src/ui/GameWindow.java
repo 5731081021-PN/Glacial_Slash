@@ -34,6 +34,7 @@ public class GameWindow extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if (!window.isFocused()) {
 					InputUtility.clearKeyPressed();
+					InputUtility.clearKeyTriggered();
 				}
 			}
 		}).start();

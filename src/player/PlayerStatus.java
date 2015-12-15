@@ -190,9 +190,11 @@ public class PlayerStatus implements Renderable, Serializable {
 	@Override
 	public void render(Graphics2D g) {
 		// render mana
-		g.drawImage(Resource.mana[currentMana], null, 20, 20);
-		g.drawImage(Resource.slash, null, 80, 20);
-		g.drawImage(Resource.maxMana[maxMana], null, 130, 50);
+		if (maxMana != 0) { // Since division by zero is undefined
+			g.drawImage(Resource.mana[currentMana], null, 20, 20);
+			g.drawImage(Resource.slash, null, 80, 20);
+			g.drawImage(Resource.maxMana[maxMana], null, 130, 50);
+		}
 		
 		// render informations
 		g.drawImage(Resource.escButton, null, 1160, -20);

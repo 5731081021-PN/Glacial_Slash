@@ -3,6 +3,7 @@ package map;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
+import player.PlayerStatus;
 import res.Resource;
 
 public class FinalMap extends GameMap {
@@ -31,8 +32,10 @@ public class FinalMap extends GameMap {
 	@Override
 	public void collideCheckPoints(Rectangle collisionBox) {
 		super.collideCheckPoints(collisionBox);
-		if (finalCheckPoint.getBoundaries().intersects(collisionBox))
+		if (finalCheckPoint.getBoundaries().intersects(collisionBox)) {
 			isWin = true;
+			PlayerStatus.getPlayer().savePlayer();
+		}
 	}
 
 }
