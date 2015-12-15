@@ -3,6 +3,8 @@ package res;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
+
 import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
@@ -28,10 +30,10 @@ public class Resource {
 	public static BufferedImage background;
 	public static BufferedImage title, startButton, loadButton, exitButton;
 	public static BufferedImage upButton, leftButton, downButton, rightButton, dButton, escButton, fButton, rButton,
-			sButton, spaceButton, eButton, plusButton;
+	sButton, spaceButton, eButton, plusButton;
 	public static BufferedImage walkContent, jumpContent, yourHandContent, doublejumpContent, glacialDriftContent,
-			iceSummonContent, skyUppercutContent, exitContent, returnContent, theEndContent, concentrationContent,
-			checkpointContent, yourManaContent;
+	iceSummonContent, skyUppercutContent, exitContent, returnContent, theEndContent, concentrationContent,
+	checkpointContent, yourManaContent;
 
 	public static InputStream tutorialMap, easyMap, normalMap, hardMap, finalMap;
 	public static Clip titleBGM, stageBGM;
@@ -43,388 +45,110 @@ public class Resource {
 
 	static {
 
-		// Load tileset ..
-		try {
-			tileGround = ImageIO.read(loader.getResource("res/tile/tile_ground.png"));
-		} catch (IOException e) {
-			tileGround = null;
-		}
-		try {
-			tileLeft = ImageIO.read(loader.getResource("res/tile/tile_left.png"));
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			tileLeft = null;
-		}
-		try {
-			tileRight = ImageIO.read(loader.getResource("res/tile/tile_right.png"));
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			tileRight = null;
-		}
-		try {
-			tileMid = ImageIO.read(loader.getResource("res/tile/tile_mid.png"));
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			tileMid = null;
-		}
-		try {
-			tileTop = ImageIO.read(loader.getResource("res/tile/tile_top.png"));
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			tileTop = null;
-		}
-		try {
-			tileIce = ImageIO.read(loader.getResource("res/tile/tile_ice.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			tileIce = null;
+		// Load tileset
+		tileGround = readImage(loader.getResource("res/tile/tile_ground.png"));
+		tileLeft = readImage(loader.getResource("res/tile/tile_left.png"));
+		tileRight = readImage(loader.getResource("res/tile/tile_right.png"));
+		tileMid = readImage(loader.getResource("res/tile/tile_mid.png"));
+		tileTop = readImage(loader.getResource("res/tile/tile_top.png"));
+		tileTopLeft = readImage(loader.getResource("res/tile/tile_topleft.png"));
+		tileTopRight = readImage(loader.getResource("res/tile/tile_topright.png"));
+		tileIce = readImage(loader.getResource("res/tile/tile_ice.png"));
+		checkPoint = readImage(loader.getResource("res/tile/checkpoint.png"));
+		usedCheckPoint = readImage(loader.getResource("res/tile/usedcheckpoint.png"));
+
+		// Load mana display
+		for (int i = 0; i <= 20; i++)
+			mana[i] = readImage(loader.getResource("res/mana/" + i + ".png"));
+		for (int i = 0; i <= 20; i++)
+			maxMana[i] = readImage(loader.getResource("res/mana/m" + i + ".png"));
+		slash = readImage(loader.getResource("res/mana/slash.png"));
+
+		// Load cards
+		doubleJump = readImage(loader.getResource("res/card/DoubleJump.png"));
+		glacialDrift = readImage(loader.getResource("res/card/GlacialDrift.png"));
+		iceSummon = readImage(loader.getResource("res/card/IceSummon.png"));
+		skyUppercut = readImage(loader.getResource("res/card/SkyUppercut.png"));
+		concentration = readImage(loader.getResource("res/card/Concentration.png"));
+
+		// Load player sprite
+		standSprite[0] = readImage(loader.getResource("res/sprite/stand/stl0.png"));
+		standSprite[1] = readImage(loader.getResource("res/sprite/stand/str0.png"));
+
+		for (int i = 0; i < 4; i++) {
+			jumpSprite[0][i] = readImage(loader.getResource("res/sprite/jump/j0_" + i + ".png"));
+			jumpSprite[1][i] = readImage(loader.getResource("res/sprite/jump/j1_" + i + ".png"));
 		}
 
-		try {
-			checkPoint = ImageIO.read(loader.getResource("res/tile/checkpoint.png"));
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			checkPoint = null;
-		}
-		try {
-			usedCheckPoint = ImageIO.read(loader.getResource("res/tile/usedcheckpoint.png"));
-		} catch (IOException e2) {
-			// TODO Auto-generated catch block
-			usedCheckPoint = null;
-		}
-		try {
-			tileTopLeft = ImageIO.read(loader.getResource("res/tile/tile_topleft.png"));
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			tileTopLeft = null;
-		}
-		try {
-			tileTopRight = ImageIO.read(loader.getResource("res/tile/tile_topright.png"));
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			tileTopRight = null;
+		for (int i = 0; i < 6; i++) {
+			walkSprite[0][i] = readImage(loader.getResource("res/sprite/walk/w0_" + i + ".png"));
+			walkSprite[1][i] = readImage(loader.getResource("res/sprite/walk/w1_" + i + ".png"));
 		}
 
-		// Load mana,maxMana and slash
-		for (int i = 0; i <= 20; i++) {
-			try {
-				mana[i] = ImageIO.read(loader.getResource("res/mana/" + i + ".png"));
-			} catch (IOException e) {
-				mana[i] = null;
-			}
-		}
-		for (int i = 0; i <= 20; i++) {
-			try {
-				maxMana[i] = ImageIO.read(loader.getResource("res/mana/m" + i + ".png"));
-			} catch (IOException e) {
-				maxMana[i] = null;
-			}
-		}
-		try {
-			slash = ImageIO.read(loader.getResource("res/mana/slash.png"));
-		} catch (IOException e) {
-			slash = null;
+		for (int i = 0; i < 9; i++) {
+			cutSprite[0][i] = readImage(loader.getResource("res/sprite/cut/c0_" + i + ".png"));
+			cutSprite[1][i] = readImage(loader.getResource("res/sprite/cut/c1_" + i + ".png"));
 		}
 
-		try {
-			doubleJump = ImageIO.read(loader.getResource("res/card/DoubleJump.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			doubleJump = null;
-		}
-		try {
-			glacialDrift = ImageIO.read(loader.getResource("res/card/GlacialDrift.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			glacialDrift = null;
-		}
-		try {
-			iceSummon = ImageIO.read(loader.getResource("res/card/IceSummon.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			iceSummon = null;
-		}
-		try {
-			skyUppercut = ImageIO.read(loader.getResource("res/card/SkyUppercut.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			skyUppercut = null;
+		for (int j = 0; j < 1; j++) {
+			dashSprite[0][j] = readImage(loader.getResource("res/sprite/dash/d0_" + j + ".png"));
+			dashSprite[1][j] = readImage(loader.getResource("res/sprite/dash/d1_" + j + ".png"));
 		}
 
-		try {
-			concentration = ImageIO.read(loader.getResource("res/card/Concentration.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			concentration = null;
-		}
-		// Load sprite
-		try {
-			standSprite[0] = ImageIO.read(loader.getResource("res/sprite/stand/stl0.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			standSprite[0] = null;
-		}
-		try {
-			standSprite[1] = ImageIO.read(loader.getResource("res/sprite/stand/str0.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			standSprite[1] = null;
-		}
-		for (int i = 0; i <= 1; i++) {
-			for (int j = 0; j <= 3; j++) {
-				try {
-					jumpSprite[i][j] = ImageIO.read(loader.getResource("res/sprite/jump/j" + i + "_" + j + ".png"));
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					jumpSprite[i][j] = null;
-				}
-			}
+		for (int i = 0; i < 8; i++) {
+			iceSummonSprite[0][i] = readImage(loader.getResource("res/sprite/icesummon/i0_" + i + ".png"));
+			iceSummonSprite[1][i] = readImage(loader.getResource("res/sprite/icesummon/i1_" + i + ".png"));
 		}
 
-		for (int i = 0; i <= 1; i++) {
-			for (int j = 0; j <= 5; j++) {
-				try {
-					walkSprite[i][j] = ImageIO.read(loader.getResource("res/sprite/walk/w" + i + "_" + j + ".png"));
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					walkSprite[i][j] = null;
-				}
-			}
-		}
-		for (int i = 0; i <= 1; i++) {
-			for (int j = 0; j <= 8; j++) {
-				try {
-					cutSprite[i][j] = ImageIO.read(loader.getResource("res/sprite/cut/c" + i + "_" + j + ".png"));
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					cutSprite[i][j] = null;
-				}
-			}
-		}
-		for (int i = 0; i <= 1; i++) {
-			for (int j = 0; j <= 0; j++) {
-				try {
-					dashSprite[i][j] = ImageIO.read(loader.getResource("res/sprite/dash/d" + i + "_" + j + ".png"));
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					dashSprite[i][j] = null;
-				}
-			}
-		}
+		// Load card animation
+		for (int i = 0; i < 12; i++)
+			cardAnimation[i] = readImage(loader.getResource("res/card/animation/card_" + i + ".png"));
 
-		for (int i = 0; i <= 1; i++) {
-			for (int j = 0; j <= 7; j++) {
-				try {
-					iceSummonSprite[i][j] = ImageIO
-							.read(loader.getResource("res/sprite/icesummon/i" + i + "_" + j + ".png"));
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					iceSummonSprite[i][j] = null;
-				}
-			}
-		}
-
-		for (int i = 0; i <= 11; i++) {
-			try {
-				cardAnimation[i] = ImageIO.read(loader.getResource("res/card/animation/card_" + i + ".png"));
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				cardAnimation = null;
-			}
-		}
-
-		try {
-			background = ImageIO.read(loader.getResource("res/map/background.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			background = null;
-		}
+		background = readImage(loader.getResource("res/map/background.png"));
 
 		// Load title image
-		try {
-			title = ImageIO.read(loader.getResource("res/title/title.png"));
-		} catch (IOException e1) {
-			title = null;
-		}
-		try {
-			startButton = ImageIO.read(loader.getResource("res/title/new.png"));
-		} catch (IOException e) {
-			startButton = null;
-		}
-		try {
-			loadButton = ImageIO.read(loader.getResource("res/title/load.png"));
-		} catch (IOException e) {
-			loadButton = null;
-		}
-		try {
-			exitButton = ImageIO.read(loader.getResource("res/title/exit.png"));
-		} catch (IOException e) {
-			exitButton = null;
-		}
+		title = readImage(loader.getResource("res/title/title.png"));
+		startButton = readImage(loader.getResource("res/title/new.png"));
+		loadButton = readImage(loader.getResource("res/title/load.png"));
+		exitButton = readImage(loader.getResource("res/title/exit.png"));
 
-		// load tutorial button
-		try {
-			upButton = ImageIO.read(loader.getResource("res/map/tutorial/up.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			upButton = null;
-		}
-		try {
-			leftButton = ImageIO.read(loader.getResource("res/map/tutorial/left.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			leftButton = null;
-		}
-		try {
-			downButton = ImageIO.read(loader.getResource("res/map/tutorial/down.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			downButton = null;
-		}
-		try {
-			rightButton = ImageIO.read(loader.getResource("res/map/tutorial/right.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			rightButton = null;
-		}
-		try {
-			dButton = ImageIO.read(loader.getResource("res/map/tutorial/D.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			dButton = null;
-		}
-		try {
-			escButton = ImageIO.read(loader.getResource("res/map/tutorial/esc.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			escButton = null;
-		}
-		try {
-			fButton = ImageIO.read(loader.getResource("res/map/tutorial/F.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			fButton = null;
-		}
-		try {
-			rButton = ImageIO.read(loader.getResource("res/map/tutorial/R.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			rButton = null;
-		}
-		try {
-			sButton = ImageIO.read(loader.getResource("res/map/tutorial/S.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			sButton = null;
-		}
-		try {
-			spaceButton = ImageIO.read(loader.getResource("res/map/tutorial/space.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			spaceButton = null;
-		}
-		try {
-			eButton = ImageIO.read(loader.getResource("res/map/tutorial/E.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			eButton = null;
-		}
-		try {
-			plusButton = ImageIO.read(loader.getResource("res/map/tutorial/plus.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			plusButton = null;
-		}
+		// Load HUD
+		upButton = readImage(loader.getResource("res/map/tutorial/up.png"));
+		leftButton = readImage(loader.getResource("res/map/tutorial/left.png"));
+		downButton = readImage(loader.getResource("res/map/tutorial/down.png"));
+		rightButton = readImage(loader.getResource("res/map/tutorial/right.png"));
+		dButton = readImage(loader.getResource("res/map/tutorial/D.png"));
+		escButton = readImage(loader.getResource("res/map/tutorial/esc.png"));
+		fButton = readImage(loader.getResource("res/map/tutorial/F.png"));
+		rButton = readImage(loader.getResource("res/map/tutorial/R.png"));
+		sButton = readImage(loader.getResource("res/map/tutorial/S.png"));
+		spaceButton = readImage(loader.getResource("res/map/tutorial/space.png"));
+		eButton = readImage(loader.getResource("res/map/tutorial/E.png"));
+		plusButton = readImage(loader.getResource("res/map/tutorial/plus.png"));
 
-		// load Content
-		try {
-			walkContent = ImageIO.read(loader.getResource("res/map/content/walk.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			walkContent = null;
-		}
-		try {
-			jumpContent = ImageIO.read(loader.getResource("res/map/content/jump.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			jumpContent = null;
-		}
-		try {
-			yourHandContent = ImageIO.read(loader.getResource("res/map/content/yourhand.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			yourHandContent = null;
-		}
-		try {
-			exitContent = ImageIO.read(loader.getResource("res/map/content/exit.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			exitContent = null;
-		}
-		try {
-			returnContent = ImageIO.read(loader.getResource("res/map/content/return.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			returnContent = null;
-		}
-		try {
-			doublejumpContent = ImageIO.read(loader.getResource("res/map/content/doublejump.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			doublejumpContent = null;
-		}
-		try {
-			glacialDriftContent = ImageIO.read(loader.getResource("res/map/content/glacialdrift.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			glacialDriftContent = null;
-		}
-		try {
-			iceSummonContent = ImageIO.read(loader.getResource("res/map/content/icesummon.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			iceSummonContent = null;
-		}
-		try {
-			skyUppercutContent = ImageIO.read(loader.getResource("res/map/content/skyuppercut.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			skyUppercutContent = null;
-		}
-		try {
-			theEndContent = ImageIO.read(loader.getResource("res/map/content/the_end.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			theEndContent = null;
-		}
-		try {
-			concentrationContent = ImageIO.read(loader.getResource("res/map/content/concentration.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			concentrationContent = null;
-		}
-		try {
-			checkpointContent = ImageIO.read(loader.getResource("res/map/content/checkpoint.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			checkpointContent = null;
-		}
-		try {
-			yourManaContent = ImageIO.read(loader.getResource("res/map/content/yourmana.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			yourManaContent = null;
-		}
+		// Load content
+		walkContent = readImage(loader.getResource("res/map/content/walk.png"));
+		jumpContent = readImage(loader.getResource("res/map/content/jump.png"));
+		yourHandContent = readImage(loader.getResource("res/map/content/yourhand.png"));
+		exitContent = readImage(loader.getResource("res/map/content/exit.png"));
+		returnContent = readImage(loader.getResource("res/map/content/return.png"));
+		doublejumpContent = readImage(loader.getResource("res/map/content/doublejump.png"));
+		glacialDriftContent = readImage(loader.getResource("res/map/content/glacialdrift.png"));
+		iceSummonContent = readImage(loader.getResource("res/map/content/icesummon.png"));
+		skyUppercutContent = readImage(loader.getResource("res/map/content/skyuppercut.png"));
+		theEndContent = readImage(loader.getResource("res/map/content/the_end.png"));
+		concentrationContent = readImage(loader.getResource("res/map/content/concentration.png"));
+		checkpointContent = readImage(loader.getResource("res/map/content/checkpoint.png"));
+		yourManaContent = readImage(loader.getResource("res/map/content/yourmana.png"));
 
-
-
+		// load map
 		tutorialMap = loader.getResourceAsStream("res/map/tutorial.map");
 		easyMap = loader.getResourceAsStream("res/map/easy.map");
 		normalMap = loader.getResourceAsStream("res/map/normal.map");
 		hardMap = loader.getResourceAsStream("res/map/hard.map");
 		finalMap = loader.getResourceAsStream("res/map/final.map");
 
-		//load sound
+		// load sound
 		try {
 			titleBGM = AudioSystem.getClip();
 			titleBGM.open(AudioSystem.getAudioInputStream(loader.getResourceAsStream("res/sound/titleBGM.wav")));
@@ -468,7 +192,15 @@ public class Resource {
 		skyUppercutSound = getByteArray(skyUppercutAudioIn, skyUppercutAudioFormat);
 
 	}
-	
+
+	private static BufferedImage readImage(URL in) {
+		try {
+			return ImageIO.read(in);
+		} catch (IOException e) {
+			return null;
+		}
+	}
+
 	private static AudioInputStream readAudio(InputStream in) {
 		try {
 			return AudioSystem.getAudioInputStream(in);
@@ -476,7 +208,7 @@ public class Resource {
 			return null;
 		}
 	}
-	
+
 	private static byte[] getByteArray(AudioInputStream audioIn, AudioFormat format) {
 		try {
 			int size = (int)(format.getFrameSize() * audioIn.getFrameLength());
