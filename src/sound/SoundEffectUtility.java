@@ -6,9 +6,9 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.DataLine;
 import javax.sound.sampled.LineUnavailableException;
 
-public class SoundUtility {
+public class SoundEffectUtility {
 	
-	private SoundUtility() {}
+	private SoundEffectUtility() {}
 
 	public static void playSoundEffect(byte[] source, AudioFormat format) {
 		try {

@@ -12,7 +12,7 @@ import java.io.Serializable;
 import exception.SkillCardUnusableException;
 import render.Animation;
 import res.Resource;
-import sound.SoundUtility;
+import sound.SoundEffectUtility;
 
 public abstract class SkillCard implements Comparable<SkillCard>, Serializable {
 
@@ -53,7 +53,7 @@ public abstract class SkillCard implements Comparable<SkillCard>, Serializable {
 	}
 	
 	public void playActivateAnimation() {
-		SoundUtility.playSoundEffect(Resource.cardSound, Resource.cardAudioFormat);
+		SoundEffectUtility.playSoundEffect(Resource.cardSound, Resource.cardAudioFormat);
 		activateAnimationThread = new Thread(new Animation(Resource.cardAnimation, 2) {
 			
 			@Override

@@ -14,7 +14,7 @@ import input.InputUtility;
 import input.InputUtility.CommandKey;
 import render.Renderable;
 import res.Resource;
-import sound.SoundUtility;
+import sound.SoundEffectUtility;
 import ui.GameScreen;
 
 public class PlayerCharacter implements Renderable {
@@ -134,10 +134,10 @@ public class PlayerCharacter implements Renderable {
 		ySpeed = JUMP_INITIAL_SPEED;
 		if (!this.isOnGround()) {
 			airJumpCount--;
-			SoundUtility.playSoundEffect(Resource.doubleJumpSound, Resource.doubleJumpAudioFormat);
+			SoundEffectUtility.playSoundEffect(Resource.doubleJumpSound, Resource.doubleJumpAudioFormat);
 		}
 		else {
-			SoundUtility.playSoundEffect(Resource.jumpSound, Resource.jumpAudioFormat);
+			SoundEffectUtility.playSoundEffect(Resource.jumpSound, Resource.jumpAudioFormat);
 		}
 		Thread jumpAnimation = new Thread(new PlayerAnimation(Resource.jumpSprite, this, 6, false));
 		jumpAnimation.start();
@@ -249,7 +249,7 @@ public class PlayerCharacter implements Renderable {
 	// Special moves
 	
 	protected void performSkyUpperCut() {
-		SoundUtility.playSoundEffect(Resource.skyUppercutSound, Resource.skyUppercutAudioFormat);
+		SoundEffectUtility.playSoundEffect(Resource.skyUppercutSound, Resource.skyUppercutAudioFormat);
 		freezePlayerControlCount = 30;
 		yAcceleration = 0f;
 		new Thread(new Runnable() {
@@ -271,7 +271,7 @@ public class PlayerCharacter implements Renderable {
 	}
 	
 	protected void performGlacialDrift() {
-		SoundUtility.playSoundEffect(Resource.dashSound, Resource.dashAudioFormat);
+		SoundEffectUtility.playSoundEffect(Resource.dashSound, Resource.dashAudioFormat);
 		freezePlayerControlCount = 8;
 		yAcceleration = 0f;
 		new Thread(new Runnable() {
@@ -299,7 +299,7 @@ public class PlayerCharacter implements Renderable {
 	}
 	
 	protected void performIceSummon() {
-		SoundUtility.playSoundEffect(Resource.iceSummonSound, Resource.iceSummonAudioFormat);
+		SoundEffectUtility.playSoundEffect(Resource.iceSummonSound, Resource.iceSummonAudioFormat);
 		stopAllMotion();
 		freezePlayerControlCount = 45;
 		iceSummonAnimationThread = new Thread(new PlayerAnimation(Resource.iceSummonSprite, this, 5, false));
