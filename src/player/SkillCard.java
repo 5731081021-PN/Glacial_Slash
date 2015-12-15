@@ -27,7 +27,7 @@ public abstract class SkillCard implements Comparable<SkillCard>, Serializable {
 	
 	public abstract void activate() throws SkillCardUnusableException;
 	
-	public SkillCard(int cost, Image cardImage) {
+	protected SkillCard(int cost, Image cardImage) {
 		this.cost = cost;
 		this.cardImage = cardImage;
 		this.originalCardImage = cardImage;
@@ -52,7 +52,7 @@ public abstract class SkillCard implements Comparable<SkillCard>, Serializable {
 		else return null;
 	}
 	
-	public void playActivateAnimation() {
+	protected void playActivateAnimation() {
 		SoundEffectUtility.playSoundEffect(Resource.cardSound);
 		activateAnimationThread = new Thread(new Animation(Resource.cardAnimation, 2) {
 			
@@ -87,7 +87,7 @@ public abstract class SkillCard implements Comparable<SkillCard>, Serializable {
 		activateAnimationThread.start();
 	}
 	
-	public void joinActivateAnimationThread() throws InterruptedException {
+	protected void joinActivateAnimationThread() throws InterruptedException {
 		activateAnimationThread.join();
 	}
 	

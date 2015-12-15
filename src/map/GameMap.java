@@ -106,18 +106,6 @@ public class GameMap implements Renderable, Serializable {
 		return initialPosition;
 	}
 
-	public String getNextMapName() {
-		return nextMapName;
-	}
-	
-	public int getWidth() {
-		return width;
-	}
-
-	public int getHeight() {
-		return height;
-	}
-
 	public int getScreenWidth() {
 		return width*TILE_WIDTH;
 	}
@@ -126,8 +114,8 @@ public class GameMap implements Renderable, Serializable {
 		return height*TILE_HEIGHT;
 	}
 	
-	public void freeze(int x, int y) {
-		tileMap[x][y] = Tile.ICE;
+	public void freeze(int tileX, int tileY) {
+		tileMap[tileX][tileY] = Tile.ICE;
 	}
 	
 	public Tile getTileType(int tileX, int tileY) {
