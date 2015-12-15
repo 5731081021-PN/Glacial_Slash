@@ -142,11 +142,11 @@ public class Resource {
 		yourManaContent = readImage(loader.getResource("res/map/content/yourmana.png"));
 
 		// load map
-		tutorialMap = loader.getResourceAsStream("res/map/tutorial.map");
-		easyMap = loader.getResourceAsStream("res/map/easy.map");
-		normalMap = loader.getResourceAsStream("res/map/normal.map");
-		hardMap = loader.getResourceAsStream("res/map/hard.map");
-		finalMap = loader.getResourceAsStream("res/map/final.map");
+		tutorialMap = loader.getResourceAsStream("res/map/tutorial.txt");
+		easyMap = loader.getResourceAsStream("res/map/easy.txt");
+		normalMap = loader.getResourceAsStream("res/map/normal.txt");
+		hardMap = loader.getResourceAsStream("res/map/hard.txt");
+		finalMap = loader.getResourceAsStream("res/map/final.txt");
 
 		// load sound
 		try {
