@@ -138,11 +138,18 @@ public class Resource {
 		yourManaContent = readImage(loader.getResource("res/map/content/yourmana.png"));
 
 		// load map
+		/* Used with MapSerializer
 		tutorialMap = loader.getResourceAsStream("res/map/tutorial.txt");
 		easyMap = loader.getResourceAsStream("res/map/easy.txt");
 		normalMap = loader.getResourceAsStream("res/map/normal.txt");
 		hardMap = loader.getResourceAsStream("res/map/hard.txt");
 		finalMap = loader.getResourceAsStream("res/map/final.txt");
+		*/
+		tutorialMap = loader.getResourceAsStream("res/map/tutorial.glm");
+		easyMap = loader.getResourceAsStream("res/map/easy.glm");
+		normalMap = loader.getResourceAsStream("res/map/normal.glm");
+		hardMap = loader.getResourceAsStream("res/map/hard.glm");
+		finalMap = loader.getResourceAsStream("res/map/final.glm");
 
 		// load sound
 		try {
